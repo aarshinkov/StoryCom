@@ -5,6 +5,11 @@ CREATE OR REPLACE PACKAGE STORYCOM_GENERAL IS
                         ip_name     IN NVARCHAR2,
                         ip_password IN NVARCHAR2,
                         ip_email    IN NVARCHAR2);
+
+  ---------- insert_story ----------
+  PROCEDURE insert_story(ip_title   IN NVARCHAR2,
+                         ip_content IN NVARCHAR2,
+                         ip_userid  IN NUMBER);
 END STORYCOM_GENERAL;
 /
 CREATE OR REPLACE PACKAGE BODY STORYCOM_GENERAL IS
@@ -19,6 +24,16 @@ CREATE OR REPLACE PACKAGE BODY STORYCOM_GENERAL IS
     VALUES
       (S_USERS.NEXTVAL, ip_username, ip_name, ip_password,
        ip_email);
+  END;
+
+  ---------- insert_story ----------  
+  PROCEDURE insert_story(ip_title   IN NVARCHAR2,
+                         ip_content IN NVARCHAR2,
+                         ip_userid  IN NUMBER) IS
+  BEGIN
+    INSERT INTO STORIES
+    VALUES
+      (S_STORIES.NEXTVAL, ip_title, ip_content, SYSDATE, ip_userid);
   END;
 END STORYCOM_GENERAL;
 /
