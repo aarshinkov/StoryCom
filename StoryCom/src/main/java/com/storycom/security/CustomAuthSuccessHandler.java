@@ -21,7 +21,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         log.debug("Authentication successful.");
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = (User) auth.getPrincipal();
+		StoryUser storyUser = (StoryUser) auth.getPrincipal();
 
         String url = request.getParameter("url");
 
@@ -41,6 +41,8 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
 //        } else {
 //            targetUrl += "?back";
 //        }
+		request.getSession(false).setAttribute("user", storyUser.getUsername() + " - " + storyUser.getName());
+
 //        log.debug("Redirecting to page: " + targetUrl);
         response.sendRedirect(targetUrl);
     }
