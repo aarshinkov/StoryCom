@@ -19,7 +19,7 @@
 
     <!--<bean id="versionBean" class="com.storycom.beans.VersionBean"/>-->
     <!--<bean id="messagesBean" class="com.storycom.beans.MessagesBean"/>-->
-    <!--<bean id="errorsBean" class="com.storycom.beans.ErrorsBean"/>-->
+    <bean id="errorsBean" class="com.storycom.beans.ErrorsBean"/>
     <bean id="configBean" class="com.storycom.beans.ConfigurationBean"/>
     <!--<bean id="usersBean" class="com.storycom.beans.UsersBean"/>-->
     <!--<bean id="settingsBean" class="com.storycom.beans.SettingsBean"/>-->

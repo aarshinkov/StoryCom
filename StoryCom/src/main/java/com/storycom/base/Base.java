@@ -28,7 +28,7 @@ public class Base {
         return messageSource.getMessage(key, params, LocaleContextHolder.getLocale());
     }
 
-    protected boolean isDBConnectionError(Throwable exc) {
+    protected boolean isDBConnectError(Throwable exc) {
         Throwable ex = exc;
         while (true) {
             if (ex != null) {
