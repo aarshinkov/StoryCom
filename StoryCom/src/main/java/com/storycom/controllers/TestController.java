@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.print.attribute.standard.Media;
 import java.util.List;
@@ -35,6 +32,14 @@ public class TestController extends Base {
     @ResponseBody
     @RequestMapping(value = "/story/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Story storyById(@PathVariable("id") Integer storyId) {
+        log.debug("storyById() begin --");
+        return storiesRepository.findByStoryId(storyId);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/story", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Story storyByIdParam(@RequestParam(name = "id") Integer storyId) {
+        log.debug("storyByIdParam() begin --");
         return storiesRepository.findByStoryId(storyId);
     }
 }
