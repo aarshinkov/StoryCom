@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.attribute.standard.Media;
@@ -29,15 +30,26 @@ public class TestController extends Base {
         return "test/designTest";
     }
 
+    @GetMapping(value = "/design/story")
+    public String designStory(@RequestParam(name = "id") Integer storyId, Model model) {
+        log.debug("Design story");
+
+        Story story = storiesRepository.findByStoryId(storyId);
+
+        model.addAttribute("story", story);
+
+        return "test/designTest";
+    }
+
     @ResponseBody
-    @RequestMapping(value = "/story/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/story/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Story storyById(@PathVariable("id") Integer storyId) {
         log.debug("storyById() begin --");
         return storiesRepository.findByStoryId(storyId);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/story", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/story", produces = MediaType.APPLICATION_JSON_VALUE)
     public Story storyByIdParam(@RequestParam(name = "id") Integer storyId) {
         log.debug("storyByIdParam() begin --");
         return storiesRepository.findByStoryId(storyId);
