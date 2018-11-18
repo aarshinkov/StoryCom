@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.attribute.standard.Media;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
@@ -54,4 +56,17 @@ public class TestController extends Base {
         log.debug("storyByIdParam() begin --");
         return storiesRepository.findByStoryId(storyId);
     }
+
+    @ResponseBody
+    @GetMapping(value = "/encoding", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String testEncoding() {
+        log.debug("testEncoding() begin --");
+
+        String word = "Здравейте, приятели";
+
+        log.debug("word: " + word);
+
+        return word;
+    }
+
 }

@@ -42,11 +42,11 @@
                 <!--<i class="fa fa-user"></i>-->
                 <!--<span>Nickname</span>-->
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <i class="fa fa-eye"></i>
-                <span>21</span>
-                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <i class="fa fa-comments"></i>
-                <a href="#" style="color: #212529;">56</a>
+                <a href="#" th:text="${story.comments}" style="color: #212529;">56</a>
+                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <i class="fa fa-eye"></i>
+                <span th:text="${story.views}">21</span>
             </div>
         </div>
 

@@ -19,6 +19,12 @@ public class Story {
     @Column(name = "CONTENT")
     private String content;
 
+    @Column(name = "COMMENTS")
+    private Integer comments;
+
+    @Column(name = "VIEWS")
+    private Integer views;
+
     @Column(name = "CREATED_ON")
     private Date createdOn;
 
@@ -48,6 +54,22 @@ public class Story {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getComments() {
+        return comments;
+    }
+
+    public void setComments(Integer comments) {
+        this.comments = comments;
+    }
+
+    public Integer getViews() {
+        return views;
+    }
+
+    public void setViews(Integer views) {
+        this.views = views;
     }
 
     public Date getCreatedOn() {
