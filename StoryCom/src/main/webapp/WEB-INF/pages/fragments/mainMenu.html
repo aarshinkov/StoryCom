@@ -32,6 +32,20 @@
                 <a class="nav-link" th:href="@{/admin}" th:text="#{nav.admin}">Admin</a>
             </li>
 
+            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER')"
+                th:classappend="${globalMenu eq 'story'} ? 'active'">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" th:text="#{nav.story}">
+                    Stories
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#" th:href="@{/story/add}" th:text="#{nav.story.add}">Add story</a>
+                    <a class="dropdown-item" href="#" th:href="@{/story/search}" th:text="#{nav.story.search}">Search
+                        story</a>
+                    <!--<div class="dropdown-divider"></div>-->
+                </div>
+            </li>
+
 
             <li class="nav-item" sec:authorize="isAuthenticated()" style="cursor: pointer;">
                 <a class="nav-link" onclick="$('#formLogout').submit();" th:text="#{nav.logout}">Logout</a>

@@ -2,7 +2,9 @@ package com.storycom.controllers;
 
 import com.storycom.base.Base;
 import com.storycom.entity.Story;
+import com.storycom.entity.User;
 import com.storycom.repository.StoriesRepository;
+import com.storycom.repository.UsersRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class TestController extends Base {
 
     @Autowired
     private StoriesRepository storiesRepository;
+
+    @Autowired
+    private UsersRepository usersRepository;
 
     @GetMapping(value = "/design")
     public String designTest() {
@@ -67,6 +72,12 @@ public class TestController extends Base {
         log.debug("word: " + word);
 
         return word;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUser() {
+        return usersRepository.findByUserId(getStoryUser().getUserId());
     }
 
 }

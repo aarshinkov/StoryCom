@@ -1,8 +1,11 @@
 package com.storycom.base;
 
+import com.storycom.entity.User;
+import com.storycom.repository.UsersRepository;
 import com.storycom.security.StoryUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
@@ -15,6 +18,9 @@ import java.text.SimpleDateFormat;
 public class Base {
     @Resource(name = "messageSource")
     private MessageSource messageSource;
+
+    @Autowired
+    private UsersRepository usersRepository;
 
     private DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -56,7 +62,12 @@ public class Base {
         try {
             return (StoryUser) auth.getPrincipal();
         } catch (Exception e) {
+            log.error("Error getting StoryUser!", e);
             return null;
         }
+    }
+
+    protected User getUser() {
+        return usersRepository.findByUserId(getStoryUser().getUserId());
     }
 }

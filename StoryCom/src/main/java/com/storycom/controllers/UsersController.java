@@ -1,5 +1,6 @@
 package com.storycom.controllers;
 
+import com.storycom.base.Base;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(value = "/user")
-public class UsersController {
+public class UsersController extends Base {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 

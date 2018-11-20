@@ -87,4 +87,17 @@ public class Story {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Story{" +
+                "storyId=" + storyId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", comments=" + comments +
+                ", views=" + views +
+                ", createdOn=" + createdOn +
+                ", user=" + user +
+                '}';
+    }
 }
