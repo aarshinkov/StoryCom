@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/contentTemplate}">
+<head>
+    <title th:text="#{title.story.search} + ' | ' + #{app.title}"></title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <h2>Here you can add your personal story completely anonymous</h2>
+
+    <form th:action="@{/story/search}" method="post">
+        <div class="form-group">
+            <label for="titleId">Title</label>
+            <input type="text" class="form-control" id="titleId" th:name="title" placeholder="Enter title">
+        </div>
+        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-save"></i>
+            <span>Save story</span>
+        </button>
+    </form>
+
+</div>
+</body>
+</html>

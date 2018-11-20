@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,9 @@ public class TestController extends Base {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/design")
     public String designTest() {
@@ -78,6 +82,12 @@ public class TestController extends Base {
     @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUser() {
         return usersRepository.findByUserId(getStoryUser().getUserId());
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/encodePass/{pass}")
+    public String encodePass(@PathVariable(value = "pass") String password) {
+        return passwordEncoder.encode(password);
     }
 
 }

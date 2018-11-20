@@ -29,21 +29,15 @@ public class StoriesServiceImpl implements StoriesService {
 
         log.debug("Adding story...");
 
-        log.debug(story.toString());
-
-        try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
-             CallableStatement cstmt = conn.prepareCall("{? = call STORYCOM_GENERAL.INSERT_STORY(?,?,?)}")) {
-
-            log.debug(story.getTitle());
+        try {
+            CallableStatement cstmt = jdbcTemplate.getDataSource().getConnection().prepareCall("{call STORYCOM_GENERAL.INSERT_STORY(?,?,?)}");
             cstmt.setString(1, story.getTitle());
-            log.debug(story.getContent());
             cstmt.setString(2, story.getContent());
-            log.debug("" + user.getUserId());
             cstmt.setInt(3, user.getUserId());
 
             cstmt.execute();
+            log.debug("Story added successfully!");
         } catch (Exception e) {
-            e.printStackTrace();
             log.error("Error adding story to database!");
         }
     }
