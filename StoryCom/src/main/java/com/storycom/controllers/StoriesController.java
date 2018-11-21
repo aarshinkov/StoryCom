@@ -58,7 +58,7 @@ public class StoriesController extends Base {
     @PostMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Story> searchStory(@RequestParam(name = "title") String title) {
 
-        List<Story> stories = storiesRepository.findAllByTitle(title);
+        List<Story> stories = storiesRepository.findAllByTitleContaining(title);
 
         return stories;
     }

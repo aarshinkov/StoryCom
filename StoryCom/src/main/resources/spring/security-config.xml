@@ -15,6 +15,7 @@
     <security:http use-expressions="true">
         <security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
         <security:intercept-url pattern="/story/**" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/login/**" access="!isAuthenticated()"/>
 
         <!--<security:form-login/>-->
         <security:form-login
@@ -33,7 +34,7 @@
         <!--delete-cookies="JSESSIONID"-->
         <!--invalidate-session="true"/>-->
 
-        <security:logout success-handler-ref="logoutSuccessHandler" invalidate-session="false"/>
+        <security:logout success-handler-ref="logoutSuccessHandler" invalidate-session="true"/>
     </security:http>
 
     <bean id="customAuthSuccessHandler" class="com.storycom.security.CustomAuthSuccessHandler"/>
@@ -47,7 +48,7 @@
     <!--<security:authentication-provider>-->
     <!--<security:user-service id="userDetailsService">-->
     <!--<security:user name="admin" password="$2a$12$q8SVUUS51j/StXmbsweczOn/ZbfLmpc2Rl9Bpgpcc0BKGPCdwHjle" authorities="ROLE_ADMIN"/>-->
-    <!--<security:user name="atanas" password="$2a$12$vdmzUs4s5qceGCkgLFG06e0E82HXGji/uBzucshZAIK0MdEBuh5eS" authorities="ROLE_USER"/>-->
+    <!--<security:user name="atanas97" password="$2a$12$vdmzUs4s5qceGCkgLFG06e0E82HXGji/uBzucshZAIK0MdEBuh5eS" authorities="ROLE_USER"/>-->
     <!--</security:user-service>-->
     <!--<security:password-encoder hash="bcrypt"/>-->
     <!--</security:authentication-provider>-->

@@ -23,6 +23,8 @@ public class ConfigurationBean extends Base {
 
     private EmailSettings emailSettings;
 
+    private String env = "TEST";
+
     public ConfigurationBean() {
     }
 
@@ -100,5 +102,13 @@ public class ConfigurationBean extends Base {
             log.error("Error loading e-mail configuration from database!", e);
         }
         return emailSettings;
+    }
+
+    public String getEnv() {
+        return env;
+    }
+
+    public String getEnvStyled() {
+        return this.env.equalsIgnoreCase("TEST") ? "Test" : "Production";
     }
 }

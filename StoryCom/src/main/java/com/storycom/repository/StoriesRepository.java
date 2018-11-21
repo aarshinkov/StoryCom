@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface StoriesRepository extends CrudRepository<Story, Integer> {
     Story findByStoryId(Integer storyId);
-    List<Story> findAllByTitle(String title);
+    List<Story> findAllByTitleContaining(String title);
 }
