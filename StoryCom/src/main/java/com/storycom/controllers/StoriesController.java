@@ -7,14 +7,15 @@ import com.storycom.services.StoriesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.awt.*;
 import java.util.List;
 
 @Controller
@@ -50,16 +51,23 @@ public class StoriesController extends Base {
     }
 
     @GetMapping(value = "/search")
-    public String prepareSearchStory() {
+    public String prepareSearchStory(Model model) {
+
+        model.addAttribute("globalMenu", GLOBAL_MENU);
+
         return "stories/searchStory";
     }
 
-    @ResponseBody
-    @PostMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Story> searchStory(@RequestParam(name = "title") String title) {
+    @GetMapping(value = "/search", params = "title")
+    public String searchStory(@RequestParam(name = "title") String title, Model model) {
 
         List<Story> stories = storiesRepository.findAllByTitleContaining(title);
 
-        return stories;
+        model.addAttribute("currUserId", getStoryUser().getUserId());
+        model.addAttribute("globalMenu", GLOBAL_MENU);
+        model.addAttribute("stories", stories);
+        model.addAttribute("storiesCount", stories.size());
+
+        return "stories/searchStory";
     }
 }

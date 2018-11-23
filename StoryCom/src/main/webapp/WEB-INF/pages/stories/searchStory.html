@@ -2,25 +2,62 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       layout:decorate="~{templates/contentTemplate}">
 <head>
     <title th:text="#{title.story.search} + ' | ' + #{app.title}"></title>
 </head>
 <body>
 <div layout:fragment="contentDiv">
-    <h2>Here you can add your personal story completely anonymous</h2>
+    <h2 style="margin-bottom: 30px;">Find every story you'd like</h2>
 
-    <form th:action="@{/story/search}" method="post">
-        <div class="form-group">
-            <label for="titleId">Title</label>
-            <input type="text" class="form-control" id="titleId" th:name="title" placeholder="Enter title">
+    <div class="row">
+        <div class="col-lg-3" style="padding-bottom: 20px;">
+            <form th:action="@{/story/search}" method="GET" style="border: 1px solid rgba(0,0,0,.125); padding: 20px;">
+                <div class="form-group">
+                    <label for="titleId">Title</label>
+                    <input type="text" class="form-control" id="titleId" th:name="title" placeholder="Enter title"/>
+                </div>
+                <hr/>
+                <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-search"></i>
+                    <span>Search story</span>
+                </button>
+            </form>
         </div>
-        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-        <button type="submit" class="btn btn-success">
-            <i class="fas fa-search"></i>
-            <span>Search story</span>
-        </button>
-    </form>
+        <div class="col-lg-9">
+            <p th:if="${storiesCount} eq 0">No results found</p>
+
+            <div class="row">
+                <div class="col-lg-6" style="padding-bottom: 20px;" th:each="story : ${stories}">
+
+                    <div class="card">
+                        <h5 class="card-header" th:text="${story.title}">Title</h5>
+                        <div class="card-body">
+                            <small>
+                                <i class="far fa-user"></i>
+                                <span th:if="${story.user.userId} eq ${currUserId}" th:text="${story.user.name} + ' (Me)'"></span>
+                                <span th:unless="${story.user.userId} eq ${currUserId}" th:text="${story.user.name}"></span>
+                            </small>
+                            <small> | </small>
+                            <small>
+                                <i class="far fa-clock"></i>
+                                <span th:text="${story.createdOn}"></span>
+                            </small>
+                            <hr style="margin-top: 10px; margin-bottom: 10px;"/>
+                            <p class="card-text" th:text="${story.content}">Text</p>
+                            <a href="#" class="btn btn-primary">View</a>
+                            <a href="#" class="btn btn-success" th:if="${story.user.userId} eq ${currUserId}">Edit</a>
+                            <a href="#" class="btn btn-warning" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DBA')">Warn</a>
+                            <a href="#" class="btn btn-danger" th:if="${story.user.userId} eq ${currUserId}">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
 </body>
