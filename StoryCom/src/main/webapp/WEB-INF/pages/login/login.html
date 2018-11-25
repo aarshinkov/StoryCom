@@ -23,7 +23,7 @@
                 <!--</button>-->
                 <!--</div>-->
 
-                <div th:if="${@errorsBean.isBadCredentials()}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div th:if="${@errorsBean.badCredentials} and ${(param.error != null) and (param.error[0] == '')}" th:scope="session" class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span th:text="#{login.invalid}">Invalid username/password!</span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <input type="text" class="form-control" id="usernameInput" name="username"
-                                   placeholder="Username" th:classappend="${@errorsBean.isBadCredentials() ? 'is-invalid' : ''}">
+                                   placeholder="Username" th:classappend="${(@errorsBean.badCredentials && (param.error != null) && (param.error[0] == ''))? 'is-invalid' : ''}">
                         </div>
                     </div>
 
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                             <input type="password" class="form-control" id="passwordInput" name="password"
-                                   placeholder="Password" th:classappend="${@errorsBean.isBadCredentials() ? 'is-invalid' : ''}">
+                                   placeholder="Password" th:classappend="${(@errorsBean.badCredentials && (param.error != null) && (param.error[0] == ''))? 'is-invalid' : ''}">
                         </div>
                     </div>
 

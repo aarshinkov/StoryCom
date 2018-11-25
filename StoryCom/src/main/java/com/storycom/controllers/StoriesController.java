@@ -37,9 +37,10 @@ public class StoriesController extends Base {
         log.debug("prepareAddStory() begin ---");
 
         model.addAttribute("globalMenu", GLOBAL_MENU);
+        model.addAttribute("subMenu", "add");
         model.addAttribute("story", new Story());
 
-        return "stories/addStory";
+        return "stories/add";
     }
 
     @PostMapping(value = "/add")
@@ -54,8 +55,9 @@ public class StoriesController extends Base {
     public String prepareSearchStory(Model model) {
 
         model.addAttribute("globalMenu", GLOBAL_MENU);
+        model.addAttribute("subMenu", "search");
 
-        return "stories/searchStory";
+        return "stories/search";
     }
 
     @GetMapping(value = "/search", params = "title")
@@ -63,11 +65,33 @@ public class StoriesController extends Base {
 
         List<Story> stories = storiesRepository.findAllByTitleContaining(title);
 
-        model.addAttribute("currUserId", getStoryUser().getUserId());
+        if (getStoryUser() != null) {
+            model.addAttribute("currUserId", getStoryUser().getUserId());
+        }
+
         model.addAttribute("globalMenu", GLOBAL_MENU);
+        model.addAttribute("subMenu", "search");
         model.addAttribute("stories", stories);
         model.addAttribute("storiesCount", stories.size());
 
-        return "stories/searchStory";
+        return "stories/search";
+    }
+
+    @GetMapping(value = "/view", params = "id")
+    public String viewStory(@RequestParam(name = "id") Integer storyId, Model model) {
+
+        log.debug("Viewing story with id: " + storyId);
+
+        Story story = storiesRepository.findByStoryId(storyId);
+
+        if (story == null) {
+            log.error("Error getting story by id. Object might not exist.");
+            return "redirect:/error/404";
+        }
+
+        model.addAttribute("globalMenu", GLOBAL_MENU);
+        model.addAttribute("story", story);
+
+        return "stories/view";
     }
 }

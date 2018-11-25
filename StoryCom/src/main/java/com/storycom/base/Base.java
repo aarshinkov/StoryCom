@@ -61,6 +61,9 @@ public class Base {
 
         try {
             return (StoryUser) auth.getPrincipal();
+        } catch (ClassCastException ex) {
+            log.debug("No logged user has been found!");
+            return null;
         } catch (Exception e) {
             log.error("Error getting StoryUser!", e);
             return null;

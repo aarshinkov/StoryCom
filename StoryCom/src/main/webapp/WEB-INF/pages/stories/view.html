@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/contentTemplate}">
+<head>
+    <title th:text="#{title.story.view} + ' | ' + #{app.title}"></title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <p>View story</p>
+    <p th:text="${story.storyId}">StoryId</p>
+    <p th:text="${story.title}">Title</p>
+    <p th:text="${story.content}">Content</p>
+    <p th:text="${story.comments}">Comments</p>
+    <p th:text="${story.views}">Views</p>
+    <p th:text="${story.createdOn}">Created on</p>
+</div>
+</body>
+</html>

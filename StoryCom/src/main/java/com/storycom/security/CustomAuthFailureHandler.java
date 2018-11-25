@@ -21,6 +21,10 @@ public class CustomAuthFailureHandler extends SimpleUrlAuthenticationFailureHand
         String username = request.getParameter("username");
         log.debug("Username: " + username);
 
+        setDefaultFailureUrl("/login?error");
+
         super.onAuthenticationFailure(request, response, ex);
     }
+
+
 }
