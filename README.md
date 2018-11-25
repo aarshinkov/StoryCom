@@ -16,7 +16,7 @@ ____
 
 ## Implementation
 
-This is a Spring Web MVC project and with it you can freely and completely anonymously share your personal stories with other users.
+This is a Spring Web MVC project and with it you can freely share your personal stories with other users.
 
 ____
 
