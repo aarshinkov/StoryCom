@@ -12,7 +12,7 @@
     <a class="navbar-brand" th:text="#{app.title}" th:href="@{/}" href="#">StoryCom</a>
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <ul class="navbar-nav mr-auto mt-0">
             <li class="nav-item" th:classappend="${globalMenu eq 'home'}  ? 'active'">
                 <a class="nav-link" th:href="@{/}" th:text="#{nav.home}">Home</a>
             </li>
@@ -34,7 +34,14 @@
                 </div>
             </li>
 
-            <li class="nav-item dropdown" sec:authorize="isAuthenticated()" th:classappend="${globalMenu eq 'settings'} ? 'active'">
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"
+                th:classappend="${globalMenu eq 'admin'} ? 'active'">
+                <a class="nav-link" th:href="@{/admin}" th:text="#{nav.admin}">Admin</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav mt-lg-0">
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()"
+                th:classappend="${globalMenu eq 'settings'} ? 'active'">
                 <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     <span th:text="#{nav.settings}">Settings</span>
@@ -54,11 +61,6 @@
             <li class="nav-item" sec:authorize="!isAuthenticated()"
                 th:classappend="${globalMenu eq 'signup'} ? 'active'">
                 <a class="nav-link" th:href="@{/signup}" th:text="#{nav.signup}" href="#">Sign up</a>
-            </li>
-
-            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"
-                th:classappend="${globalMenu eq 'admin'} ? 'active'">
-                <a class="nav-link" th:href="@{/admin}" th:text="#{nav.admin}">Admin</a>
             </li>
 
             <li class="nav-item" sec:authorize="isAuthenticated()" style="cursor: pointer;">

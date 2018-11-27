@@ -25,6 +25,9 @@ public class Story {
     @Column(name = "VIEWS")
     private Integer views;
 
+    @Column(name = "LIKES")
+    private Integer likes;
+
     @Column(name = "CREATED_ON")
     private Date createdOn;
 
@@ -72,6 +75,14 @@ public class Story {
         this.views = views;
     }
 
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
     public Date getCreatedOn() {
         return createdOn;
     }
@@ -96,6 +107,7 @@ public class Story {
                 ", content='" + content + '\'' +
                 ", comments=" + comments +
                 ", views=" + views +
+                ", likes=" + likes +
                 ", createdOn=" + createdOn +
                 ", user=" + user +
                 '}';
