@@ -94,4 +94,14 @@ public class StoriesController extends Base {
 
         return "stories/view";
     }
+
+    @GetMapping(value = "/edit", params = "id")
+    public String editStory(@RequestParam(name = "id") Integer storyId, Model model) {
+        log.debug("Editing story with id: " + storyId);
+
+        Story story = storiesRepository.findByStoryId(storyId);
+
+
+        return null;
+    }
 }
