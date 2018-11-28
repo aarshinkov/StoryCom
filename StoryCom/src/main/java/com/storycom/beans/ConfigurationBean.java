@@ -31,7 +31,7 @@ public class ConfigurationBean extends Base {
     @PostConstruct
     private void init() {
         log.debug("Loading configuration params...");
-//        emailSettings = loadEmailSettings();
+        emailSettings = loadEmailSettings();
         log.debug("Configuration params loaded.");
     }
 

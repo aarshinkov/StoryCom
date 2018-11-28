@@ -3,14 +3,24 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="cltr" class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
+        <property name="checkExistence" value="true" />
+        <property name="cacheable" value="false" />
+        <property name="prefix" value="/mail/" />
+        <property name="templateMode" value="HTML" />
+        <property name="characterEncoding" value="UTF-8" />
+        <property name="order" value="1"/>
+    </bean>
+
     <bean id="srtr" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".html"/>
         <property name="templateMode" value="HTML"/>
         <property name="characterEncoding" value="UTF-8"/>
         <property name="cacheable" value="false"/>
-        <property name="order" value="1"/>
+        <property name="order" value="2"/>
     </bean>
+
 
     <bean id="layoutDialect" class="nz.net.ultraq.thymeleaf.LayoutDialect"/>
 
@@ -19,6 +29,7 @@
     <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
         <property name="templateResolvers">
             <set>
+                <ref bean="cltr"/>
                 <ref bean="srtr"/>
             </set>
         </property>
