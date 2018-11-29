@@ -98,6 +98,8 @@ public class StoriesController extends Base {
             return "redirect:/error/404";
         }
 
+        storiesService.updateStoriesViews(storyId);
+
         model.addAttribute("globalMenu", GLOBAL_MENU);
         model.addAttribute("story", story);
 
