@@ -103,6 +103,19 @@
                                th:unless="${story.user.userId} eq ${currUserId}"
                                sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DBA')">Warn</a>
                             <!--<a href="#" class="btn btn-danger" th:if="${story.user.userId} eq ${currUserId}">Delete</a>-->
+                            <hr style="margin-bottom: 1px;"/>
+                            <div class="row">
+
+                                <div class="col-7 text-muted" style="margin: 0;">
+                                    <small>
+                                        <a href="#" th:text="#{story.comments(${story.comments})}">3 Comments</a>
+                                        <a href="#" th:text="#{story.likes(${story.likes})}">2 Likes</a>
+                                    </small>
+                                </div>
+                                <div class="col-5 text-muted">
+                                    <div class="text-right"><small th:text="#{story.views(${story.views})}">283 Views</small></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
