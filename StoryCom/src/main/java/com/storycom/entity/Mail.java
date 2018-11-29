@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "MAILBOX")
@@ -37,23 +36,13 @@ public class Mail implements Serializable {
     @NotNull
     private String content;
 
-    @Column(name = "CREATED_ON")
-    @NotNull
-    private Timestamp createdOn;
-
-    @Column(name = "IS_SENT")
-    @NotNull
-    private char isSent;
-
     @Override
     public String toString() {
         return "Mail: mailId=" + mailId +
                 ", sender=" + sender +
                 ", receivers=" + receivers +
                 ", subject=" + subject +
-                ", content=" + content +
-                ", createdOn = " + createdOn +
-                ", isSent = " + isSent;
+                ", content=" + content;
     }
 
     public Integer getMailId() {

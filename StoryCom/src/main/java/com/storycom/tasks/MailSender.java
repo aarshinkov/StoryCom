@@ -15,6 +15,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.mail.internet.MimeMessage;
@@ -45,6 +46,7 @@ public class MailSender {
     }
 
     @Async
+    @Transactional(rollbackFor = Exception.class)
     public void sendMail(Mail mail, User user, Story story) {
         log.debug("Sending mail: " + mail.getMailId());
 

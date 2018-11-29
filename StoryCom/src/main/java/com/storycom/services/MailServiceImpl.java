@@ -4,6 +4,7 @@ import com.storycom.beans.ConfigurationBean;
 import com.storycom.entity.Mail;
 import com.storycom.entity.Story;
 import com.storycom.entity.User;
+import com.storycom.repository.MailsRepository;
 import com.storycom.tasks.MailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,9 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private ConfigurationBean configBean;
 
+    @Autowired
+    private MailsRepository mailsRepo;
+
     @Override
     public Mail createMail(String sender, String subject, String content, String... recipients) {
         log.debug("Creating mail begin --");
@@ -41,12 +45,10 @@ public class MailServiceImpl implements MailService {
         Mail mail = new Mail();
         mail.setSender(sender);
         mail.setReceivers(recips);
+        mail.setSubject(subject);
         mail.setContent(content);
 
-//        for inserting the mail into the database
-//        return mailsRepo.save(mail);
-        log.debug("Mail: " + mail.toString());
-        return mail;
+        return mailsRepo.save(mail);
     }
 
     @Override
