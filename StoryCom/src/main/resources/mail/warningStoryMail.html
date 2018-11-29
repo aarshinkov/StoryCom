@@ -1,116 +1,148 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">  
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Story warning email</title>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400italic,400,600,700' rel='stylesheet' type='text/css'/>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400italic,700,400,300' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400italic,400,600,700' rel='stylesheet'
+          type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400italic,700,400,300'
+          rel='stylesheet' type='text/css'/>
 
     <style>
-      * {
-        font-family: Helvetica,Arial,sans-serif;
-        color: #717171;
-      }
+        * {
+            font-family: Helvetica, Arial, sans-serif;
+            color: #717171;
+        }
 
-      .title {
-        font-size: 40px;
-        color: #00000073;
-        font-weight: bold;
-        /*text-shadow: 2px 3px 3px #e8e8e8;*/
-        -webkit-text-stroke: 1px #000000;
-        margin: 3px;
-      }
-      .table-data {
-        color: #2c5494;
-        font-weight: bold;
-      }
-      
-      td {
-        vertical-align: top;
-      }
-    </style>    
-  </head>
-  <body yahoo="fix" style="background: #f4f4f4;">
-    <table cellpadding="0" cellspacing="0" border="0" id="backgroundTable" width="100%">
-      <tr>
+        .title {
+            font-size: 40px;
+            color: #00000073;
+            font-weight: bold;
+            /*text-shadow: 2px 3px 3px #e8e8e8;*/
+            -webkit-text-stroke: 1px #000000;
+            margin: 3px;
+        }
+
+        .table-data {
+            color: #2c5494;
+            font-weight: bold;
+        }
+
+        td {
+            vertical-align: top;
+        }
+
+        .report {
+            padding: 10px;
+        }
+
+        .report div {
+            margin-bottom: 5px;
+        }
+
+        .request {
+            color: white;
+            text-decoration: none;
+            background: #17a2b8;
+        }
+
+        .level-3 {
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body yahoo="fix" style="background: #f4f4f4;">
+<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable" width="100%">
+    <tr>
         <td align="center">
-          <!-- header -->
-          <table cellpadding="0" cellspacing="0" border="0" align="center" width="600">
-            <tr>
-              <td colspan="2">
-                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td style="padding: 8px 10px 10px 10px;" align="center">
-                      <h1 class="title">
-                        STORYCOM
-                      </h1>
+            <!-- header -->
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <tr>
+                    <td colspan="2">
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr>
+                                <td style="padding: 8px 10px 10px 10px;" align="center">
+                                    <h1 class="title">
+                                        STORYCOM
+                                    </h1>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-				  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-          <!-- end header -->
+                </tr>
+            </table>
+            <!-- end header -->
 
-          <!-- start service -->
-          <table cellpadding="0" cellspacing="0" border="0" align="center" width="600">
-            <tr>
-              <td width="100%">
-                <table align="left" cellpadding="0" cellspacing="0" border="0" class="deviceWidth">
-                  <tr>
-                    <td style="padding-left: 15px;" align="left" class="full">
-                      <h1>Hello, <span th:text="${username}">username</span></h1>
+            <!-- start service -->
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <tr>
+                    <td width="100%">
+                        <table align="left" cellpadding="0" cellspacing="0" border="0" class="deviceWidth">
+                            <tr>
+                                <td align="left" class="full">
+                                    <h1>Hello, <span th:text="${username}">username</span></h1>
 
-                      <p>We are the administrators of the <b>StoryCom</b> website.</p>
+                                    <p>We are the administrators of the <a href="#"><b>StoryCom</b></a> website.</p>
 
-                      <p>We'd like to inform you that an administrator have marked one of your stories as <b>inappropriate.</b></p>
-					  
-					  <p>Below you can review the story otherwise it will be deleted permanently</p>
+                                    <p>We'd like to inform you that an administrator have marked one of your stories as
+                                        <b class="level-3">inappropriate.</b></p>
 
+                                    <p>Below you can <b>review</b> the story, <b>change</b> it and you can <a href="#"
+                                                                                                              style="color: #007bff;">make
+                                        a request</a> for reviewing the story and changing the <b>story's state.</b></p>
+
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-          <!-- end service -->
+                </tr>
+            </table>
+            <!-- end service -->
 
-          <br/>
-          <table cellpadding="0" cellspacing="0" border="0" width="200px" style="background: #17a2b8;">
-            <tr>
-              <td style="padding: 8px 10px 10px 10px;">
-                <a style="text-decoration: none; font-size: 14px; color: rgb(234,234,234); width: 200px; display: block; text-align: center; padding: 10px"
-                   href="http://yourlink" th:href="${appURL} + '/'">
-                  View Report
-                </a>
-                <!--                <a href="http://yourlink">
-                                  <h1 style="font-family: Helvetica, sans-serif; font-size: 16px; color: #ffffff; font-weight: normal;"
-                                      th:text="#">
-                                    Confirm your user account now
-                                  </h1>
-                                </a>-->
-              </td>
-            </tr>
-          </table>
-          <br/>
+            <br/>
+            <table cellpadding="0" cellspacing="0" border="0" width="600" style="background: #dbdbdb;">
+                <tr>
+                    <td class="report">
+                        <div><a href="#" th:href="">Story</a></div>
+                        <div th:text="${title}">Title</div>
+                        <div th:text="${content}">Content</div>
+                        <div th:text="${createdOn}">Created on</div>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+
+            <table cellpadding="0" cellspacing="0" border="0" width="200">
+                <tr>
+                    <td style="padding: 20px 10px;" align="center">
+                        <a href="#" class="request" style="padding: 20px 30px;">
+                            Make a request
+                        </a>
+                    </td>
+                </tr>
+            </table>
 
 
-          <!-- start footer -->
-          <table cellpadding="0" cellspacing="0" border="0" align="center" width="600">
-            <tr>
-              <td align="center" style="padding: 30px 0;">
-                <p style="font-family: Arial, sans-serif; font-size: 14px; color: #8e8e8e; margin-bottom: 25px;">
-                  <a href="#" style="text-decoration: none; color: #5AA3E8;">Support</a> | <a href="#" style="text-decoration: none; color: #5AA3E8;">Privacy Policy</a>
-                </p>
-                <p style="font-family: Arial, sans-serif; font-size: 13px; color: #7b7b7b; margin-bottom: 3px;">This e-mail was automatically generated. Please, do not reply, this mailbox is not monitored.</p>
-              </td>
-            </tr>
-          </table>
-          <!-- end footer -->
+            <!-- start footer -->
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <tr>
+                    <td align="center" style="padding: 30px 0;">
+                        <p style="font-family: Arial, sans-serif; font-size: 14px; color: #8e8e8e; margin-bottom: 25px;">
+                            <a href="#" style="text-decoration: none; color: #5AA3E8;">Support</a> | <a href="#"
+                                                                                                        style="text-decoration: none; color: #5AA3E8;">Privacy
+                            Policy</a>
+                        </p>
+                        <p style="font-family: Arial, sans-serif; font-size: 13px; color: #7b7b7b; margin-bottom: 3px;">
+                            This e-mail was automatically generated. Please, do not reply, this mailbox is not
+                            monitored.</p>
+                    </td>
+                </tr>
+            </table>
+            <!-- end footer -->
         </td>
-      </tr>
-    </table>
-  </body>
+    </tr>
+</table>
+</body>
 </html>
