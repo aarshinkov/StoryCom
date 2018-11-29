@@ -29,12 +29,14 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public Mail createMail(String sender, String subject, String content, String... recipients) {
+        log.debug("Creating mail begin --");
         StringBuilder to = new StringBuilder();
         for (String recipient : recipients) {
             to.append(recipient);
             to.append(";");
         }
         String recips = to.substring(0, to.length() - 1);
+        log.debug("Recips: " + recips);
 
         Mail mail = new Mail();
         mail.setSender(sender);
@@ -43,6 +45,7 @@ public class MailServiceImpl implements MailService {
 
 //        for inserting the mail into the database
 //        return mailsRepo.save(mail);
+        log.debug("Mail: " + mail.toString());
         return mail;
     }
 

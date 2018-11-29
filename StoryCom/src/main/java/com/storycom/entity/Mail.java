@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "MAILBOX")
@@ -15,12 +16,7 @@ public class Mail implements Serializable {
     @SequenceGenerator(name = "SEQ_GEN_MAILS", sequenceName = "S_MAILS", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN_MAILS")
     @Column(name = "MAIL_ID")
-    private int mailId;
-
-    @Column(name = "SUBJECT")
-    @Size(max = 300)
-    @NotNull
-    private String subject;
+    private Integer mailId;
 
     @Column(name = "SENDER")
     @Size(max = 250)
@@ -32,28 +28,40 @@ public class Mail implements Serializable {
     @NotNull
     private String receivers;
 
+    @Column(name = "SUBJECT")
+    @Size(max = 300)
+    @NotNull
+    private String subject;
+
     @Column(name = "CONTENT")
     @NotNull
     private String content;
 
+    @Column(name = "CREATED_ON")
+    @NotNull
+    private Timestamp createdOn;
+
+    @Column(name = "IS_SENT")
+    @NotNull
+    private char isSent;
+
+    @Override
     public String toString() {
-        return "mailId: " + getMailId() + "; subject: " + getSubject() + "; receivers: " + getReceivers();
+        return "Mail: mailId=" + mailId +
+                ", sender=" + sender +
+                ", receivers=" + receivers +
+                ", subject=" + subject +
+                ", content=" + content +
+                ", createdOn = " + createdOn +
+                ", isSent = " + isSent;
     }
 
-    public int getMailId() {
+    public Integer getMailId() {
         return mailId;
     }
 
-    public void setMailId(int mailId) {
+    public void setMailId(Integer mailId) {
         this.mailId = mailId;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
     }
 
     public String getSender() {
@@ -70,6 +78,14 @@ public class Mail implements Serializable {
 
     public void setReceivers(String receivers) {
         this.receivers = receivers;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getContent() {
