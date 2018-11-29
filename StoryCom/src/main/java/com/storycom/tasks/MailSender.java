@@ -50,6 +50,8 @@ public class MailSender {
     public void sendMail(Mail mail, User user, Story story) {
         log.debug("Sending mail: " + mail.getMailId());
 
+        String sqlUpd = "UPDATE MAILBOX SET IS_SENT = ? WHERE MAIL_ID = ?";
+
         try {
             MimeMessage mimeMessage = sender.createMimeMessage();
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
@@ -59,6 +61,10 @@ public class MailSender {
             message.setText(mail.getContent(), true); //true = isHtml
 
             sender.send(mimeMessage);
+
+            jdbcTemplate.update(sqlUpd, "Y", mail.getMailId());
+            log.debug("Mail sent: " + mail.getMailId());
+
         } catch (Exception e) {
             log.error("Sending mail with id \'" + mail.getMailId() + "\' failed!");
         }
