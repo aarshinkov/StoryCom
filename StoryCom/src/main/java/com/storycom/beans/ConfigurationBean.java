@@ -22,6 +22,7 @@ public class ConfigurationBean extends Base {
     private JdbcTemplate jdbcTemplate;
 
     private EmailSettings emailSettings;
+    private String appUrl;
 
     private String env = "TEST";
 
@@ -32,7 +33,24 @@ public class ConfigurationBean extends Base {
     private void init() {
         log.debug("Loading configuration params...");
         emailSettings = loadEmailSettings();
+        appUrl = loadAppUrl();
         log.debug("Configuration params loaded.");
+    }
+
+    @Async
+    public String loadAppUrl() {
+        try {
+            String sql = "SELECT value FROM SYS_PARAMS WHERE name = 'APPURL'";
+            SqlRowSet rs = jdbcTemplate.queryForRowSet(sql);
+
+            if (rs.next()) {
+                log.debug("APPURL = " + rs.getString("value"));
+                return rs.getString("value");
+            }
+        } catch (Exception e) {
+            log.error("Error loading app URL from database!", e);
+        }
+        return null;
     }
 
     public EmailSettings getEmailSettings() {
@@ -110,5 +128,9 @@ public class ConfigurationBean extends Base {
 
     public String getEnvStyled() {
         return this.env.equalsIgnoreCase("TEST") ? "Test" : "Production";
+    }
+
+    public String getAppUrl() {
+        return appUrl;
     }
 }

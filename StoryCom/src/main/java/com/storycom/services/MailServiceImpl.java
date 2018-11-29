@@ -66,6 +66,7 @@ public class MailServiceImpl implements MailService {
     public void sendWarningMail(User user, Story story) {
         try {
             Context ctx = new Context();
+            ctx.setVariable("appUrl", configBean.getAppUrl());
             ctx.setVariable("username", user.getUsername());
             ctx.setVariable("title", story.getTitle());
             ctx.setVariable("content", story.getContent());
