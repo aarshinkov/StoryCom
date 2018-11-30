@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.CallableStatement;
+import java.util.Objects;
 
 @Service
 public class StoriesServiceImpl implements StoriesService {
@@ -44,7 +45,7 @@ public class StoriesServiceImpl implements StoriesService {
         log.debug("Adding story...");
 
         try {
-            CallableStatement cstmt = jdbcTemplate.getDataSource().getConnection().prepareCall("{call STORYCOM_GENERAL.INSERT_STORY(?,?,?)}");
+            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_GENERAL.INSERT_STORY(?,?,?)}");
             cstmt.setString(1, story.getTitle());
             cstmt.setString(2, story.getContent());
             cstmt.setInt(3, user.getUserId());
