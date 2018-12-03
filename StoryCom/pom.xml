@@ -6,7 +6,7 @@
 
     <groupId>com.aarshinkov.storycom</groupId>
     <artifactId>story-com</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <packaging>war</packaging>
 
     <name>story-com Maven Webapp</name>
@@ -189,6 +189,11 @@
         </dependency>
 
         <!-- JavaMail-->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.1</version>
+        </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>

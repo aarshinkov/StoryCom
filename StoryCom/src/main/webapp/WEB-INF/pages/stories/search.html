@@ -12,7 +12,7 @@
     <h2 style="margin-bottom: 30px;">Find every story you'd like</h2>
 
     <div class="row">
-        <div class="col-lg-3" style="padding-bottom: 20px;">
+        <div class="col-lg-3">
             <form th:action="@{/story/search}" method="GET" style="border: 1px solid rgba(0,0,0,.125); padding: 20px;">
                 <div class="form-group">
                     <label for="titleId">Title</label>
@@ -25,19 +25,22 @@
                     <span>Search story</span>
                 </button>
             </form>
+            <hr class="d-block d-xs-block d-md-block d-lg-none d-xl-none"/>
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-6">
             <p th:if="${storiesCount} eq 0">No results found</p>
 
             <div class="row">
-                <div class="col-lg-6" style="padding-bottom: 20px;" th:each="story : ${stories}">
+                <div class="col-lg-12" th:each="story : ${stories}">
 
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-10">
                                     <h5 style="margin-bottom: 0;">
-                                        <a href="#" style="color: inherit;" th:href="@{'/story/view' + '?id=' + ${story.storyId}}" th:text="${story.title}">Title</a>
+                                        <a href="#" style="color: inherit;"
+                                           th:href="@{'/story/view' + '?id=' + ${story.storyId}}"
+                                           th:text="${story.title}">Title</a>
                                     </h5>
                                 </div>
                                 <div class="col-2 my-auto">
@@ -48,11 +51,16 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
 
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" th:href="@{'/story/view' + '?id=' + ${story.storyId}}" href="#">View</a>
-                                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:if="${story.user.userId} eq ${currUserId}" href="#">Edit</a>
-                                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:if="${story.user.userId} eq ${currUserId}" href="#">Delete</a>
-                                            <a class="dropdown-item" sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${currUserId}" href="#">Report</a>
+                                        <div class="dropdown-menu dropdown-menu-right"
+                                             aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item"
+                                               th:href="@{'/story/view' + '?id=' + ${story.storyId}}" href="#">View</a>
+                                            <a class="dropdown-item" sec:authorize="isAuthenticated()"
+                                               th:if="${story.user.userId} eq ${currUserId}" href="#">Edit</a>
+                                            <a class="dropdown-item" sec:authorize="isAuthenticated()"
+                                               th:if="${story.user.userId} eq ${currUserId}" href="#">Delete</a>
+                                            <a class="dropdown-item" sec:authorize="isAuthenticated()"
+                                               th:unless="${story.user.userId} eq ${currUserId}" href="#">Report</a>
                                             <!--<a class="dropdown-item" href="#">Test</a>-->
                                         </div>
                                     </div>
@@ -78,21 +86,51 @@
                             <hr style="margin-top: 10px; margin-bottom: 10px;"/>
                             <p class="card-text" th:text="${story.content}">Text</p>
 
-                            <button sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${currUserId}" class="btn btn-outline-success">
+                            <a sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${currUserId}"
+                               class="btn btn-outline-success" href="#"
+                               th:href="@{'/story/upvote' + '?id=' + ${story.storyId}}">
                                 <i class="far fa-thumbs-up"></i>
-                            </button>
-                            <button sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${currUserId}" class="btn btn-outline-danger">
+                            </a>
+                            <a sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${currUserId}"
+                               class="btn btn-outline-danger" href="#"
+                               th:href="@{'/story/downvote' + '?id=' + ${story.storyId}}">
                                 <i class="far fa-thumbs-down"></i>
-                            </button>
+                            </a>
                             <!--<a href="#" class="btn btn-primary">View</a>-->
                             <!--<a href="#" class="btn btn-success" th:if="${story.user.userId} eq ${currUserId}">Edit</a>-->
-                            <a href="#" class="btn btn-warning" th:unless="${story.user.userId} eq ${currUserId}"
+                            <a style="vertical-align: bottom; float:right;" href="#"
+                               th:href="@{'/story/warn' + '?id=' + ${story.storyId}}"
+                               class=" btn btn-outline-warning btn-sm"
+                               th:unless="${story.user.userId} eq ${currUserId}"
                                sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DBA')">Warn</a>
                             <!--<a href="#" class="btn btn-danger" th:if="${story.user.userId} eq ${currUserId}">Delete</a>-->
+                            <hr style="margin-bottom: 1px;"/>
+                            <div class="row">
+
+                                <div class="col-7 text-muted" style="margin: 0;">
+                                    <small>
+                                        <a href="#" th:text="#{story.comments(${story.comments})}">3 Comments</a>
+                                        <a href="#" th:text="#{story.likes(${story.likes})}">2 Likes</a>
+                                    </small>
+                                </div>
+                                <div class="col-5 text-muted">
+                                    <div class="text-right">
+                                        <small th:text="#{story.views(${story.views})}">283 Views</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-3">
+            <hr class="d-block d-xs-block d-md-block d-lg-none d-xl-none"/>
+            <div>
+                Encountered a <span class="text-warning">inappropriate</span> story? <b>Report it</b> to the
+                administrators.
+            </div>
+            <br/>
         </div>
     </div>
 </div>
