@@ -72,7 +72,7 @@ public class StoriesController extends Base {
     @GetMapping(value = "/search", params = "title")
     public String searchStory(@RequestParam(name = "title") String title, Model model) {
 
-        List<Story> stories = storiesRepo.findAllByTitleContaining(title);
+        List<Story> stories = storiesRepo.findAllByTitleContainingOrderByStoryIdDesc(title);
 
         if (getStoryUser() != null) {
             model.addAttribute("currUserId", getStoryUser().getUserId());

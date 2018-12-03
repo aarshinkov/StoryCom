@@ -67,7 +67,7 @@ public class MailServiceImpl implements MailService {
         try {
             Context ctx = new Context();
             ctx.setVariable("appUrl", configBean.getAppUrl());
-            ctx.setVariable("username", user.getUsername());
+            ctx.setVariable("name", user.getName());
             ctx.setVariable("title", story.getTitle());
             ctx.setVariable("content", story.getContent());
             ctx.setVariable("createdOn", story.getCreatedOn());
