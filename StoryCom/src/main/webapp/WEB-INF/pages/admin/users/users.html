@@ -14,16 +14,32 @@
                 <div class="row">
                     <div class="col-12">
                         <h4 class="name">
-                            <a href="#" th:title="'View ' + ${user.name} + '\'s profile'" th:text="${user.name}">Name</a>
+                            <a href="#" th:title="'View ' + ${user.name} + '\'s profile'"
+                               th:text="${user.name}">Name</a>
                         </h4>
-                        <!--todo - make it more beautiful-->
-                        <p class="role" th:text="${user.roles}">Roles, separated with comma</p>
+
+                        <span th:each="role : ${user.roles}">
+                            <i th:if="${role.rolename} eq 'ADMIN'" th:title="${role.displayName}"
+                               class="fas fa-users-cog"></i>
+                            <i th:if="${role.rolename} eq 'USER'" th:title="${role.displayName}"
+                               class="fas fa-user"></i>
+                            <i th:if="${role.rolename} eq 'DBA'" th:title="${role.displayName}"
+                               class="fas fa-database"></i>
+                        </span>
+
+                        <!--<p class="role" th:text="${user.roles}">Roles, separated with comma</p>-->
+                        <!--<div th:each="role : ${user.roles}">-->
+                        <!--<span th:text="${role.displayName}">Role</span>-->
+                        <!--</div>-->
                         <p>Some other information</p>
                         <div class="social-media-branding social-media-branding-sm">
                             <!--@todo: replace with real social share links -->
-                            <a href="#" class="text-dark text-hover-brand-facebook"><i class="fab fa-facebook-square icon-1x"></i></a>
-                            <a href="#" class="text-dark text-hover-brand-twitter"><i class="fab fa-twitter-square icon-1x"></i></a>
-                            <a href="#" class="text-dark text-hover-brand-linkedin"><i class="fab fa-linkedin icon-1x"></i></a>
+                            <a href="#" class="text-dark text-hover-brand-facebook"><i
+                                    class="fab fa-facebook-square icon-1x"></i></a>
+                            <a href="#" class="text-dark text-hover-brand-twitter"><i
+                                    class="fab fa-twitter-square icon-1x"></i></a>
+                            <a href="#" class="text-dark text-hover-brand-linkedin"><i
+                                    class="fab fa-linkedin icon-1x"></i></a>
                         </div>
                     </div>
                 </div>
