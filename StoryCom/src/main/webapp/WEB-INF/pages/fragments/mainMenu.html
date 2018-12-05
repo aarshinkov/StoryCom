@@ -43,6 +43,7 @@
                 </div>
             </div>
             <div class="header-block-flex order-2">
+                <span sec:authorize="isAuthenticated()" th:text="'Welcome, ' + ${@usersBean.storyPrincipal.getName()}">Hello, name</span>
                 <a class="nav-link text-sm text-uppercase" sec:authorize="isAuthenticated()"
                    onclick="$('#formLogout').submit();" th:text="#{nav.logout}">Logout</a>
 
@@ -76,32 +77,34 @@
         <div class="sticky-inner">
             <div class="header">
                 <div class="header-inner container">
-                    <div class="header-brand">
+                    <div class="header-brand mr-lg-2">
                         <a class="header-brand-text" th:href="@{/}" href="#" title="Home">
                             <h1 class="h2">
                                 <span>Story</span>Com<span>.</span>
                             </h1>
                         </a>
                         <div class="header-divider d-none d-lg-block"></div>
-                        <div class="header-slogan d-none d-lg-block">Share your story to the world</div>
+                        <div class="header-slogan d-none d-lg-block">Share your story</div>
                     </div>
                     <div class="header-block order-lg-12">
                         <a href="#top" class="btn btn-link btn-icon header-btn float-right d-lg-none show collapsed"
                            data-toggle="collapse" data-target=".navbar-main"
                            data-settings="{&quot;cloneTarget&quot;:true, &quot;targetClassExtras&quot;: &quot;navbar-offcanvas&quot;}"
-                           aria-expanded="false"> <i class="fa fa-bars"></i> </a>
+                           aria-expanded="false">
+                            <i class="fa fa-bars"></i>
+                        </a>
                     </div>
                     <div class="navbar navbar-expand-md navbar-expand-collapse navbar-static-top">
                         <div class="navbar-main collapse" style="">
                             <ul class="nav navbar-nav navbar-nav-stretch float-lg-right dropdown-effect-fade">
-                                <li class="nav-item">
-                                    <a th:href="@{/}" href="#" class="nav-link animated">
-                                        <i class="fa fa-home nav-link-icon"></i>
-                                    </a>
-                                </li>
+                                <!--<li class="nav-item">-->
+                                    <!--<a th:href="@{/}" href="#" class="nav-link animated">-->
+                                        <!--<i class="fa fa-home nav-link-icon"></i>-->
+                                    <!--</a>-->
+                                <!--</li>-->
                                 <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle animated dropdown"
-                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">Stories</a>
+                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false" th:text="#{nav.story}">Stories</a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" th:classappend="${subMenu eq 'add'} ? 'active'"
                                            href="#" sec:authorize="hasRole('ROLE_USER')" th:href="@{/story/add}"
@@ -109,6 +112,15 @@
                                         <a class="dropdown-item" th:classappend="${subMenu eq 'search'} ? 'active'"
                                            href="#" th:href="@{/story/search}" th:text="#{nav.story.search}">Search
                                             story</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a href="#" class="nav-link dropdown-toggle animated dropdown"
+                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false" th:text="#{nav.admin}">Admin</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#" th:href="@{/admin/users}"
+                                           th:text="#{nav.admin.users}">Users</a>
                                     </div>
                                 </li>
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/contentTemplate}">
+<head>
+    <title th:text="#{title.admin.users} + ' | ' + #{app.title}"></title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <div class="row">
+        <div class="col-12 col-md-6" th:each="user : ${users}">
+            <div class="team-member">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="name">
+                            <a href="#" th:title="'View ' + ${user.name} + '\'s profile'" th:text="${user.name}">Name</a>
+                        </h4>
+                        <!--todo - make it more beautiful-->
+                        <p class="role" th:text="${user.roles}">Roles, separated with comma</p>
+                        <p>Some other information</p>
+                        <div class="social-media-branding social-media-branding-sm">
+                            <!--@todo: replace with real social share links -->
+                            <a href="#" class="text-dark text-hover-brand-facebook"><i class="fab fa-facebook-square icon-1x"></i></a>
+                            <a href="#" class="text-dark text-hover-brand-twitter"><i class="fab fa-twitter-square icon-1x"></i></a>
+                            <a href="#" class="text-dark text-hover-brand-linkedin"><i class="fab fa-linkedin icon-1x"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
