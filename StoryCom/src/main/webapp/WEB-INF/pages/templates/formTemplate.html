@@ -20,8 +20,9 @@
           rel="stylesheet">
 
     <!--Your custom colour override-->
-    <link th:href="@{/resources/theme/css/colour-red-dark.min.css}"
-          href="../../resources/theme/css/colour-red-dark.min.css" id="colour-scheme" rel="stylesheet">
+    <!--<link th:href="@{/resources/theme/css/colour-red-dark.min.css}" href="../../resources/theme/css/colour-red-dark.min.css" id="colour-scheme" rel="stylesheet">-->
+    <link th:href="@{/resources/theme/css/colour-blue.min.css}" href="../../resources/theme/css/colour-blue.min.css"
+          id="colour-scheme" rel="stylesheet">
 
     <!-- Your custom override -->
     <link th:href="@{/resources/theme/css/custom-style.css}" href="../../resources/theme/css/custom-style.css"
@@ -47,7 +48,7 @@
     <!--<link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">-->
     <!--<link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">-->
     <!--<link rel="manifest" href="assets/favicons/manifest.json">-->
-    <!--<link rel="shortcut icon" href="assets/favicons/favicon.ico">-->
+    <link rel="shortcut icon" th:href="@{/resources/img/logo/favicon.ico}" href="../../resources/img/logo/favicon.ico">
     <!--<meta name="msapplication-config" content="assets/favicons/browserconfig.xml">-->
     <!--<meta name="theme-color" content="#ffffff">-->
 
