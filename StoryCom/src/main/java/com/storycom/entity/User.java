@@ -1,5 +1,7 @@
 package com.storycom.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -30,6 +32,7 @@ public class User implements Serializable {
 
     @Column(name = "PASSWORD", nullable = false)
     @Size(min = 4, max = 100)
+    @JsonIgnore
     private String password;
 
     @Column(name = "EMAIL")
@@ -37,14 +40,13 @@ public class User implements Serializable {
     @Email
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "USER_DETAIL_ID")
+    private UserDetails userDetails;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLES", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLENAME"))
     private List<Role> roles = new ArrayList<>();
-
-//    private String[] selectedRoles = new String[]{};
-
-//    private Date createdOn;
-
 
     @Override
     public String toString() {
@@ -91,6 +93,14 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }
@@ -98,20 +108,5 @@ public class User implements Serializable {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
-//
-//    public String[] getSelectedRoles() {
-//        return selectedRoles;
-//    }
-//
-//    public void setSelectedRoles(String[] selectedRoles) {
-//        this.selectedRoles = selectedRoles;
-//    }
-//
-//    public Date getCreatedOn() {
-//        return createdOn;
-//    }
-//
-//    public void setCreatedOn(Date createdOn) {
-//        this.createdOn = createdOn;
-//    }
+
 }
