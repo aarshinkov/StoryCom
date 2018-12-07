@@ -34,14 +34,18 @@
                         <p>Some other information</p>
                         <div class="social-media-branding social-media-branding-sm">
                             <!--@todo: replace with real social share links -->
-                            <a href="#" th:unless="${user.userDetails.facebook} eq null" th:href="${user.userDetails.facebook}" class="text-brand-facebook"><i
-                                    class="fab fa-facebook-square icon-1x"></i></a>
-                            <a href="#" th:unless="${user.userDetails.twitter} eq null" th:href="${user.userDetails.twitter}" class="text-brand-twitter"><i
-                                    class="fab fa-twitter-square icon-1x"></i></a>
-                            <a href="#" th:unless="${user.userDetails.youtube} eq null" th:href="${user.userDetails.youtube}" class="text-brand-youtube"><i
-                                    class="fab fa-youtube icon-1x"></i></a>
-                            <a href="#" th:unless="${user.userDetails.instagram} eq null" th:href="${user.userDetails.instagram}" class="text-brand-instagram"><i
-                                    class="fab fa-instagram icon-1x"></i></a>
+                            <a href="#" th:unless="${user.userDetails.facebook} eq null" th:href="${user.userDetails.facebook}" target="_blank" class="text-brand-facebook">
+                                <i class="fab fa-facebook-square icon-1x"></i>
+                            </a>
+                            <a href="#" th:unless="${user.userDetails.twitter} eq null" th:href="${user.userDetails.twitter}" target="_blank" class="text-brand-twitter">
+                                <i class="fab fa-twitter-square icon-1x"></i>
+                            </a>
+                            <a href="#" th:unless="${user.userDetails.youtube} eq null" th:href="${user.userDetails.youtube}" target="_blank" class="text-brand-youtube">
+                                <i class="fab fa-youtube icon-1x"></i>
+                            </a>
+                            <a href="#" th:unless="${user.userDetails.instagram} eq null" th:href="${user.userDetails.instagram}" target="_blank" class="text-brand-instagram">
+                                <i class="fab fa-instagram icon-1x"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
