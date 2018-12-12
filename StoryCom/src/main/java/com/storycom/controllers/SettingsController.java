@@ -14,12 +14,21 @@ public class SettingsController {
     private static final String GLOBAL_MENU = "settings";
 
     @GetMapping(value = "/settings/profile")
-    public String profile(Model model) {
+    public String viewProfile(Model model) {
 
         model.addAttribute("globalMenu", GLOBAL_MENU);
+        model.addAttribute("submenu", "profile");
 
         return "settings/profile";
     }
 
+    @GetMapping(value = "/settings/changepass")
+    public String prepareChangePassword(Model model) {
+
+        model.addAttribute("globalMenu", GLOBAL_MENU);
+        model.addAttribute("submenu", "password");
+
+        return "settings/changePass";
+    }
 
 }

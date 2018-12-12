@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head></head>
+
+<body>
+
+<div id="submenuDiv" class="sidebar" style="margin-top: 13px;">
+    <ul class="nav nav-section-menu mb-4 py-3">
+        <li class="nav-header">Menu</li>
+        <li>
+            <a th:href="@{/settings/profile}" href="#" class="nav-link" th:classappend="${submenu eq 'profile'} ? 'active'">
+                <span>Profile</span>
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/settings/changepass}" href="#" class="nav-link" th:classappend="${submenu eq 'password'} ? 'active'">
+                <span>Change password</span>
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
