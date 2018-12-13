@@ -105,6 +105,24 @@
                                 <!--</li>-->
                                 <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle animated dropdown"
+                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">
+                                        <i class="fa fa-home nav-link-icon"></i>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'about'} ? 'active'"
+                                           href="#" th:href="@{/about}" th:text="#{nav.about.general}">About</a>
+
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'contact'} ? 'active'"
+                                           href="#" th:href="@{/about/contact}"
+                                           th:text="#{nav.about.contact}">Contact</a>
+
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'timeline'} ? 'active'"
+                                           href="#" th:href="@{/about/timeline}"
+                                           th:text="#{nav.about.timeline}">Timeline</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle animated dropdown"
                                        data-toggle="dropdown" data-hover="dropdown" aria-expanded="false"
                                        th:text="#{nav.story}">Stories</a>
                                     <div class="dropdown-menu">
@@ -134,7 +152,8 @@
                                         <a class="dropdown-item" th:classappend="${submenu eq 'profile'} ? 'active'"
                                            href="#" th:href="@{/settings/profile}" th:text="#{nav.settings.profile}">Profile</a>
                                         <a class="dropdown-item" th:classappend="${submenu eq 'password'} ? 'active'"
-                                           href="#" th:href="@{/settings/changepass}" th:text="#{nav.settings.password}">Profile</a>
+                                           href="#" th:href="@{/settings/changepass}"
+                                           th:text="#{nav.settings.password}">Profile</a>
                                     </div>
                                 </li>
                             </ul>

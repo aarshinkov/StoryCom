@@ -19,11 +19,11 @@ public class RegisterUser {
     private String username;
 
     @NotEmpty(message = "You have not entered a password")
-    @Size(max = 100)
+    @Size(min = 4, max = 100)
     private String password;
 
     @NotEmpty(message = "You have not entered a password")
-    @Size(max = 100)
+    @Size(min = 4, max = 100)
     private String confirmPassword;
 
     public RegisterUser() {
