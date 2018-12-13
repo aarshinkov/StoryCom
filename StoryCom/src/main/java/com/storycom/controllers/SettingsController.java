@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class SettingsController extends Base {
@@ -48,7 +51,14 @@ public class SettingsController extends Base {
     }
 
     @PostMapping(value = "/settings/changepass")
-    public String changePassword(Password password, Model model) {
+    public String changePassword(@Valid Password password, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("submenu", "password");
+            model.addAttribute("globalMenu", GLOBAL_MENU);
+
+            return "settings/changePass";
+        }
 
         log.debug("Changing password for user: " + getStoryUser().getUsername());
         log.debug("User id: " + getStoryUser().getUserId());
@@ -58,7 +68,7 @@ public class SettingsController extends Base {
 
         password.setEncodedPassword(passwordEncoder.encode(password.getPassword()));
 
-        userService.changePassword(getStoryUser(), password);
+//        userService.changePassword(getStoryUser(), password);
 
         return "redirect:/settings/profile";
     }

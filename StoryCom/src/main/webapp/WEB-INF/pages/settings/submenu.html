@@ -12,13 +12,15 @@
         <li>
             <a th:href="@{/settings/profile}" href="#" class="nav-link" th:classappend="${submenu eq 'profile'} ? 'active'">
                 <span>Profile</span>
-                <i class="fa fa-angle-right"></i>
+                <i class="d-none d-md-block fa fa-angle-right"></i>
+                <i class="d-block d-md-none fa fa-angle-left"></i>
             </a>
         </li>
         <li>
             <a th:href="@{/settings/changepass}" href="#" class="nav-link" th:classappend="${submenu eq 'password'} ? 'active'">
                 <span>Change password</span>
-                <i class="fa fa-angle-right"></i>
+                <i class="d-none d-md-block fa fa-angle-right"></i>
+                <i class="d-block d-md-none fa fa-angle-left"></i>
             </a>
         </li>
     </ul>
