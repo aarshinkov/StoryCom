@@ -1,6 +1,8 @@
 package com.storycom.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -14,9 +16,12 @@ public class Story {
     private Integer storyId;
 
     @Column(name = "TITLE")
+    @NotEmpty(message = "Provide title for the story")
+    @Size(max = 150, message = "The title must not be more than 150 symbols")
     private String title;
 
     @Column(name = "CONTENT")
+    @NotEmpty(message = "The story must not be empty")
     private String content;
 
     @Column(name = "COMMENTS")

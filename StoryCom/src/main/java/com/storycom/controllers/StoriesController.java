@@ -55,6 +55,13 @@ public class StoriesController extends Base {
     @PostMapping(value = "/add")
     public String addStory(@Valid Story story, BindingResult bindingResult, Model model) {
 
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("globalMenu", GLOBAL_MENU);
+            model.addAttribute("submenu", "add");
+
+            return "stories/add";
+        }
+
         storiesService.addStory(story, getUser());
 
         return "redirect:/";
