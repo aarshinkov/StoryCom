@@ -1,5 +1,6 @@
 package com.storycom.controllers;
 
+import com.storycom.base.Base;
 import com.storycom.entity.User;
 import com.storycom.repository.UsersRepository;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/admin")
-public class AdminController {
+public class AdminController extends Base {
     private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired

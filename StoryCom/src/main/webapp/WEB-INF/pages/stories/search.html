@@ -14,9 +14,11 @@
     <div class="row">
         <div class="col-lg-3">
             <form th:action="@{/story/search}" method="GET" style="border: 1px solid rgba(0,0,0,.125); padding: 20px;">
+                <h5>Search</h5>
+                <hr/>
                 <div class="form-group">
-                    <label for="titleId">Title</label>
-                    <input type="text" class="form-control" id="titleId" th:name="title" placeholder="Enter title"/>
+                    <!--<label for="titleId">Title</label>-->
+                    <input type="text" class="form-control form-control-rounded" id="titleId" th:name="title" placeholder="Enter title"/>
                 </div>
                 <hr/>
                 <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->

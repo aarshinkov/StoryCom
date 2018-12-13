@@ -9,15 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.print.attribute.standard.Media;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/test")
@@ -33,6 +30,9 @@ public class TestController extends Base {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @GetMapping(value = "/design")
     public String designTest() {
@@ -88,6 +88,26 @@ public class TestController extends Base {
     @GetMapping(value = "/encodePass/{pass}")
     public String encodePass(@PathVariable(value = "pass") String password) {
         return passwordEncoder.encode(password);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/password/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean isPasswordMatch(@PathVariable("password") String password) {
+        log.debug("password: " + password);
+
+        String sql = "SELECT U.PASSWORD FROM USERS U WHERE U.USER_ID = ?";
+
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, 1001);
+
+        String dbPassword = "-1";
+
+        while (rs.next()) {
+            dbPassword = rs.getString(1);
+        }
+
+        log.debug("dbPassword: " + dbPassword);
+
+        return passwordEncoder.matches(password, dbPassword);
     }
 
 }
