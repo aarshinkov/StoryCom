@@ -10,24 +10,31 @@
     <ul class="nav nav-section-menu mb-4 py-3">
         <li class="nav-header">Menu</li>
         <li>
+            <a th:href="@{/}" href="#" class="nav-link" th:classappend="${submenu eq 'home'} ? 'active'">
+                <span th:text="#{nav.home.general}">Home</span>
+                <i class="d-none d-md-block fa fa-angle-right"></i>
+                <i class="d-block d-md-none fa fa-angle-left"></i>
+            </a>
+        </li>
+        <li>
             <a th:href="@{/about}" href="#" class="nav-link" th:classappend="${submenu eq 'about'} ? 'active'">
-                <span th:text="#{nav.about.general}">About</span>
+                <span th:text="#{nav.home.about}">About</span>
                 <i class="d-none d-md-block fa fa-angle-right"></i>
                 <i class="d-block d-md-none fa fa-angle-left"></i>
             </a>
         </li>
         <li>
-            <a th:href="@{/about/contact}" href="#" class="nav-link"
+            <a th:href="@{/contact}" href="#" class="nav-link"
                th:classappend="${submenu eq 'contact'} ? 'active'">
-                <span th:text="#{nav.about.contact}">Contact</span>
+                <span th:text="#{nav.home.contact}">Contact</span>
                 <i class="d-none d-md-block fa fa-angle-right"></i>
                 <i class="d-block d-md-none fa fa-angle-left"></i>
             </a>
         </li>
         <li>
-            <a th:href="@{/about/timeline}" href="#" class="nav-link"
+            <a th:href="@{/timeline}" href="#" class="nav-link"
                th:classappend="${submenu eq 'timeline'} ? 'active'">
-                <span th:text="#{nav.about.timeline}">Timeline</span>
+                <span th:text="#{nav.home.timeline}">Timeline</span>
                 <i class="d-none d-md-block fa fa-angle-right"></i>
                 <i class="d-block d-md-none fa fa-angle-left"></i>
             </a>
