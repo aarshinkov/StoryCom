@@ -25,12 +25,17 @@ public class User implements Serializable {
     @NotNull
     private String username;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "FIRST_NAME")
     @Size(min = 4, max = 100)
     @NotNull
-    private String name;
+    private String firstName;
 
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(name = "LAST_NAME")
+//    @Size(min = 4, max = 100)
+//    @NotNull
+    private String lastName;
+
+    @Column(name = "PASSWORD")
     @Size(min = 4, max = 100)
     @JsonIgnore
     private String password;
@@ -50,7 +55,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "userId=" + userId + ", username=" + username + ", name=" + name + ", password=" + password;
+        return "userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName = " + lastName + ", password=" + password;
     }
 
     public Integer getUserId() {
@@ -69,12 +74,20 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {

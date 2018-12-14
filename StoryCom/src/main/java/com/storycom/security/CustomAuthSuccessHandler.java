@@ -41,7 +41,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
 //        } else {
 //            targetUrl += "?back";
 //        }
-		request.getSession(false).setAttribute("user", "(" + storyUser.getName() + ") " + storyUser.getUsername());
+		request.getSession(false).setAttribute("user", "(" + storyUser.getFullName() + ") " + storyUser.getUsername());
 
 //        log.debug("Redirecting to page: " + targetUrl);
         response.sendRedirect(targetUrl);

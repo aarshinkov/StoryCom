@@ -29,10 +29,19 @@
                 </h5>
 
                 <div class="form-group">
-                    <label class="sr-only" for="nameInput">Name</label>
-                    <input type="text" class="form-control form-control-rounded" id="nameInput" th:field="*{name}"
-                           th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" placeholder="Your name"/>
-                    <div class="invalid-feedback" th:errors="*{name}">Error</div>
+                    <label class="sr-only" for="firstNameInput">First name</label>
+                    <input type="text" class="form-control form-control-rounded" id="firstNameInput"
+                           th:field="*{firstName}" th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"
+                           placeholder="Your first name"/>
+                    <div class="invalid-feedback" th:errors="*{firstName}">Error</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="sr-only" for="lastNameInput">Last name</label>
+                    <input type="text" class="form-control form-control-rounded" id="lastNameInput"
+                           th:field="*{lastName}" th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"
+                           placeholder="Your last name"/>
+                    <div class="invalid-feedback" th:errors="*{lastName}">Error</div>
                 </div>
 
                 <div class="form-group">

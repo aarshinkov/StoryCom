@@ -5,9 +5,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class RegisterUser {
-    @NotEmpty(message = "You have not filled in your name")
+    @NotEmpty(message = "You have not filled in your first name")
     @Size(max = 100)
-    private String name;
+    private String firstName;
+
+    @NotEmpty(message = "You have not filled in your last name")
+    @Size(max = 100)
+    private String lastName;
 
     @NotEmpty(message = "You have not provided an email")
     @Size(max = 200)
@@ -31,19 +35,28 @@ public class RegisterUser {
 
     @Override
     public String toString() {
-        return "name=" + name +
+        return "firstName=" + firstName +
+                ", lastName=" + lastName +
                 ", email=" + email +
                 ", username=" + username +
                 ", password=" + password +
                 ", confirmPassword='" + confirmPassword;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

@@ -44,7 +44,7 @@
             </div>
             <div class="header-block-flex order-2">
                 <span class="d-none d-md-block" sec:authorize="isAuthenticated()"
-                      th:text="'Welcome, ' + ${@usersBean.storyPrincipal.getName()}">Hello, name</span>
+                      th:text="'Welcome, ' + ${@usersBean.storyPrincipal.getFullName()}">Hello, name</span>
                 <a class="nav-link text-sm text-uppercase" sec:authorize="isAuthenticated()"
                    onclick="$('#formLogout').submit();" th:text="#{nav.logout}">Logout</a>
 
