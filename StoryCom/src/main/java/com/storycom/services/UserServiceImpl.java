@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         log.debug("Registering new user...");
 
         try {
-            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_GENERAL.INSERT_NORMAL_USER(?, ?, ?, ?, ?)}");
+            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_USERS.INSERT_NORMAL_USER(?, ?, ?, ?, ?)}");
             cstmt.setString(1, user.getUsername());
             cstmt.setString(2, user.getFirstName());
             cstmt.setString(3, user.getLastName());

@@ -45,7 +45,7 @@ public class StoriesServiceImpl implements StoriesService {
         log.debug("Adding story...");
 
         try {
-            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_GENERAL.INSERT_STORY(?,?,?)}");
+            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_STORIES.INSERT_STORY(?,?,?)}");
             cstmt.setString(1, story.getTitle());
             cstmt.setString(2, story.getContent());
             cstmt.setInt(3, user.getUserId());

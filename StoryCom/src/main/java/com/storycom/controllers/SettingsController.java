@@ -2,6 +2,8 @@ package com.storycom.controllers;
 
 import com.storycom.base.Base;
 import com.storycom.domain.Password;
+import com.storycom.entity.User;
+import com.storycom.repository.UsersRepository;
 import com.storycom.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,15 +28,36 @@ public class SettingsController extends Base {
     private UserService userService;
 
     @Autowired
+    private UsersRepository usersRepository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/settings/profile")
     public String viewProfile(Model model) {
 
+        User user = getUser();
+
+        log.debug(user.toString());
+
+        model.addAttribute("user", user);
+
         model.addAttribute("globalMenu", GLOBAL_MENU);
         model.addAttribute("submenu", "profile");
 
         return "settings/profile";
+    }
+
+    @PostMapping(value = "/settings/profile")
+    public String saveProfile(Model model, User user) {
+
+        log.debug("post user: " + user.toString());
+        log.debug(user.getUserDetails().getFacebook());
+        log.debug(user.getUserDetails().getTwitter());
+        log.debug(user.getUserDetails().getYoutube());
+        log.debug(user.getUserDetails().getInstagram());
+
+        return "redirect:/settings/profile";
     }
 
     @GetMapping(value = "/settings/changepass")
