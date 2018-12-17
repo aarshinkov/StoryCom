@@ -26,7 +26,9 @@
                     </div>
                     <div class="col-lg-10 col-md-9 col-12">
                         <input type="text" id="firstName" class="form-control form-control-rounded"
+                               th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"
                                th:field="*{firstName}" th:value="${user.firstName}" placeholder="First name"/>
+                        <div class="invalid-feedback" th:errors="*{firstName}">Error</div>
                     </div>
                 </div>
 
@@ -36,7 +38,9 @@
                     </div>
                     <div class="col-lg-10 col-md-9 col-12">
                         <input type="text" id="lastName" class="form-control form-control-rounded"
+                               th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"
                                th:field="*{lastName}" th:value="${user.lastName}" placeholder="Last name"/>
+                        <div class="invalid-feedback" th:errors="*{lastName}">Error</div>
                     </div>
                 </div>
 
@@ -46,47 +50,55 @@
                     </div>
                     <div class="col-lg-10 col-md-9 col-12">
                         <input type="text" id="email" class="form-control form-control-rounded"
+                               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
                                th:field="*{email}" th:value="${user.email}" placeholder="Email"/>
+                        <div class="invalid-feedback" th:errors="*{email}">Error</div>
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <div class="col-lg-2 col-md-3 col-12">
-                        <label class="text-brand-facebook custom-social-label" for="facebook">Facebook</label>
+                <div th:unless="${user.userDetails} eq null" th:remove="tag">
+                    <div class="form-group row">
+                        <div class="col-lg-2 col-md-3 col-12">
+                            <label class="text-brand-facebook custom-social-label" for="facebook">Facebook</label>
+                        </div>
+                        <div class="col-lg-10 col-md-9 col-12">
+                            <input type="text" id="facebook" class="form-control form-control-rounded"
+                                   th:field="*{userDetails.facebook}" th:value="${user.userDetails.facebook}"
+                                   placeholder="Facebook account"/>
+                        </div>
                     </div>
-                    <div class="col-lg-10 col-md-9 col-12">
-                        <input type="text" id="facebook" class="form-control form-control-rounded"
-                               th:field="*{userDetails.facebook}" th:value="${user.userDetails.facebook}" placeholder="Facebook account"/>
-                    </div>
-                </div>
 
-                <div class="form-group row">
-                    <div class="col-lg-2 col-md-3 col-12">
-                        <label class="text-brand-twitter custom-social-label" for="twitter">Twitter</label>
+                    <div class="form-group row">
+                        <div class="col-lg-2 col-md-3 col-12">
+                            <label class="text-brand-twitter custom-social-label" for="twitter">Twitter</label>
+                        </div>
+                        <div class="col-lg-10 col-md-9 col-12">
+                            <input type="text" id="twitter" class="form-control form-control-rounded"
+                                   th:field="*{userDetails.twitter}" th:value="${user.userDetails.twitter}"
+                                   placeholder="Twitter account"/>
+                        </div>
                     </div>
-                    <div class="col-lg-10 col-md-9 col-12">
-                        <input type="text" id="twitter" class="form-control form-control-rounded"
-                               th:field="*{userDetails.twitter}" th:value="${user.userDetails.twitter}" placeholder="Twitter account"/>
-                    </div>
-                </div>
 
-                <div class="form-group row">
-                    <div class="col-lg-2 col-md-3 col-12">
-                        <label class="text-brand-youtube custom-social-label" for="youtube">YouTube</label>
+                    <div class="form-group row">
+                        <div class="col-lg-2 col-md-3 col-12">
+                            <label class="text-brand-youtube custom-social-label" for="youtube">YouTube</label>
+                        </div>
+                        <div class="col-lg-10 col-md-9 col-12">
+                            <input type="text" id="youtube" class="form-control form-control-rounded"
+                                   th:field="*{userDetails.youtube}" th:value="${user.userDetails.youtube}"
+                                   placeholder="YouTube account"/>
+                        </div>
                     </div>
-                    <div class="col-lg-10 col-md-9 col-12">
-                        <input type="text" id="youtube" class="form-control form-control-rounded"
-                               th:field="*{userDetails.youtube}" th:value="${user.userDetails.youtube}" placeholder="YouTube account"/>
-                    </div>
-                </div>
 
-                <div class="form-group row">
-                    <div class="col-lg-2 col-md-3 col-12">
-                        <label class="text-brand-instagram custom-social-label" for="instagram">Instagram</label>
-                    </div>
-                    <div class="col-lg-10 col-md-9 col-12">
-                        <input type="text" id="instagram" class="form-control form-control-rounded"
-                               th:field="*{userDetails.instagram}" th:value="${user.userDetails.instagram}" placeholder="Instagram account"/>
+                    <div class="form-group row">
+                        <div class="col-lg-2 col-md-3 col-12">
+                            <label class="text-brand-instagram custom-social-label" for="instagram">Instagram</label>
+                        </div>
+                        <div class="col-lg-10 col-md-9 col-12">
+                            <input type="text" id="instagram" class="form-control form-control-rounded"
+                                   th:field="*{userDetails.instagram}" th:value="${user.userDetails.instagram}"
+                                   placeholder="Instagram account"/>
+                        </div>
                     </div>
                 </div>
 

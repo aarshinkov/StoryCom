@@ -76,9 +76,9 @@
                                 <i class="far fa-user"></i>
                                 <!--<i class="lnr lnr-user"></i>-->
                                 <span th:if="${story.user.userId} eq ${currUserId}"
-                                      th:text="${story.user.name} + ' (Me)'"></span>
+                                      th:text="${story.user.userFullName} + ' (Me)'"></span>
                                 <span th:unless="${story.user.userId} eq ${currUserId}"
-                                      th:text="${story.user.name}"></span>
+                                      th:text="${story.user.userFullName}"></span>
                             </small>
                             <small> |</small>
                             <small>

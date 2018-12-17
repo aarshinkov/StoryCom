@@ -141,8 +141,11 @@
                                        data-toggle="dropdown" data-hover="dropdown" aria-expanded="false"
                                        th:text="#{nav.admin}">Admin</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#" th:href="@{/admin/users}"
-                                           th:text="#{nav.admin.users}">Users</a>
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'users'} ? 'active'"
+                                           href="#" th:href="@{/admin/users}" th:text="#{nav.admin.users}">Users</a>
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'addUser'} ? 'active'"
+                                           href="#" th:href="@{/admin/addUser}"
+                                           th:text="#{nav.admin.addUser}">Add user</a>
                                     </div>
                                 </li>
 

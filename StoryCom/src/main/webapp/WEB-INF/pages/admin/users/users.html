@@ -14,8 +14,8 @@
                 <div class="row">
                     <div class="col-12">
                         <h4 class="name">
-                            <a href="#" th:title="'View ' + ${user.name} + '\'s profile'"
-                               th:text="${user.name}">Name</a>
+                            <a href="#" th:title="'View ' + ${user.userFullName} + '\'s profile'"
+                               th:text="${user.userFullName}">Name</a>
                         </h4>
 
                         <span th:each="role : ${user.roles}">

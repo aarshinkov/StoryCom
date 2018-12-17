@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -43,6 +44,7 @@ public class User implements Serializable {
     @Column(name = "EMAIL")
     @Size(max = 200)
     @Email
+    @NotEmpty
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -122,4 +124,10 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public String getUserFullName() {
+        if (lastName == null || "".equalsIgnoreCase(lastName)) {
+            return firstName;
+        }
+        return firstName + " " + lastName;
+    }
 }

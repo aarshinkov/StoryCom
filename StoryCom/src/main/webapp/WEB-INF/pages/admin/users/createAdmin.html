@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/contentTemplate}">
+<head>
+    <title th:text="#{title.admin.add.user} + ' | ' + #{app.title}"></title>
+</head>
+<body>
+<div layout:fragment="contentDiv">
+    <h2>Create user</h2>
+    <hr/>
+
+    <form>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="username">Username</label>
+                <input type="text" class="form-control form-control-rounded" id="username" placeholder="Enter an username">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="password">Password</label>
+                <input type="password" class="form-control form-control-rounded" id="password" placeholder="Enter a password">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="firstName">First name</label>
+                <input type="text" class="form-control form-control-rounded" id="firstName" placeholder="John">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="lastName">Last name</label>
+                <input type="text" class="form-control form-control-rounded" id="lastName" placeholder="Doe">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control form-control-rounded" id="email" placeholder="user@email.com"/>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="role">Type of user</label>
+                <select id="role" name="role" class="form-control form-control-rounded">
+                    <option value="user" selected="selected">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="dba">Database admin</option>
+                </select>
+            </div>
+            <!--<div class="form-group col-md-4">-->
+            <!--<label for="inputState">State</label>-->
+            <!--<select id="inputState" class="form-control">-->
+            <!--<option selected="">Choose...</option>-->
+            <!--<option>...</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--<div class="form-group col-md-2">-->
+            <!--<label for="inputZip">Zip</label>-->
+            <!--<input type="text" class="form-control" id="inputZip">-->
+            <!--</div>-->
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Create user</button>
+    </form>
+</div>
+</body>
+</html>

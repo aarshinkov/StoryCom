@@ -4,10 +4,12 @@ import com.storycom.base.Base;
 import com.storycom.domain.Password;
 import com.storycom.entity.User;
 import com.storycom.repository.UsersRepository;
+import com.storycom.security.StoryUser;
 import com.storycom.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,9 @@ public class SettingsController extends Base {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @GetMapping(value = "/settings/profile")
     public String viewProfile(Model model) {
 
@@ -49,13 +54,15 @@ public class SettingsController extends Base {
     }
 
     @PostMapping(value = "/settings/profile")
-    public String saveProfile(Model model, User user) {
+    public String saveProfile(User user, Model model) {
 
-        log.debug("post user: " + user.toString());
-        log.debug(user.getUserDetails().getFacebook());
-        log.debug(user.getUserDetails().getTwitter());
-        log.debug(user.getUserDetails().getYoutube());
-        log.debug(user.getUserDetails().getInstagram());
+        //TODO get proper user/storyUser
+
+        StoryUser storyUser = getStoryUser();
+
+        log.debug("User id: " + storyUser.getUserId());
+
+        //TODO call update procedure
 
         return "redirect:/settings/profile";
     }
