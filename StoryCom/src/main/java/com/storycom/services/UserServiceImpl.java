@@ -76,8 +76,7 @@ public class UserServiceImpl implements UserService {
             cstm.executeUpdate();
             log.debug("Password updated successfully!");
         } catch (SQLException e) {
-            log.debug("Error updating password");
-//            e.printStackTrace();
+            log.error("Error updating password", e);
         }
     }
 }

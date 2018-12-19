@@ -10,14 +10,24 @@
     <ul class="nav nav-section-menu mb-4 py-3">
         <li class="nav-header">Menu</li>
         <li>
-            <a th:href="@{/settings/profile}" href="#" class="nav-link" th:classappend="${submenu eq 'profile'} ? 'active'">
+            <a th:href="@{/settings/profile}" href="#" class="nav-link"
+               th:classappend="${submenu eq 'profile'} ? 'active'">
                 <span>Profile</span>
                 <i class="d-none d-md-block fa fa-angle-right"></i>
                 <i class="d-block d-md-none fa fa-angle-left"></i>
             </a>
         </li>
         <li>
-            <a th:href="@{/settings/changepass}" href="#" class="nav-link" th:classappend="${submenu eq 'password'} ? 'active'">
+            <a th:href="@{/settings/details}" href="#" class="nav-link"
+               th:classappend="${submenu eq 'details'} ? 'active'">
+                <span>User details</span>
+                <i class="d-none d-md-block fa fa-angle-right"></i>
+                <i class="d-block d-md-none fa fa-angle-left"></i>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/settings/changepass}" href="#" class="nav-link"
+               th:classappend="${submenu eq 'password'} ? 'active'">
                 <span>Change password</span>
                 <i class="d-none d-md-block fa fa-angle-right"></i>
                 <i class="d-block d-md-none fa fa-angle-left"></i>

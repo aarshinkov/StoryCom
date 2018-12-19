@@ -8,13 +8,19 @@
 </head>
 <body>
 <div layout:fragment="contentDiv">
+    <h2>Registered users</h2>
+    <hr/>
+
     <div class="row">
         <div class="col-12 col-md-6" th:each="user : ${users}">
             <div class="team-member">
                 <div class="row">
                     <div class="col-12">
                         <h4 class="name">
-                            <a href="#" th:title="'View ' + ${user.userFullName} + '\'s profile'"
+                            <a href="#" th:if="${user.userId} eq ${currUserId}" title="View my profile"
+                               th:text="${user.userFullName}">Name</a>
+                            <a href="#" th:unless="${user.userId} eq ${currUserId}"
+                               th:title="'View ' + ${user.userFullName} + '\'s profile'"
                                th:text="${user.userFullName}">Name</a>
                         </h4>
 
@@ -32,18 +38,27 @@
                         <!--<span th:text="${role.displayName}">Role</span>-->
                         <!--</div>-->
                         <p>Some other information</p>
-                        <div class="social-media-branding social-media-branding-sm" th:unless="${user.userDetails} eq null">
+                        <div class="social-media-branding social-media-branding-sm"
+                             th:unless="${user.userDetails} eq null">
                             <!--@todo: replace with real social share links -->
-                            <a href="#" th:unless="${user.userDetails.facebook} eq null" th:href="${user.userDetails.facebook}" target="_blank" style="text-decoration: none;" class="text-brand-facebook">
+                            <a href="#" th:unless="${user.userDetails.facebook} eq null"
+                               th:href="'https://www.facebook.com/' + ${user.userDetails.facebook}" target="_blank"
+                               style="text-decoration: none;" class="text-brand-facebook">
                                 <i class="fab fa-facebook-square icon-2x"></i>
                             </a>
-                            <a href="#" th:unless="${user.userDetails.twitter} eq null" th:href="${user.userDetails.twitter}" target="_blank" style="text-decoration: none;" class="text-brand-twitter">
+                            <a href="#" th:unless="${user.userDetails.twitter} eq null"
+                               th:href="'https://twitter.com/' + ${user.userDetails.twitter}" target="_blank"
+                               style="text-decoration: none;" class="text-brand-twitter">
                                 <i class="fab fa-twitter-square icon-2x"></i>
                             </a>
-                            <a href="#" th:unless="${user.userDetails.youtube} eq null" th:href="${user.userDetails.youtube}" target="_blank" style="text-decoration: none;" class="text-brand-youtube">
+                            <a href="#" th:unless="${user.userDetails.youtube} eq null"
+                               th:href="'https://www.youtube.com/channel/' + ${user.userDetails.youtube}"
+                               target="_blank" style="text-decoration: none;" class="text-brand-youtube">
                                 <i class="fab fa-youtube icon-2x"></i>
                             </a>
-                            <a href="#" th:unless="${user.userDetails.instagram} eq null" th:href="${user.userDetails.instagram}" target="_blank" style="text-decoration: none;" class="text-brand-instagram">
+                            <a href="#" th:unless="${user.userDetails.instagram} eq null"
+                               th:href="'https://www.instagram.com/' + ${user.userDetails.instagram}" target="_blank"
+                               style="text-decoration: none;" class="text-brand-instagram">
                                 <i class="fab fa-instagram icon-2x"></i>
                             </a>
                         </div>

@@ -155,6 +155,8 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" th:classappend="${submenu eq 'profile'} ? 'active'"
                                            href="#" th:href="@{/settings/profile}" th:text="#{nav.settings.profile}">Profile</a>
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'details'} ? 'active'"
+                                           href="#" th:href="@{/settings/details}" th:text="#{nav.settings.details}">User details</a>
                                         <a class="dropdown-item" th:classappend="${submenu eq 'password'} ? 'active'"
                                            href="#" th:href="@{/settings/changepass}"
                                            th:text="#{nav.settings.password}">Profile</a>

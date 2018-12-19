@@ -91,13 +91,14 @@ public class TestController extends Base {
     }
 
     @ResponseBody
-    @GetMapping(value = "/password/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean isPasswordMatch(@PathVariable("password") String password) {
+    @GetMapping(value = "/password/{userId}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean isPasswordMatch(@PathVariable("userId") Integer userId, @PathVariable("password") String password) {
+        log.debug("userId: " + userId);
         log.debug("password: " + password);
 
         String sql = "SELECT U.PASSWORD FROM USERS U WHERE U.USER_ID = ?";
 
-        SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, 1001);
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, userId);
 
         String dbPassword = "-1";
 
