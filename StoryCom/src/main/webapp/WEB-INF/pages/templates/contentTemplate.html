@@ -78,6 +78,16 @@
     <script th:src="@{/resources/theme/js/custom-script.js}" src="../../resources/theme/js/custom-script.js"></script>
     <script th:src="@{resources/theme/js/script.min.js}" src="../../resources/theme/js/script.min.js"></script>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128194164-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-128194164-1');
+    </script>
+
 </head>
 <body>
 <div th:replace="fragments/mainMenu :: #mainMenu"></div>
