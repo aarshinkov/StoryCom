@@ -18,7 +18,7 @@
                     <div class="col-12">
                         <h4 class="name">
                             <a href="#" th:if="${user.userId} eq ${currUserId}" title="View my profile"
-                               th:text="${user.userFullName}">Name</a>
+                               class="text-red" th:text="${user.userFullName}">Name</a>
                             <a href="#" th:unless="${user.userId} eq ${currUserId}"
                                th:title="'View ' + ${user.userFullName} + '\'s profile'"
                                th:text="${user.userFullName}">Name</a>
