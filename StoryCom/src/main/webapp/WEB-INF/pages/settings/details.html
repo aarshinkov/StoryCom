@@ -25,7 +25,13 @@
                 <div th:unless="${user.userDetails} eq null" th:remove="tag">
                     <div class="form-group row">
                         <div class="col-lg-2 col-md-3 col-12">
-                            <label class="text-brand-facebook custom-social-label" for="facebook">Facebook</label>
+                            <label class="custom-social-label" for="facebook">
+                                <a class="text-brand-facebook"
+                                   th:href="'https://www.facebook.com/' + ${user.userDetails.facebook}" target="_blank"
+                                   href="#" th:unless="${user.userDetails.facebook} eq null">Facebook</a>
+                                <span class="text-brand-facebook"
+                                      th:if="${user.userDetails.facebook} eq null">Facebook</span>
+                            </label>
                         </div>
                         <div class="col-lg-10 col-md-9 col-12">
                             <input type="text" id="facebook"
@@ -37,7 +43,13 @@
 
                     <div class="form-group row">
                         <div class="col-lg-2 col-md-3 col-12">
-                            <label class="text-brand-twitter custom-social-label" for="twitter">Twitter</label>
+                            <label class="custom-social-label" for="twitter">
+                                <a class="text-brand-twitter"
+                                   th:href="'https://twitter.com/' + ${user.userDetails.twitter}" target="_blank"
+                                   href="#" th:unless="${user.userDetails.twitter} eq null">Twitter</a>
+                                <span class="text-brand-twitter"
+                                      th:if="${user.userDetails.twitter} eq null">Twitter</span>
+                            </label>
                         </div>
                         <div class="col-lg-10 col-md-9 col-12">
                             <input type="text" id="twitter" class="form-control form-control-rounded text-brand-twitter"
@@ -48,7 +60,13 @@
 
                     <div class="form-group row">
                         <div class="col-lg-2 col-md-3 col-12">
-                            <label class="text-brand-youtube custom-social-label" for="youtube">YouTube</label>
+                            <label class="custom-social-label" for="youtube">
+                                <a class="text-brand-youtube"
+                                   th:href="'https://www.youtube.com/channel/' + ${user.userDetails.youtube}"
+                                   target="_blank" href="#" th:unless="${user.userDetails.youtube} eq null">YouTube</a>
+                                <span class="text-brand-youtube"
+                                      th:if="${user.userDetails.youtube} eq null">YouTube</span>
+                            </label>
                         </div>
                         <div class="col-lg-10 col-md-9 col-12">
                             <input type="text" id="youtube" class="form-control form-control-rounded text-brand-youtube"
@@ -59,7 +77,14 @@
 
                     <div class="form-group row">
                         <div class="col-lg-2 col-md-3 col-12">
-                            <label class="text-brand-instagram custom-social-label" for="instagram">Instagram</label>
+                            <label class="custom-social-label" for="instagram">
+                                <a class="text-brand-instagram"
+                                   th:href="'https://www.instagram.com/' + ${user.userDetails.instagram}"
+                                   target="_blank" href="#"
+                                   th:unless="${user.userDetails.instagram} eq null">Instagram</a>
+                                <span class="text-brand-instagram"
+                                      th:if="${user.userDetails.instagram} eq null">Instagram</span>
+                            </label>
                         </div>
                         <div class="col-lg-10 col-md-9 col-12">
                             <input type="text" id="instagram"
