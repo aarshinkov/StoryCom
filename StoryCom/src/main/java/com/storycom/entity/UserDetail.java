@@ -4,13 +4,20 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "USER_DETAILS")
-public class UserDetails {
+public class UserDetail {
 
     @Id
     @Column(name = "USER_DETAIL_ID")
     @SequenceGenerator(name = "SEQ_GEN_USER_DETAIL", sequenceName = "S_USER_DETAILS", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN_USER_DETAIL")
     private Integer userDetailId;
+
+    @Column(name = "GENDER")
+    private String gender;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "COUNTRY_NAME")
+    private Country country;
 
     @Column(name = "FACEBOOK")
     private String facebook;
@@ -26,11 +33,13 @@ public class UserDetails {
 
     @Override
     public String toString() {
-        return "UserDetails: userDetailId=" + userDetailId +
-                ", facebook='" + facebook +
-                ", twitter='" + twitter +
-                ", youtube='" + youtube +
-                ", instagram='" + instagram;
+        return "UserDetail: userDetailId='" + userDetailId +
+                "', gender='" + gender +
+                "', country='" + country +
+                "', facebook='" + facebook +
+                "', twitter='" + twitter +
+                "', youtube='" + youtube +
+                "', instagram='" + instagram + "'";
     }
 
     public Integer getUserDetailId() {
@@ -39,6 +48,22 @@ public class UserDetails {
 
     public void setUserDetailId(Integer userDetailId) {
         this.userDetailId = userDetailId;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     public String getFacebook() {

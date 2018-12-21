@@ -4,7 +4,6 @@ import com.storycom.base.Base;
 import com.storycom.domain.Password;
 import com.storycom.entity.User;
 import com.storycom.repository.UsersRepository;
-import com.storycom.security.StoryUser;
 import com.storycom.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,13 +101,18 @@ public class SettingsController extends Base {
 
         user.setUserId(getStoryUser().getUserId());
 
+        log.debug("user: " + user.toString());
+        log.debug("userDetails: " + user.getUserDetail().toString());
+
         try {
-            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_USERS.UPDATE_USER_DETAILS(?,?,?,?,?)}");
+            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_USERS.UPDATE_USER_DETAILS(?,?,?,?,?,?,?)}");
             cstmt.setInt(1, user.getUserId());
-            cstmt.setString(2, user.getUserDetails().getFacebook());
-            cstmt.setString(3, user.getUserDetails().getTwitter());
-            cstmt.setString(4, user.getUserDetails().getYoutube());
-            cstmt.setString(5, user.getUserDetails().getInstagram());
+            cstmt.setString(2, user.getUserDetail().getGender());
+            cstmt.setString(3, user.getUserDetail().getCountry().getCountryName());
+            cstmt.setString(4, user.getUserDetail().getFacebook());
+            cstmt.setString(5, user.getUserDetail().getTwitter());
+            cstmt.setString(6, user.getUserDetail().getYoutube());
+            cstmt.setString(7, user.getUserDetail().getInstagram());
 
             cstmt.execute();
             log.debug("User details saved successfully!");

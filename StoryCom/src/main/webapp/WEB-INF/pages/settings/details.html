@@ -20,80 +20,108 @@
 
             <form action="#" th:action="@{/settings/details}" th:object="${user}" method="post">
 
-                <h4>Social</h4>
+                <h4>Personal</h4>
                 <hr/>
-                <div th:unless="${user.userDetails} eq null" th:remove="tag">
-                    <div class="form-group row">
-                        <div class="col-lg-2 col-md-3 col-12">
-                            <label class="custom-social-label" for="facebook">
-                                <a class="text-brand-facebook"
-                                   th:href="'https://www.facebook.com/' + ${user.userDetails.facebook}" target="_blank"
-                                   href="#" th:unless="${user.userDetails.facebook} eq null">Facebook</a>
-                                <span class="text-brand-facebook"
-                                      th:if="${user.userDetails.facebook} eq null">Facebook</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-10 col-md-9 col-12">
-                            <input type="text" id="facebook"
-                                   class="form-control form-control-rounded text-brand-facebook"
-                                   th:field="*{userDetails.facebook}" th:value="${user.userDetails.facebook}"
-                                   placeholder="Facebook account"/>
-                        </div>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-3 col-12">
+                        <label class="custom-social-label" for="gender">
+                            <span class="text-brand-youtube">Gender</span>
+                        </label>
                     </div>
-
-                    <div class="form-group row">
-                        <div class="col-lg-2 col-md-3 col-12">
-                            <label class="custom-social-label" for="twitter">
-                                <a class="text-brand-twitter"
-                                   th:href="'https://twitter.com/' + ${user.userDetails.twitter}" target="_blank"
-                                   href="#" th:unless="${user.userDetails.twitter} eq null">Twitter</a>
-                                <span class="text-brand-twitter"
-                                      th:if="${user.userDetails.twitter} eq null">Twitter</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-10 col-md-9 col-12">
-                            <input type="text" id="twitter" class="form-control form-control-rounded text-brand-twitter"
-                                   th:field="*{userDetails.twitter}" th:value="${user.userDetails.twitter}"
-                                   placeholder="Twitter account"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-lg-2 col-md-3 col-12">
-                            <label class="custom-social-label" for="youtube">
-                                <a class="text-brand-youtube"
-                                   th:href="'https://www.youtube.com/channel/' + ${user.userDetails.youtube}"
-                                   target="_blank" href="#" th:unless="${user.userDetails.youtube} eq null">YouTube</a>
-                                <span class="text-brand-youtube"
-                                      th:if="${user.userDetails.youtube} eq null">YouTube</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-10 col-md-9 col-12">
-                            <input type="text" id="youtube" class="form-control form-control-rounded text-brand-youtube"
-                                   th:field="*{userDetails.youtube}" th:value="${user.userDetails.youtube}"
-                                   placeholder="YouTube account"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-lg-2 col-md-3 col-12">
-                            <label class="custom-social-label" for="instagram">
-                                <a class="text-brand-instagram"
-                                   th:href="'https://www.instagram.com/' + ${user.userDetails.instagram}"
-                                   target="_blank" href="#"
-                                   th:unless="${user.userDetails.instagram} eq null">Instagram</a>
-                                <span class="text-brand-instagram"
-                                      th:if="${user.userDetails.instagram} eq null">Instagram</span>
-                            </label>
-                        </div>
-                        <div class="col-lg-10 col-md-9 col-12">
-                            <input type="text" id="instagram"
-                                   class="form-control form-control-rounded text-brand-instagram"
-                                   th:field="*{userDetails.instagram}" th:value="${user.userDetails.instagram}"
-                                   placeholder="Instagram account"/>
-                        </div>
+                    <div class="col-lg-10 col-md-9 col-12">
+                        <input type="text" id="gender" class="form-control form-control-rounded text-brand-youtube"
+                               th:field="*{userDetail.gender}" th:value="${user.userDetail.gender}"
+                               placeholder="Gender"/>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-3 col-12">
+                        <label class="custom-social-label" for="countryName">
+                            <span class="text-brand-youtube">Country</span>
+                        </label>
+                    </div>
+                    <div class="col-lg-10 col-md-9 col-12">
+                        <input type="text" id="countryName" class="form-control form-control-rounded text-brand-youtube"
+                               th:field="*{userDetail.country.countryName}" th:value="${user.userDetail.country.countryName}"
+                               placeholder="Country"/>
+                    </div>
+                </div>
+                <!--&lt;!&ndash;<p>Country - <span th:text="${user.userDetail.country.countryFull}">Country name</span></p>&ndash;&gt;-->
+
+                <!--<h4>Social</h4>-->
+                <!--<hr/>-->
+                <!--<div th:unless="${user.userDetail} eq null" th:remove="tag">-->
+                    <!--<div class="form-group row">-->
+                        <!--<div class="col-lg-2 col-md-3 col-12">-->
+                            <!--<label class="custom-social-label" for="facebook">-->
+                                <!--<a class="text-brand-facebook"-->
+                                   <!--th:href="'https://www.facebook.com/' + ${user.userDetail.facebook}" target="_blank"-->
+                                   <!--href="#" th:unless="${user.userDetail.facebook} eq null">Facebook</a>-->
+                                <!--<span class="text-brand-facebook"-->
+                                      <!--th:if="${user.userDetail.facebook} eq null">Facebook</span>-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="col-lg-10 col-md-9 col-12">-->
+                            <!--<input type="text" id="facebook"-->
+                                   <!--class="form-control form-control-rounded text-brand-facebook"-->
+                                   <!--th:field="*{userDetail.facebook}" th:value="${user.userDetail.facebook}"-->
+                                   <!--placeholder="Facebook account"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="form-group row">-->
+                        <!--<div class="col-lg-2 col-md-3 col-12">-->
+                            <!--<label class="custom-social-label" for="twitter">-->
+                                <!--<a class="text-brand-twitter"-->
+                                   <!--th:href="'https://twitter.com/' + ${user.userDetail.twitter}" target="_blank"-->
+                                   <!--href="#" th:unless="${user.userDetail.twitter} eq null">Twitter</a>-->
+                                <!--<span class="text-brand-twitter"-->
+                                      <!--th:if="${user.userDetail.twitter} eq null">Twitter</span>-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="col-lg-10 col-md-9 col-12">-->
+                            <!--<input type="text" id="twitter" class="form-control form-control-rounded text-brand-twitter"-->
+                                   <!--th:field="*{userDetail.twitter}" th:value="${user.userDetail.twitter}"-->
+                                   <!--placeholder="Twitter account"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="form-group row">-->
+                        <!--<div class="col-lg-2 col-md-3 col-12">-->
+                            <!--<label class="custom-social-label" for="youtube">-->
+                                <!--<a class="text-brand-youtube"-->
+                                   <!--th:href="'https://www.youtube.com/channel/' + ${user.userDetail.youtube}"-->
+                                   <!--target="_blank" href="#" th:unless="${user.userDetail.youtube} eq null">YouTube</a>-->
+                                <!--<span class="text-brand-youtube"-->
+                                      <!--th:if="${user.userDetail.youtube} eq null">YouTube</span>-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="col-lg-10 col-md-9 col-12">-->
+                            <!--<input type="text" id="youtube" class="form-control form-control-rounded text-brand-youtube"-->
+                                   <!--th:field="*{userDetail.youtube}" th:value="${user.userDetail.youtube}"-->
+                                   <!--placeholder="YouTube account"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="form-group row">-->
+                        <!--<div class="col-lg-2 col-md-3 col-12">-->
+                            <!--<label class="custom-social-label" for="instagram">-->
+                                <!--<a class="text-brand-instagram"-->
+                                   <!--th:href="'https://www.instagram.com/' + ${user.userDetail.instagram}"-->
+                                   <!--target="_blank" href="#"-->
+                                   <!--th:unless="${user.userDetail.instagram} eq null">Instagram</a>-->
+                                <!--<span class="text-brand-instagram"-->
+                                      <!--th:if="${user.userDetail.instagram} eq null">Instagram</span>-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="col-lg-10 col-md-9 col-12">-->
+                            <!--<input type="text" id="instagram"-->
+                                   <!--class="form-control form-control-rounded text-brand-instagram"-->
+                                   <!--th:field="*{userDetail.instagram}" th:value="${user.userDetail.instagram}"-->
+                                   <!--placeholder="Instagram account"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <button type="submit" class="btn btn-primary btn-md d-none d-md-block">
