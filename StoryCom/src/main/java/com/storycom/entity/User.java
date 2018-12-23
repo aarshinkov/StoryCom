@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -25,12 +26,17 @@ public class User implements Serializable {
     @NotNull
     private String username;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "FIRST_NAME")
     @Size(min = 4, max = 100)
     @NotNull
-    private String name;
+    private String firstName;
 
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(name = "LAST_NAME")
+//    @Size(min = 4, max = 100)
+//    @NotNull
+    private String lastName;
+
+    @Column(name = "PASSWORD")
     @Size(min = 4, max = 100)
     @JsonIgnore
     private String password;
@@ -38,11 +44,12 @@ public class User implements Serializable {
     @Column(name = "EMAIL")
     @Size(max = 200)
     @Email
+    @NotEmpty
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_DETAIL_ID")
-    private UserDetails userDetails;
+    private UserDetail userDetail;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLES", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLENAME"))
@@ -50,7 +57,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "userId=" + userId + ", username=" + username + ", name=" + name + ", password=" + password;
+        return "userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName = " + lastName + ", password=" + password;
     }
 
     public Integer getUserId() {
@@ -69,12 +76,20 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
@@ -93,12 +108,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public UserDetails getUserDetails() {
-        return userDetails;
+    public UserDetail getUserDetail() {
+        return userDetail;
     }
 
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 
     public List<Role> getRoles() {
@@ -109,4 +124,10 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public String getUserFullName() {
+        if (lastName == null || "".equalsIgnoreCase(lastName)) {
+            return firstName;
+        }
+        return firstName + " " + lastName;
+    }
 }

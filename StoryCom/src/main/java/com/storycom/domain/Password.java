@@ -1,12 +1,31 @@
 package com.storycom.domain;
 
+import javax.validation.constraints.Size;
+
 public class Password {
+
+    @Size(min = 4, max = 100, message = "Password must be between 4 and 100 symbols")
+    private String currentPassword;
+
+    @Size(min = 4, max = 100, message = "Password must be between 4 and 100 symbols")
     private String password;
-    private String hashedPassword;
+
+    @Size(min = 4, max = 100, message = "Password must be between 4 and 100 symbols")
+    private String confirmPassword;
+
+    private String encodedPassword;
 
     @Override
     public String toString() {
-        return "password=" + password + ", hashedPassword=" + hashedPassword;
+        return "currentPassword=" + currentPassword + ", password=" + password + ", confirmPassword=" + confirmPassword + ", encodedPassword=" + encodedPassword;
+    }
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
     }
 
     public String getPassword() {
@@ -17,11 +36,19 @@ public class Password {
         this.password = password;
     }
 
-    public String getHashedPassword() {
-        return hashedPassword;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public String getEncodedPassword() {
+        return encodedPassword;
+    }
+
+    public void setEncodedPassword(String encodedPassword) {
+        this.encodedPassword = encodedPassword;
     }
 }

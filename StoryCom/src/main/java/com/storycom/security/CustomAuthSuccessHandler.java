@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.SavedRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,29 +22,19 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         log.debug("Authentication successful.");
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		StoryUser storyUser = (StoryUser) auth.getPrincipal();
+        StoryUser storyUser = (StoryUser) auth.getPrincipal();
 
-        String url = request.getParameter("url");
+        SavedRequest savedRequest = (SavedRequest) request.getSession(false).getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 
-        if (url != null) {
-            url = URLDecoder.decode(url, "UTF-8");
-        } else {
-            url = "";
+        String redirectUrl = request.getContextPath() + "/";
+
+        request.getSession(false).setAttribute("user", "(" + storyUser.getFullName() + ") " + storyUser.getUsername());
+
+        if (savedRequest != null) {
+            redirectUrl = savedRequest.getRedirectUrl();
         }
-//
-        String targetUrl = request.getContextPath() + url;
-//        log.debug("url = " + url);
-//
-//        if (url.contains("?")) {
-//            if (!url.contains("back")) {
-//                targetUrl += "&back";
-//            }
-//        } else {
-//            targetUrl += "?back";
-//        }
-		request.getSession(false).setAttribute("user", "(" + storyUser.getName() + ") " + storyUser.getUsername());
 
-//        log.debug("Redirecting to page: " + targetUrl);
-        response.sendRedirect(targetUrl);
+        log.debug("Redirecting to page: " + redirectUrl);
+        response.sendRedirect(redirectUrl);
     }
 }

@@ -46,7 +46,7 @@ public class StoriesController extends Base {
         log.debug("prepareAddStory() begin ---");
 
         model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("subMenu", "add");
+        model.addAttribute("submenu", "add");
         model.addAttribute("story", new Story());
 
         return "stories/add";
@@ -54,6 +54,13 @@ public class StoriesController extends Base {
 
     @PostMapping(value = "/add")
     public String addStory(@Valid Story story, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("globalMenu", GLOBAL_MENU);
+            model.addAttribute("submenu", "add");
+
+            return "stories/add";
+        }
 
         storiesService.addStory(story, getUser());
 
@@ -64,7 +71,7 @@ public class StoriesController extends Base {
     public String prepareSearchStory(Model model) {
 
         model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("subMenu", "search");
+        model.addAttribute("submenu", "search");
 
         return "stories/search";
     }
@@ -79,7 +86,7 @@ public class StoriesController extends Base {
         }
 
         model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("subMenu", "search");
+        model.addAttribute("submenu", "search");
         model.addAttribute("stories", stories);
         model.addAttribute("storiesCount", stories.size());
 

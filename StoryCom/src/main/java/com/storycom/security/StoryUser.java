@@ -7,14 +7,16 @@ import java.util.Collection;
 
 public class StoryUser extends User {
     private Integer userId;
-    private String name;
+    private String firstName;
+    private String lastName;
 
     public StoryUser(String username, String password, boolean enabled,
                      boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
-                     Collection<? extends GrantedAuthority> authorities, String name, Integer userId) {
+                     Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, Integer userId) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.userId = userId;
     }
 
@@ -26,11 +28,26 @@ public class StoryUser extends User {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        if (lastName == null || "".equalsIgnoreCase(lastName)) {
+            return firstName;
+        }
+        return firstName + " " + lastName;
     }
 }

@@ -1,22 +1,23 @@
 package com.storycom.controllers;
 
 import com.storycom.base.Base;
+import com.storycom.entity.Country;
 import com.storycom.entity.Story;
 import com.storycom.entity.User;
+import com.storycom.repository.CountriesRepository;
 import com.storycom.repository.StoriesRepository;
 import com.storycom.repository.UsersRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
@@ -32,7 +33,13 @@ public class TestController extends Base {
     private UsersRepository usersRepository;
 
     @Autowired
+    private CountriesRepository countriesRepository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @GetMapping(value = "/design")
     public String designTest() {
@@ -90,4 +97,34 @@ public class TestController extends Base {
         return passwordEncoder.encode(password);
     }
 
+    @ResponseBody
+    @GetMapping(value = "/password/{userId}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean isPasswordMatch(@PathVariable("userId") Integer userId, @PathVariable("password") String password) {
+        log.debug("userId: " + userId);
+        log.debug("password: " + password);
+
+        String sql = "SELECT U.PASSWORD FROM USERS U WHERE U.USER_ID = ?";
+
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, userId);
+
+        String dbPassword = "-1";
+
+        while (rs.next()) {
+            dbPassword = rs.getString(1);
+        }
+
+        log.debug("dbPassword: " + dbPassword);
+
+        return passwordEncoder.matches(password, dbPassword);
+    }
+
+    @GetMapping(value = "/countries")
+    public String countries(Model model) {
+
+        List<Country> countries =  countriesRepository.findAll();
+
+        model.addAttribute("countries", countries);
+
+        return "test/selectTest";
+    }
 }

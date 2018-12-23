@@ -10,7 +10,7 @@
             <div class="header-block-flex order-1 mr-auto">
                 <nav class="nav nav-sm header-block-flex">
                     <a class="nav-link text-sm text-uppercase" sec:authorize="isAuthenticated()"
-                       th:href="@{/settings/profile}" href="/settings/profile">
+                       th:href="@{/settings/profile}" href="#">
                         <!--<i class="fa fa-user"></i>-->
                         <span>Profile</span>
                     </a>
@@ -43,7 +43,8 @@
                 </div>
             </div>
             <div class="header-block-flex order-2">
-                <span class="d-none d-md-block" sec:authorize="isAuthenticated()" th:text="'Welcome, ' + ${@usersBean.storyPrincipal.getName()}">Hello, name</span>
+                <span class="d-none d-md-block" sec:authorize="isAuthenticated()"
+                      th:text="#{nav.welcome(${@usersBean.storyPrincipal.getFullName()})}">Hello, name</span>
                 <a class="nav-link text-sm text-uppercase" sec:authorize="isAuthenticated()"
                    onclick="$('#formLogout').submit();" th:text="#{nav.logout}">Logout</a>
 
@@ -98,18 +99,38 @@
                         <div class="navbar-main collapse" style="">
                             <ul class="nav navbar-nav navbar-nav-stretch float-lg-right dropdown-effect-fade">
                                 <!--<li class="nav-item">-->
-                                    <!--<a th:href="@{/}" href="#" class="nav-link animated">-->
-                                        <!--<i class="fa fa-home nav-link-icon"></i>-->
-                                    <!--</a>-->
+                                <!--<a th:href="@{/}" href="#" class="nav-link animated">-->
+                                <!--<i class="fa fa-home nav-link-icon"></i>-->
+                                <!--</a>-->
                                 <!--</li>-->
                                 <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle animated dropdown"
-                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false" th:text="#{nav.story}">Stories</a>
+                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">
+                                        <i class="fa fa-home nav-link-icon"></i>
+                                    </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" th:classappend="${subMenu eq 'add'} ? 'active'"
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'home'} ? 'active'"
+                                           href="#" th:href="@{/}" th:text="#{nav.home.general}">Home</a>
+
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'about'} ? 'active'"
+                                           href="#" th:href="@{/about}" th:text="#{nav.home.about}">About</a>
+
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'contact'} ? 'active'"
+                                           href="#" th:href="@{/contact}" th:text="#{nav.home.contact}">Contact</a>
+
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'timeline'} ? 'active'"
+                                           href="#" th:href="@{/timeline}" th:text="#{nav.home.timeline}">Timeline</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle animated dropdown"
+                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false"
+                                       th:text="#{nav.story}">Stories</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'add'} ? 'active'"
                                            href="#" sec:authorize="hasRole('ROLE_USER')" th:href="@{/story/add}"
                                            th:text="#{nav.story.add}">Add story</a>
-                                        <a class="dropdown-item" th:classappend="${subMenu eq 'search'} ? 'active'"
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'search'} ? 'active'"
                                            href="#" th:href="@{/story/search}" th:text="#{nav.story.search}">Search
                                             story</a>
                                     </div>
@@ -117,10 +138,14 @@
 
                                 <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                                     <a href="#" class="nav-link dropdown-toggle animated dropdown"
-                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false" th:text="#{nav.admin}">Admin</a>
+                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false"
+                                       th:text="#{nav.admin}">Admin</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#" th:href="@{/admin/users}"
-                                           th:text="#{nav.admin.users}">Users</a>
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'users'} ? 'active'"
+                                           href="#" th:href="@{/admin/users}" th:text="#{nav.admin.users}">Users</a>
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'addUser'} ? 'active'"
+                                           href="#" th:href="@{/admin/addUser}"
+                                           th:text="#{nav.admin.addUser}">Add user</a>
                                     </div>
                                 </li>
 
@@ -128,8 +153,13 @@
                                     <a href="#" class="nav-link dropdown-toggle animated dropdown"
                                        data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">Settings</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#" th:href="@{/settings/profile}"
-                                           th:text="#{nav.settings.profile}">Profile</a>
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'profile'} ? 'active'"
+                                           href="#" th:href="@{/settings/profile}" th:text="#{nav.settings.profile}">Profile</a>
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'details'} ? 'active'"
+                                           href="#" th:href="@{/settings/details}" th:text="#{nav.settings.details}">User details</a>
+                                        <a class="dropdown-item" th:classappend="${submenu eq 'password'} ? 'active'"
+                                           href="#" th:href="@{/settings/changepass}"
+                                           th:text="#{nav.settings.password}">Profile</a>
                                     </div>
                                 </li>
                             </ul>

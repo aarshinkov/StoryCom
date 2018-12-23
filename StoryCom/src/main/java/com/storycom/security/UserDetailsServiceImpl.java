@@ -55,7 +55,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         StoryUser storyUser = new StoryUser(username, user.getPassword(),
                 true, true, true, true,
-                authorities, user.getName(), user.getUserId());
+                authorities, user.getFirstName(), user.getLastName(), user.getUserId());
 
         return storyUser;
     }
