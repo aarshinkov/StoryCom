@@ -3,6 +3,7 @@ package com.storycom.controllers;
 import com.storycom.base.Base;
 import com.storycom.domain.Password;
 import com.storycom.entity.User;
+import com.storycom.repository.CountriesRepository;
 import com.storycom.repository.UsersRepository;
 import com.storycom.services.UserService;
 import org.slf4j.Logger;
@@ -35,6 +36,9 @@ public class SettingsController extends Base {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private CountriesRepository countriesRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -88,6 +92,7 @@ public class SettingsController extends Base {
         User user = getUser();
 
         model.addAttribute("user", user);
+        model.addAttribute("countries", countriesRepository.findAll());
 
         model.addAttribute("globalMenu", GLOBAL_MENU);
         model.addAttribute("submenu", "details");
@@ -100,9 +105,6 @@ public class SettingsController extends Base {
         log.debug("Saving user details...");
 
         user.setUserId(getStoryUser().getUserId());
-
-        log.debug("user: " + user.toString());
-        log.debug("userDetails: " + user.getUserDetail().toString());
 
         try {
             CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_USERS.UPDATE_USER_DETAILS(?,?,?,?,?,?,?)}");

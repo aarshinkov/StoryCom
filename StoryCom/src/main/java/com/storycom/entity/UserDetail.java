@@ -42,6 +42,10 @@ public class UserDetail {
                 "', instagram='" + instagram + "'";
     }
 
+    public String getGenderText() {
+        return gender.equalsIgnoreCase("m") ? "Male" : "Female";
+    }
+
     public Integer getUserDetailId() {
         return userDetailId;
     }

@@ -1,8 +1,10 @@
 package com.storycom.controllers;
 
 import com.storycom.base.Base;
+import com.storycom.entity.Country;
 import com.storycom.entity.Story;
 import com.storycom.entity.User;
+import com.storycom.repository.CountriesRepository;
 import com.storycom.repository.StoriesRepository;
 import com.storycom.repository.UsersRepository;
 import org.slf4j.Logger;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value = "/test")
 public class TestController extends Base {
@@ -27,6 +31,9 @@ public class TestController extends Base {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private CountriesRepository countriesRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -111,4 +118,13 @@ public class TestController extends Base {
         return passwordEncoder.matches(password, dbPassword);
     }
 
+    @GetMapping(value = "/countries")
+    public String countries(Model model) {
+
+        List<Country> countries =  countriesRepository.findAll();
+
+        model.addAttribute("countries", countries);
+
+        return "test/selectTest";
+    }
 }
