@@ -6,4 +6,5 @@ import com.storycom.entity.User;
 public interface StoriesService {
     void updateStoriesViews(Integer storyId);
     void addStory(Story story, User user);
+    boolean deleteStory(Integer storyId);
 }

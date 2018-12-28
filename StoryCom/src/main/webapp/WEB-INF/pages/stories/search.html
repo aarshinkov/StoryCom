@@ -61,8 +61,14 @@
                                            th:href="@{'/story/view' + '?id=' + ${story.storyId}}" href="#">View</a>
                                         <a class="dropdown-item" sec:authorize="isAuthenticated()"
                                            th:if="${story.user.userId} eq ${currUserId}" href="#">Edit</a>
-                                        <a class="dropdown-item" sec:authorize="isAuthenticated()"
-                                           th:if="${story.user.userId} eq ${currUserId}" href="#">Delete</a>
+
+                                        <form id="deleteForm" method="post" th:action="@{/story/delete}" action="#"
+                                              sec:authorize="isAuthenticated()"
+                                              th:if="${story.user.userId} eq ${currUserId}">
+                                            <input type="hidden" name="id" th:value="${story.storyId}"/>
+                                            <button type="submit" class="dropdown-item" style="cursor: pointer;">Delete</button>
+                                        </form>
+
                                         <a class="dropdown-item" sec:authorize="isAuthenticated()"
                                            th:unless="${story.user.userId} eq ${currUserId}" href="#">Report</a>
                                     </div>
@@ -72,7 +78,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <small>
+                            <small title="Author">
                                 <i class="far fa-user"></i>
                                 <!--<i class="lnr lnr-user"></i>-->
                                 <span th:if="${story.user.userId} eq ${currUserId}"
@@ -81,12 +87,13 @@
                                       th:text="${story.user.userFullName}"></span>
                             </small>
                             <small> |</small>
-                            <small>
+                            <small title="Created on">
                                 <i class="far fa-clock"></i>
                                 <span th:text="${story.createdOn}"></span>
                             </small>
                             <hr style="margin-top: 10px; margin-bottom: 10px;"/>
-                            <p class="card-text" th:text="${story.content}">Text</p>
+                            <!--<p class="card-text" th:text="${story.content}">Text</p>-->
+                            <p class="card-text" th:text="${story.overview}">Overview</p>
 
                             <a sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${currUserId}"
                                class="btn btn-outline-success" href="#"
@@ -112,6 +119,7 @@
                                 <div class="col-7 text-muted" style="margin: 0;">
                                     <small>
                                         <a href="#" th:text="#{story.comments(${story.comments})}">3 Comments</a>
+                                        <span>&#8729;</span>
                                         <a href="#" th:text="#{story.likes(${story.likes})}">2 Likes</a>
                                     </small>
                                 </div>

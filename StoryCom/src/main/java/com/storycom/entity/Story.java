@@ -20,6 +20,11 @@ public class Story {
     @Size(max = 150, message = "The title must not be more than 150 symbols")
     private String title;
 
+    @Column(name = "OVERVIEW")
+    @NotEmpty(message = "Please provide an overview of the story")
+    @Size(max = 300, message = "The overview must not be more than 300 symbols")
+    private String overview;
+
     @Column(name = "CONTENT")
     @NotEmpty(message = "The story must not be empty")
     private String content;
@@ -40,6 +45,20 @@ public class Story {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @Override
+    public String toString() {
+        return "Story{" +
+                "storyId=" + storyId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", comments=" + comments +
+                ", views=" + views +
+                ", likes=" + likes +
+                ", createdOn=" + createdOn +
+                ", user=" + user +
+                '}';
+    }
+
     public Integer getStoryId() {
         return storyId;
     }
@@ -54,6 +73,14 @@ public class Story {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public String getContent() {
@@ -102,19 +129,5 @@ public class Story {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Story{" +
-                "storyId=" + storyId +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", comments=" + comments +
-                ", views=" + views +
-                ", likes=" + likes +
-                ", createdOn=" + createdOn +
-                ", user=" + user +
-                '}';
     }
 }

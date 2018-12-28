@@ -70,8 +70,16 @@ public class StoriesController extends Base {
     @GetMapping(value = "/search")
     public String prepareSearchStory(Model model) {
 
+        List<Story> stories = storiesRepo.findAll();
+
+        if (getStoryUser() != null) {
+            model.addAttribute("currUserId", getStoryUser().getUserId());
+        }
+
         model.addAttribute("globalMenu", GLOBAL_MENU);
         model.addAttribute("submenu", "search");
+        model.addAttribute("stories", stories);
+        model.addAttribute("storiesCount", stories.size());
 
         return "stories/search";
     }
@@ -120,6 +128,15 @@ public class StoriesController extends Base {
         Story story = storiesRepo.findByStoryId(storyId);
         //FIXME complete logic for method
         return null;
+    }
+
+    @PostMapping(value = "/delete", params = "id")
+    public String deleteStory(@RequestParam(name = "id") Integer storyId, Model model) {
+        log.debug("Deleting story with id: " + storyId);
+
+        storiesService.deleteStory(storyId);
+
+        return "redirect:/story/search";
     }
 
     @GetMapping(value = "/warn", params = "id")

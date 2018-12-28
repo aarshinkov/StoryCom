@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.util.Objects;
 
 @Service
@@ -45,10 +46,11 @@ public class StoriesServiceImpl implements StoriesService {
         log.debug("Adding story...");
 
         try {
-            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_STORIES.INSERT_STORY(?,?,?)}");
+            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_STORIES.INSERT_STORY(?,?,?,?)}");
             cstmt.setString(1, story.getTitle());
-            cstmt.setString(2, story.getContent());
-            cstmt.setInt(3, user.getUserId());
+            cstmt.setString(2, story.getOverview());
+            cstmt.setString(3, story.getContent());
+            cstmt.setInt(4, user.getUserId());
 
             cstmt.execute();
             log.debug("Story added successfully!");
@@ -57,5 +59,22 @@ public class StoriesServiceImpl implements StoriesService {
         }
     }
 
+    @Override
+    public boolean deleteStory(Integer storyId) {
 
+        try {
+
+            String sql = "DELETE FROM STORIES WHERE STORY_ID = ?";
+
+            PreparedStatement stmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareStatement(sql);
+            stmt.setInt(1, storyId);
+
+            stmt.execute();
+
+            log.debug("Story with id: " + storyId + " has been successfully deleted.");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
