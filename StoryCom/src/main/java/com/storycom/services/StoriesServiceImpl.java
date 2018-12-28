@@ -60,6 +60,25 @@ public class StoriesServiceImpl implements StoriesService {
     }
 
     @Override
+    public boolean editStory(Story story) {
+
+        try {
+            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_STORIES.UPDATE_STORY(?,?,?,?)}");
+            cstmt.setInt(1, story.getStoryId());
+            cstmt.setString(2, story.getTitle());
+            cstmt.setString(3, story.getOverview());
+            cstmt.setString(4, story.getContent());
+
+            cstmt.execute();
+            log.debug("Story with id: " + story.getStoryId() + " has been updated successfully");
+            return true;
+        } catch (Exception e) {
+            log.error("An error occured during editing story with id: " + story.getStoryId(), e);
+            return false;
+        }
+    }
+
+    @Override
     public boolean deleteStory(Integer storyId) {
 
         try {
@@ -74,6 +93,7 @@ public class StoriesServiceImpl implements StoriesService {
             log.debug("Story with id: " + storyId + " has been successfully deleted.");
             return true;
         } catch (Exception e) {
+            log.error("Error occured during deleting story with id: " + storyId, e);
             return false;
         }
     }

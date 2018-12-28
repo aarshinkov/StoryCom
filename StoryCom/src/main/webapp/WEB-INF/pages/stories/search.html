@@ -59,8 +59,15 @@
                                          style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 30px, 0px);">
                                         <a class="dropdown-item"
                                            th:href="@{'/story/view' + '?id=' + ${story.storyId}}" href="#">View</a>
-                                        <a class="dropdown-item" sec:authorize="isAuthenticated()"
-                                           th:if="${story.user.userId} eq ${currUserId}" href="#">Edit</a>
+                                        <!--<a class="dropdown-item" sec:authorize="isAuthenticated()"-->
+                                           <!--th:if="${story.user.userId} eq ${currUserId}" href="#">Edit</a>-->
+
+                                        <form id="editForm" method="post" th:action="@{/story/edit}" action="#"
+                                              sec:authorize="isAuthenticated()"
+                                              th:if="${story.user.userId} eq ${currUserId}">
+                                            <input type="hidden" name="id" th:value="${story.storyId}"/>
+                                            <button type="submit" class="dropdown-item" style="cursor: pointer;">Edit</button>
+                                        </form>
 
                                         <form id="deleteForm" method="post" th:action="@{/story/delete}" action="#"
                                               sec:authorize="isAuthenticated()"
@@ -145,6 +152,5 @@
     </div>
 </div>
 
-</div>
 </body>
 </html>

@@ -64,7 +64,7 @@ public class StoriesController extends Base {
 
         storiesService.addStory(story, getUser());
 
-        return "redirect:/";
+        return "redirect:/stories/search";
     }
 
     @GetMapping(value = "/search")
@@ -121,13 +121,24 @@ public class StoriesController extends Base {
         return "stories/view";
     }
 
-    @GetMapping(value = "/edit", params = "id")
-    public String editStory(@RequestParam(name = "id") Integer storyId, Model model) {
-        log.debug("Editing story with id: " + storyId);
+    @PostMapping(value = "/edit", params = "id")
+    public String prepareEditStory(@RequestParam(name = "id") Integer storyId, Model model) {
 
         Story story = storiesRepo.findByStoryId(storyId);
-        //FIXME complete logic for method
-        return null;
+
+        model.addAttribute("globalMenu", GLOBAL_MENU);
+        model.addAttribute("story", story);
+
+        return "stories/edit";
+    }
+
+    @PostMapping(value = "/edit")
+    public String editStory(Story story, Model model) {
+        log.debug("Editing story with id: " + story.getStoryId());
+
+        storiesService.editStory(story);
+
+        return "redirect:/story/search";
     }
 
     @PostMapping(value = "/delete", params = "id")
