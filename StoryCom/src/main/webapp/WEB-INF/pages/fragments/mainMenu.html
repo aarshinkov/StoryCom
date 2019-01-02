@@ -12,12 +12,12 @@
                     <a class="nav-link text-sm text-uppercase" sec:authorize="isAuthenticated()"
                        th:href="@{/settings/profile}" href="#">
                         <!--<i class="fa fa-user"></i>-->
-                        <span>Profile</span>
+                        <span th:text="#{nav.settings.profile}">Profile</span>
                     </a>
                     <a class="nav-link text-sm text-uppercase" sec:authorize="!isAuthenticated()"
-                       th:href="@{/signup}" href="#">Sign Up</a>
+                       th:href="@{/signup}" href="#" th:text="#{nav.signup}">Sign Up</a>
                     <a class="nav-link text-sm text-uppercase" sec:authorize="!isAuthenticated()"
-                       th:href="@{/login}" href="#">Login</a>
+                       th:href="@{/login}" href="#" th:text="#{nav.login}">Login</a>
                     <!--<a class="nav-link text-sm text-uppercase d-none d-md-block"-->
                     <!--th:href="@{/login}" href="#">Login</a>-->
                 </nav>
@@ -29,15 +29,15 @@
                     <div class="dropdown-menu dropdown-menu-md rounded dropdown-menu-arrow border-w-2 ml-2-neg">
                         <a href="?lang=en" class="dropdown-item">
                             <i class="flag-icon flag-icon-gb"></i>
-                            <span>English</span>
+                            <span th:text="#{nav.lang.en}">English</span>
                         </a>
                         <a href="?lang=bg" class="dropdown-item">
                             <i class="flag-icon flag-icon-bg"></i>
-                            <span>Bulgarian</span>
+                            <span th:text="#{nav.lang.bg}">Bulgarian</span>
                         </a>
                         <a href="?lang=de" class="dropdown-item">
                             <i class="flag-icon flag-icon-de"></i>
-                            <span>Deutsch</span>
+                            <span th:text="#{nav.lang.de}">Deutsch</span>
                         </a>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                             </h1>
                         </a>
                         <div class="header-divider d-none d-lg-block"></div>
-                        <div class="header-slogan d-none d-lg-block">Share your story</div>
+                        <div class="header-slogan d-none d-lg-block" th:text="#{nav.slogan}">Share your story</div>
                     </div>
                     <div class="header-block order-lg-12">
                         <a href="#top" class="btn btn-link btn-icon header-btn float-right d-lg-none show collapsed"
