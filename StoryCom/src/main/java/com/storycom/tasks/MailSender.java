@@ -5,8 +5,7 @@ import com.storycom.beans.settings.EmailSettings;
 import com.storycom.entity.Mail;
 import com.storycom.entity.Story;
 import com.storycom.entity.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,10 +20,9 @@ import javax.annotation.PostConstruct;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+@Slf4j
 @Component
 public class MailSender {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

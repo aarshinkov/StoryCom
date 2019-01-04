@@ -6,8 +6,7 @@ import com.storycom.entity.User;
 import com.storycom.repository.CountriesRepository;
 import com.storycom.repository.UsersRepository;
 import com.storycom.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -23,11 +22,10 @@ import javax.validation.Valid;
 import java.sql.CallableStatement;
 import java.util.Objects;
 
+@Slf4j
 @Controller
 @RequestMapping(value = "/settings")
 public class SettingsController extends Base {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String GLOBAL_MENU = "settings";
 

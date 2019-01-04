@@ -1,5 +1,6 @@
 package com.storycom.entity;
 
+import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+@Data
 @Entity
 @Table(name = "MAILBOX")
 @DynamicUpdate
@@ -35,53 +37,4 @@ public class Mail implements Serializable {
     @Column(name = "CONTENT")
     @NotNull
     private String content;
-
-    @Override
-    public String toString() {
-        return "Mail: mailId=" + mailId +
-                ", sender=" + sender +
-                ", receivers=" + receivers +
-                ", subject=" + subject +
-                ", content=" + content;
-    }
-
-    public Integer getMailId() {
-        return mailId;
-    }
-
-    public void setMailId(Integer mailId) {
-        this.mailId = mailId;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public String getReceivers() {
-        return receivers;
-    }
-
-    public void setReceivers(String receivers) {
-        this.receivers = receivers;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 }

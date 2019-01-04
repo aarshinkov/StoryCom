@@ -3,8 +3,7 @@ package com.storycom.security;
 import com.storycom.entity.Role;
 import com.storycom.entity.User;
 import com.storycom.repository.UsersRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UsersRepository usersRepository;
@@ -53,10 +51,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRolename()));
         }
 
-        StoryUser storyUser = new StoryUser(username, user.getPassword(),
+        return new StoryUser(username, user.getPassword(),
                 true, true, true, true,
                 authorities, user.getFirstName(), user.getLastName(), user.getUserId());
-
-        return storyUser;
     }
 }

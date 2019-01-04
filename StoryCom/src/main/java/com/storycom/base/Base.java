@@ -3,8 +3,7 @@ package com.storycom.base;
 import com.storycom.entity.User;
 import com.storycom.repository.UsersRepository;
 import com.storycom.security.StoryUser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -15,6 +14,7 @@ import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+@Slf4j
 public class Base {
     @Resource(name = "messageSource")
     private MessageSource messageSource;
@@ -23,8 +23,6 @@ public class Base {
     private UsersRepository usersRepository;
 
     private DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     protected String getMessage(String key) {
         return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());

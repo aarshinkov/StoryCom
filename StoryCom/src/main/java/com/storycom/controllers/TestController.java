@@ -7,8 +7,7 @@ import com.storycom.entity.User;
 import com.storycom.repository.CountriesRepository;
 import com.storycom.repository.StoriesRepository;
 import com.storycom.repository.UsersRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,11 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping(value = "/test")
 public class TestController extends Base {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private StoriesRepository storiesRepository;

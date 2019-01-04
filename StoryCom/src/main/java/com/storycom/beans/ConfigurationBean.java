@@ -2,8 +2,7 @@ package com.storycom.beans;
 
 import com.storycom.base.Base;
 import com.storycom.beans.settings.EmailSettings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,9 +11,8 @@ import org.springframework.scheduling.annotation.Async;
 
 import javax.annotation.PostConstruct;
 
+@Slf4j
 public class ConfigurationBean extends Base {
-
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ApplicationContext appContext;

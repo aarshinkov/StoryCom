@@ -1,17 +1,15 @@
 package com.storycom.controllers;
 
 import com.storycom.base.Base;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@Slf4j
 @Controller
 public class HomeController extends Base {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String GLOBAL_MENU = "home";
 

@@ -1,10 +1,13 @@
 package com.storycom.entity;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Data
 @Entity
 @Table(name = "COUNTRIES")
 public class Country {
@@ -15,20 +18,4 @@ public class Country {
 
     @Column(name = "COUNTRY_FULL")
     private String countryFull;
-
-    public String getCountryName() {
-        return countryName;
-    }
-
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
-    }
-
-    public String getCountryFull() {
-        return countryFull;
-    }
-
-    public void setCountryFull(String countryFull) {
-        this.countryFull = countryFull;
-    }
 }

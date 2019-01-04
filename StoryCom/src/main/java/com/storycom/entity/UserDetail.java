@@ -1,7 +1,10 @@
 package com.storycom.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "USER_DETAILS")
 public class UserDetail {
@@ -30,75 +33,4 @@ public class UserDetail {
 
     @Column(name = "INSTAGRAM")
     private String instagram;
-
-    @Override
-    public String toString() {
-        return "UserDetail: userDetailId='" + userDetailId +
-                "', gender='" + gender +
-                "', country='" + country +
-                "', facebook='" + facebook +
-                "', twitter='" + twitter +
-                "', youtube='" + youtube +
-                "', instagram='" + instagram + "'";
-    }
-
-    public String getGenderText() {
-        return gender.equalsIgnoreCase("m") ? "Male" : "Female";
-    }
-
-    public Integer getUserDetailId() {
-        return userDetailId;
-    }
-
-    public void setUserDetailId(Integer userDetailId) {
-        this.userDetailId = userDetailId;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    public String getFacebook() {
-        return facebook;
-    }
-
-    public void setFacebook(String facebook) {
-        this.facebook = facebook;
-    }
-
-    public String getTwitter() {
-        return twitter;
-    }
-
-    public void setTwitter(String twitter) {
-        this.twitter = twitter;
-    }
-
-    public String getYoutube() {
-        return youtube;
-    }
-
-    public void setYoutube(String youtube) {
-        this.youtube = youtube;
-    }
-
-    public String getInstagram() {
-        return instagram;
-    }
-
-    public void setInstagram(String instagram) {
-        this.instagram = instagram;
-    }
 }

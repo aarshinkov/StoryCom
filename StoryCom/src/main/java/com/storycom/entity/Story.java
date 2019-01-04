@@ -1,10 +1,13 @@
 package com.storycom.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "STORIES")
 public class Story {
@@ -44,90 +47,4 @@ public class Story {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private User user;
-
-    @Override
-    public String toString() {
-        return "Story{" +
-                "storyId=" + storyId +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", comments=" + comments +
-                ", views=" + views +
-                ", likes=" + likes +
-                ", createdOn=" + createdOn +
-                ", user=" + user +
-                '}';
-    }
-
-    public Integer getStoryId() {
-        return storyId;
-    }
-
-    public void setStoryId(Integer storyId) {
-        this.storyId = storyId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Integer getComments() {
-        return comments;
-    }
-
-    public void setComments(Integer comments) {
-        this.comments = comments;
-    }
-
-    public Integer getViews() {
-        return views;
-    }
-
-    public void setViews(Integer views) {
-        this.views = views;
-    }
-
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

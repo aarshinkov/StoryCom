@@ -3,8 +3,7 @@ package com.storycom.services;
 import com.storycom.entity.Story;
 import com.storycom.entity.User;
 import com.storycom.repository.StoriesRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -13,10 +12,9 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.util.Objects;
 
+@Slf4j
 @Service
 public class StoriesServiceImpl implements StoriesService {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

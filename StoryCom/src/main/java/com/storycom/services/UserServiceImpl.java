@@ -4,8 +4,7 @@ import com.storycom.domain.Password;
 import com.storycom.domain.RegisterUser;
 import com.storycom.entity.User;
 import com.storycom.security.StoryUser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,10 +15,9 @@ import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.Objects;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

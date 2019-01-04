@@ -7,8 +7,7 @@ import com.storycom.repository.StoriesRepository;
 import com.storycom.repository.UsersRepository;
 import com.storycom.services.MailService;
 import com.storycom.services.StoriesService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping(value = "/story")
 public class StoriesController extends Base {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String GLOBAL_MENU = "story";
 

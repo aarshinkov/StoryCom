@@ -4,8 +4,7 @@ import com.storycom.base.Base;
 import com.storycom.domain.RegisterUser;
 import com.storycom.entity.User;
 import com.storycom.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 public class LoginController extends Base {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UserService userService;

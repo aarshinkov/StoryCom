@@ -1,7 +1,6 @@
 package com.storycom.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
@@ -10,9 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     public CustomLogoutSuccessHandler(String defaultTargetURL) {
         this.setDefaultTargetUrl(defaultTargetURL);

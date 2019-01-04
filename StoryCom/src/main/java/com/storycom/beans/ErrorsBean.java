@@ -1,8 +1,7 @@
 package com.storycom.beans;
 
 import com.storycom.base.Base;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -11,8 +10,8 @@ import org.springframework.security.authentication.LockedException;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 public class ErrorsBean extends Base {
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private HttpServletRequest request;
