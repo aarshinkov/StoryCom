@@ -22,11 +22,14 @@
                     <!--th:href="@{/login}" href="#">Login</a>-->
                 </nav>
                 <div class="header-divider header-divider-sm"></div>
-                <div class="dropdown dropdowns-no-carets">
+                <div class="dropdown dropdowns-no-carets d-none d-sm-block">
                     <a href="#" class="nav-link text-sm p-0 dropdown-toggle ml-1" data-toggle="dropdown">
-                        <i class="flag-icon flag-icon-gb"></i>
+                        <i class="flag-icon flag-icon-gb" th:if="#{system.lang.curr} eq 'en'"></i>
+                        <i class="flag-icon flag-icon-bg" th:if="#{system.lang.curr} eq 'bg'"></i>
+                        <i class="flag-icon flag-icon-de" th:if="#{system.lang.curr} eq 'de'"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-md rounded dropdown-menu-arrow border-w-2 ml-2-neg">
+                    <div class="dropdown-menu dropdown-menu-md rounded dropdown-menu-arrow border-w-2 ml-2-neg"
+                         style="z-index: 1500;">
                         <a href="?lang=en" class="dropdown-item">
                             <i class="flag-icon flag-icon-gb"></i>
                             <span th:text="#{nav.lang.en}">English</span>
@@ -37,9 +40,19 @@
                         </a>
                         <a href="?lang=de" class="dropdown-item">
                             <i class="flag-icon flag-icon-de"></i>
-                            <span th:text="#{nav.lang.de}">Deutsch</span>
+                            <span th:text="#{nav.lang.de}">German</span>
                         </a>
                     </div>
+                </div>
+                <div class="d-block d-sm-none">
+                    <form action="">
+                        <label class="sr-only" for="langSelect">Language</label>
+                        <select id="langSelect" class="form-control" style="padding-top: 0; padding-bottom: 0; height: inherit;" onchange="this.form.submit()" name="lang">
+                            <option value="en" th:selected="#{system.lang.curr} eq 'en'">EN</option>
+                            <option value="bg" th:selected="#{system.lang.curr} eq 'bg'">BG</option>
+                            <option value="de" th:selected="#{system.lang.curr} eq 'de'">DE</option>
+                        </select>
+                    </form>
                 </div>
             </div>
             <div class="header-block-flex order-2">
@@ -151,12 +164,14 @@
 
                                 <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                                     <a href="#" class="nav-link dropdown-toggle animated dropdown"
-                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false">Settings</a>
+                                       data-toggle="dropdown" data-hover="dropdown" aria-expanded="false"
+                                       th:text="#{nav.settings}">Settings</a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" th:classappend="${submenu eq 'profile'} ? 'active'"
                                            href="#" th:href="@{/settings/profile}" th:text="#{nav.settings.profile}">Profile</a>
                                         <a class="dropdown-item" th:classappend="${submenu eq 'details'} ? 'active'"
-                                           href="#" th:href="@{/settings/details}" th:text="#{nav.settings.details}">User details</a>
+                                           href="#" th:href="@{/settings/details}" th:text="#{nav.settings.details}">User
+                                            details</a>
                                         <a class="dropdown-item" th:classappend="${submenu eq 'password'} ? 'active'"
                                            href="#" th:href="@{/settings/changepass}"
                                            th:text="#{nav.settings.password}">Profile</a>

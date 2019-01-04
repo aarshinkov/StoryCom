@@ -15,24 +15,30 @@
         </div>
 
         <div class="col-md-9 order-md-2 order-1">
-            <h2>Details</h2>
+            <h2 th:text="#{settings.details.title}">Details</h2>
             <hr/>
 
             <form action="#" th:action="@{/settings/details}" th:object="${user}" method="post">
 
-                <h4>Personal</h4>
+                <h4 th:text="#{settings.details.personal.title}">Personal</h4>
                 <hr/>
                 <div class="form-group row">
                     <div class="col-lg-2 col-md-3 col-12">
                         <label for="gender">
-                            <span>Gender</span>
+                            <span th:text="#{settings.details.personal.gender}">Gender</span>
                         </label>
                     </div>
                     <div class="col-lg-10 col-md-9 col-12">
                         <select id="gender" class="form-control form-control-rounded" th:field="*{userDetail.gender}">
-                            <option value="" th:selected="${user.userDetail.gender} eq null">Don't specify</option>
-                            <option value="m" th:selected="${user.userDetail.gender} eq 'm'">Male</option>
-                            <option value="f" th:selected="${user.userDetail.gender} eq 'f'">Female</option>
+                            <option value="" th:selected="${user.userDetail.gender} eq null"
+                                    th:text="#{settings.details.personal.gender.unknown}">Don't specify
+                            </option>
+                            <option value="m" th:selected="${user.userDetail.gender} eq 'm'"
+                                    th:text="#{settings.details.personal.gender.male}">Male
+                            </option>
+                            <option value="f" th:selected="${user.userDetail.gender} eq 'f'"
+                                    th:text="#{settings.details.personal.gender.female}">Female
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -40,7 +46,7 @@
                 <div class="form-group row">
                     <div class="col-lg-2 col-md-3 col-12">
                         <label for="country">
-                            <span>Country</span>
+                            <span th:text="#{settings.details.personal.country}">Country</span>
                         </label>
                     </div>
                     <div class="col-lg-10 col-md-9 col-12">
@@ -55,7 +61,7 @@
                     </div>
                 </div>
 
-                <h4>Social</h4>
+                <h4 th:text="#{settings.details.social.title}">Social</h4>
                 <hr/>
                 <div th:unless="${user.userDetail} eq null" th:remove="tag">
                     <div class="form-group row">
@@ -63,16 +69,18 @@
                             <label class="custom-social-label" for="facebook">
                                 <a class="text-brand-facebook"
                                    th:href="'https://www.facebook.com/' + ${user.userDetail.facebook}" target="_blank"
-                                   href="#" th:unless="${user.userDetail.facebook} eq null">Facebook</a>
+                                   href="#" th:unless="${user.userDetail.facebook} eq null"
+                                   th:text="#{settings.details.social.facebook.label}">Facebook</a>
                                 <span class="text-brand-facebook"
-                                      th:if="${user.userDetail.facebook} eq null">Facebook</span>
+                                      th:if="${user.userDetail.facebook} eq null"
+                                      th:text="#{settings.details.social.facebook.label}">Facebook</span>
                             </label>
                         </div>
                         <div class="col-lg-10 col-md-9 col-12">
                             <input type="text" id="facebook"
                                    class="form-control form-control-rounded text-brand-facebook"
                                    th:field="*{userDetail.facebook}" th:value="${user.userDetail.facebook}"
-                                   placeholder="Facebook account"/>
+                                   th:placeholder="#{settings.details.social.facebook.placeholder}"/>
                         </div>
                     </div>
 
@@ -81,15 +89,17 @@
                             <label class="custom-social-label" for="twitter">
                                 <a class="text-brand-twitter"
                                    th:href="'https://twitter.com/' + ${user.userDetail.twitter}" target="_blank"
-                                   href="#" th:unless="${user.userDetail.twitter} eq null">Twitter</a>
+                                   href="#" th:unless="${user.userDetail.twitter} eq null"
+                                   th:text="#{settings.details.social.twitter.label}">Twitter</a>
                                 <span class="text-brand-twitter"
-                                      th:if="${user.userDetail.twitter} eq null">Twitter</span>
+                                      th:if="${user.userDetail.twitter} eq null"
+                                      th:text="#{settings.details.social.twitter.label}">Twitter</span>
                             </label>
                         </div>
                         <div class="col-lg-10 col-md-9 col-12">
                             <input type="text" id="twitter" class="form-control form-control-rounded text-brand-twitter"
                                    th:field="*{userDetail.twitter}" th:value="${user.userDetail.twitter}"
-                                   placeholder="Twitter account"/>
+                                   th:placeholder="#{settings.details.social.twitter.placeholder}"/>
                         </div>
                     </div>
 
@@ -98,15 +108,17 @@
                             <label class="custom-social-label" for="youtube">
                                 <a class="text-brand-youtube"
                                    th:href="'https://www.youtube.com/channel/' + ${user.userDetail.youtube}"
-                                   target="_blank" href="#" th:unless="${user.userDetail.youtube} eq null">YouTube</a>
+                                   target="_blank" href="#" th:unless="${user.userDetail.youtube} eq null"
+                                   th:text="#{settings.details.social.youtube.label}">YouTube</a>
                                 <span class="text-brand-youtube"
-                                      th:if="${user.userDetail.youtube} eq null">YouTube</span>
+                                      th:if="${user.userDetail.youtube} eq null"
+                                      th:text="#{settings.details.social.youtube.label}">YouTube</span>
                             </label>
                         </div>
                         <div class="col-lg-10 col-md-9 col-12">
                             <input type="text" id="youtube" class="form-control form-control-rounded text-brand-youtube"
                                    th:field="*{userDetail.youtube}" th:value="${user.userDetail.youtube}"
-                                   placeholder="YouTube account"/>
+                                   th:placeholder="#{settings.details.social.youtube.placeholder}"/>
                         </div>
                     </div>
 
@@ -116,16 +128,18 @@
                                 <a class="text-brand-instagram"
                                    th:href="'https://www.instagram.com/' + ${user.userDetail.instagram}"
                                    target="_blank" href="#"
-                                   th:unless="${user.userDetail.instagram} eq null">Instagram</a>
+                                   th:unless="${user.userDetail.instagram} eq null"
+                                   th:text="#{settings.details.social.instagram.label}">Instagram</a>
                                 <span class="text-brand-instagram"
-                                      th:if="${user.userDetail.instagram} eq null">Instagram</span>
+                                      th:if="${user.userDetail.instagram} eq null"
+                                      th:text="#{settings.details.social.instagram.label}">Instagram</span>
                             </label>
                         </div>
                         <div class="col-lg-10 col-md-9 col-12">
                             <input type="text" id="instagram"
                                    class="form-control form-control-rounded text-brand-instagram"
                                    th:field="*{userDetail.instagram}" th:value="${user.userDetail.instagram}"
-                                   placeholder="Instagram account"/>
+                                   th:placeholder="#{settings.details.social.instagram.placeholder}"/>
                         </div>
                     </div>
                 </div>
@@ -133,12 +147,12 @@
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <button type="submit" class="btn btn-primary btn-md d-none d-md-block">
                     <i class="fas fa-save"></i>
-                    <span>Update details</span>
+                    <span th:text="#{settings.details.button}">Save details</span>
                 </button>
 
                 <button type="submit" class="mb-1 btn btn-block btn-primary btn-rounded btn-lg d-block d-md-none">
                     <i class="fas fa-save"></i>
-                    <span>Update details</span>
+                    <span th:text="#{settings.details.button}">Save details</span>
                 </button>
             </form>
 

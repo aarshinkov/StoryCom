@@ -8,11 +8,11 @@
 
 <div id="submenuDiv" class="sidebar" style="margin-top: 13px;">
     <ul class="nav nav-section-menu mb-4 py-3">
-        <li class="nav-header">Menu</li>
+        <li class="nav-header" th:text="#{settings.submenu.label}">Menu</li>
         <li>
             <a th:href="@{/settings/profile}" href="#" class="nav-link"
                th:classappend="${submenu eq 'profile'} ? 'active'">
-                <span>Profile</span>
+                <span th:text="#{nav.settings.profile}">Profile</span>
                 <i class="d-none d-md-block fa fa-angle-right"></i>
                 <i class="d-block d-md-none fa fa-angle-left"></i>
             </a>
@@ -20,7 +20,7 @@
         <li>
             <a th:href="@{/settings/details}" href="#" class="nav-link"
                th:classappend="${submenu eq 'details'} ? 'active'">
-                <span>User details</span>
+                <span th:text="#{nav.settings.details}">User details</span>
                 <i class="d-none d-md-block fa fa-angle-right"></i>
                 <i class="d-block d-md-none fa fa-angle-left"></i>
             </a>
@@ -28,7 +28,7 @@
         <li>
             <a th:href="@{/settings/changepass}" href="#" class="nav-link"
                th:classappend="${submenu eq 'password'} ? 'active'">
-                <span>Change password</span>
+                <span th:text="#{nav.settings.password}">Change password</span>
                 <i class="d-none d-md-block fa fa-angle-right"></i>
                 <i class="d-block d-md-none fa fa-angle-left"></i>
             </a>
