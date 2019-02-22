@@ -9,8 +9,8 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <!--<param-value>classpath*:spring/resource-config.xml</param-value>-->
-        <param-value>classpath*:spring/resource-config.xml, classpath*:spring/security-config.xml</param-value>
+        <param-value>classpath*:spring/resource-config.xml</param-value>
+        <!--<param-value>classpath*:spring/resource-config.xml, classpath*:spring/security-config.xml</param-value>-->
     </context-param>
 
     <listener>
