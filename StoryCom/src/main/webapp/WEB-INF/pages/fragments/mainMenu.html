@@ -47,7 +47,10 @@
                 <div class="d-block d-sm-none">
                     <form action="">
                         <label class="sr-only" for="langSelect">Language</label>
-                        <select id="langSelect" class="form-control" style="padding-top: 0; padding-bottom: 0; height: inherit;" onchange="this.form.submit()" name="lang">
+                        <select class="form-control" id="langSelect"
+                                name="lang"
+                                onchange="this.form.submit()"
+                                style="padding-top: 0; padding-bottom: 0; height: inherit;">
                             <option value="en" th:selected="#{system.lang.curr} eq 'en'">EN</option>
                             <option value="bg" th:selected="#{system.lang.curr} eq 'bg'">BG</option>
                             <option value="de" th:selected="#{system.lang.curr} eq 'de'">DE</option>
@@ -57,7 +60,8 @@
             </div>
             <div class="header-block-flex order-2">
                 <span class="d-none d-md-block" sec:authorize="isAuthenticated()"
-                      th:text="#{nav.welcome(${@usersBean.storyPrincipal.getFullName()})}">Hello, name</span>
+                      th:text="#{nav.welcome(${@usersBean.storyPrincipal.getFirstName()})}">Hello, name</span>
+                <!--th:text="#{nav.welcome(${@usersBean.storyPrincipal.getFullName()})}">Hello, name</span>-->
                 <a class="nav-link text-sm text-uppercase" sec:authorize="isAuthenticated()"
                    onclick="$('#formLogout').submit();" th:text="#{nav.logout}">Logout</a>
 
