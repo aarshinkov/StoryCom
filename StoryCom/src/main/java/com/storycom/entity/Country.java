@@ -1,21 +1,25 @@
 package com.storycom.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "COUNTRIES")
-public class Country {
+@Table(name = "countries")
+public class Country implements Serializable {
 
     @Id
-    @Column(name = "COUNTRY_NAME")
+    @Column(name = "country_name")
     private String countryName;
 
-    @Column(name = "COUNTRY_FULL")
+    @Column(name = "country_full")
     private String countryFull;
 }

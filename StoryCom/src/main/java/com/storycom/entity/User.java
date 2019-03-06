@@ -2,6 +2,8 @@ package com.storycom.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,49 +14,49 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User implements Serializable {
 
     @Id
-    @Column(name = "USER_ID")
-    @SequenceGenerator(name = "SEQ_GEN_USER", sequenceName = "S_USERS", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN_USER")
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
-    @Column(name = "USERNAME")
+    @Column(name = "username")
     @Size(min = 4, max = 50)
     @NotNull
     private String username;
 
-    @Column(name = "FIRST_NAME")
+    @Column(name = "first_name")
     @Size(min = 4, max = 100)
     @NotNull
     private String firstName;
 
-    @Column(name = "LAST_NAME")
+    @Column(name = "last_name")
 //    @Size(min = 4, max = 100)
 //    @NotNull
     private String lastName;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     @Size(min = 4, max = 100)
     @JsonIgnore
     private String password;
 
-    @Column(name = "EMAIL")
+    @Column(name = "email")
     @Size(max = 200)
     @Email
     @NotEmpty
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_DETAIL_ID")
+    @JoinColumn(name = "user_detail_id")
     private UserDetail userDetail;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "USER_ROLES", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLENAME"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rolename"))
     private List<Role> roles = new ArrayList<>();
 
     public String getUserFullName() {

@@ -7,7 +7,7 @@
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--<import resource="datasource-config.xml"/>-->
+    <import resource="datasource-config.xml"/>
 
     <mvc:resources mapping="/resources/**" location="WEB-INF/resources/"/>
 

@@ -1,12 +1,15 @@
 package com.storycom.security;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
-@Data
+@Getter
+@Setter
 public class StoryUser extends User {
     private Integer userId;
     private String firstName;
