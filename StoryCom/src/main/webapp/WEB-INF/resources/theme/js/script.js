@@ -39,19 +39,19 @@ var Globals = {
 // =============================================================== 
 
 (function($) {
-  $.extend($.fn, {    
+  $.extend($.fn, {
     // ----------------------------------------------------------------
     // Trigger callback when fakeLoader is loaded
     // ----------------------------------------------------------------
     isPageLoaderDone: function(callback) {
       var $loader = $('[data-toggle="page-loader"]');
       var triggerCallback = function() {
-          $('html').addClass('.page-loader-done');
+        $('html').addClass('.page-loader-done');
 
-          if (callback && typeof(callback) === "function") {
-            callback();
-          }
-        };
+        if (callback && typeof(callback) === "function") {
+          callback();
+        }
+      };
 
       if ($loader.length === 0 || $loader.css('display') == 'none') {
         triggerCallback();
@@ -96,11 +96,11 @@ var Globals = {
         }
       }
     },
-    
+
     refreshWaypoints: function() {
       if (typeof jQuery.fn.waypoint !== 'undefined') {
         Waypoint.refreshAll();
-      }      
+      }
     },
 
     // ----------------------------------------------------------------
@@ -134,33 +134,31 @@ var Globals = {
           if ($body.hasClass('header-compact-sticky')) {
             offset = offset - 35;
           }
-          
+
           if ($body.data('offset-elements')) {
             $($body.data('offset-elements'), context).each(function() {
               offset += $(this).outerHeight();
             });
           }
-          
+
           return offset;
         };
-        
+
         var customActiveSpyClass = function(active) {
           scrollLinks.each(function() {
             var $t = $(this);
             var customActive = $t.data('active-class') || null;
-            
+
             if (active === null && customActive !== null) {
-              $t.removeClass(customActive);  
-            }
-            else {
+              $t.removeClass(customActive);
+            } else {
               if ($t.attr('href') == active) {
                 $t.addClass(customActive);
-              }
-              else if (customActive !== null) {
+              } else if (customActive !== null) {
                 $t.removeClass(customActive);
               }
             }
-          });          
+          });
         }
 
         var triggerSpy = function(state) {
@@ -179,7 +177,7 @@ var Globals = {
         };
 
         triggerSpy('init');
-       
+
         // Custom active class per link
         spyData = $body.data('bs.scrollspy');
         if (spyData._activeTarget) {
@@ -193,7 +191,7 @@ var Globals = {
             customActiveSpyClass($body.data('bs.scrollspy')._activeTarget);
           }, 200);
         });
-        
+
         $window.on('resize', function() {
           setTimeout(function() {
             triggerSpy('refresh');
@@ -326,21 +324,21 @@ var Globals = {
       }
       return Config.PLUGINS_LOCALPATH;
     },
-    
+
     // Delays
     // --------------------------------
     delay: function(callback, ms) {
       var timer = 0;
-      clearTimeout (timer);
+      clearTimeout(timer);
       timer = setTimeout(callback, ms);
     },
 
     // Hash from string
     // --------------------------------    
-    hashCode: function(str){
+    hashCode: function(str) {
       var hash = 0;
       for (var i = 0; i < str.length; i++) {
-          hash = ~~(((hash << 5) - hash) + str.charCodeAt(i));
+        hash = ~~(((hash << 5) - hash) + str.charCodeAt(i));
       }
       return hash;
     },
@@ -442,21 +440,21 @@ var Globals = {
           callback();
         }
       }
-    },    
+    },
   });
 })(jQuery);
 
 // Temp fix for https://github.com/vmitsaras/js-offcanvas/commit/ab116f632a092477574d69760ecbe3d7c07b00ab#diff-7399a891b21afad97155db02f6dbd60dL142
-var raf = (function(callback){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          function( callback ){
-            window.setTimeout(callback, 1000 / 60);
-          };
+var raf = (function(callback) {
+  return window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    function(callback) {
+      window.setTimeout(callback, 1000 / 60);
+    };
 })();
 var utils = {};
-utils.raf = function(callback){
+utils.raf = function(callback) {
   raf(callback);
 };
 window.utils = utils;
@@ -472,10 +470,10 @@ window.utils = utils;
         context = $(document);
       }
       $document = $(document);
-      
+
       // Menus need init quick, @see utils.js
       context.themeSubMenus();
-      context.themeScrollMenus();      
+      context.themeScrollMenus();
 
       // ----------------------------------------------------------------
       // Hover effects
@@ -722,8 +720,7 @@ window.utils = utils;
           } else if (active === 'in') {
             if (scrollPersist) {
               $scroll.data('state', 'persist');
-            }
-            else {
+            } else {
               $scroll.data('state', 'out');
               if (scrollEffectOut !== null) {
                 $scroll.addClass('animated ' + scrollEffectOut);
@@ -1389,7 +1386,9 @@ var defaultPlugins = {
 };
 
 // Add to Globals.PLUGINS
-$.extend($.fn, {themePlugins: defaultPlugins});
+$.extend($.fn, {
+  themePlugins: defaultPlugins
+});
 
 
 // Object of plugins to add to Globals.PLUGINS
@@ -1521,21 +1520,20 @@ Globals.PLUGINS.themePluginBootstrapSelect = function(context) {
         var $select = $(this);
         var styles = [];
         var defaultSettings = {
-          "width":"100%",
-          "style":null,
-          "classes":null,
+          "width": "100%",
+          "style": null,
+          "classes": null,
         };
         var customSettings = $select.data('settings') || {};
         var settings = $.extend({}, defaultSettings, customSettings); // @see: https://silviomoreto.github.io/bootstrap-select/options/
         var style = $select.data('style') || null;
-        
+
         if (style) {
           styles.push(style);
         }
         if ($select.hasClass('form-control-lg')) {
           styles.push('btn-lg');
-        }
-        else if ($select.hasClass('form-control-sm')) {
+        } else if ($select.hasClass('form-control-sm')) {
           styles.push('btn-sm');
         }
         if ($select.hasClass('form-control-rounded')) {
@@ -1546,30 +1544,28 @@ Globals.PLUGINS.themePluginBootstrapSelect = function(context) {
             $.each(settings.classes, function(key, value) {
               styles.push(value);
             })
-          }
-          else if (typeof settings.classes == 'string') {
+          } else if (typeof settings.classes == 'string') {
             styles.push(settings.classes);
           }
         }
-        
+
         // Default
         if (styles.length == 0) {
           styles.push('btn-light');
         }
-        
+
         if (styles) {
           settings.style = styles.join(' ');
         }
-        
+
         $select.selectpicker(settings);
       });
     }
   };
-  
+
   if ($selects.length > 0) {
     $document.themeLoadPlugin(
-      ["https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/js/bootstrap-select.min.js"],
-      ["https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/css/bootstrap-select.min.css", "plugin-css/plugin-bootstrap-select.min.css"],
+      ["https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/js/bootstrap-select.min.js"], ["https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/css/bootstrap-select.min.css", "plugin-css/plugin-bootstrap-select.min.css"],
       themePluginBootstrapSelectInit
     );
   }
@@ -1609,7 +1605,7 @@ Globals.PREINITPLUGINS.themePluginClipboard = function(context) {
       var $target = $(target);
       $target.data('clipboard-html-clone', $target.clone().prop('outerHTML'));
     }
-  });  
+  });
 };
 
 // Object of plugins to add to Globals.PLUGINS
@@ -1618,56 +1614,56 @@ Globals.PLUGINS.themePluginClipboard = function(context) {
   // Plugin: Clipboard.js
   // @see: https://clipboardjs.com/
   // ----------------------------------------------------------------
-  
+
   var $clipboards = context.find(clipboardSelectors);
   var formatFactory = function(html) {
     var parse = function(html, tab) {
-        if (!tab) {
-          tab = 0;
+      if (!tab) {
+        tab = 0;
+      }
+      var html = $.parseHTML(html);
+      var formatHtml = new String();
+
+      function setTabs() {
+        var tabs = new String();
+
+        for (i = 0; i < tab; i++) {
+          tabs += '\t';
         }
-        var html = $.parseHTML(html);
-        var formatHtml = new String();   
-
-        function setTabs () {
-            var tabs = new String();
-
-            for (i=0; i < tab; i++){
-              tabs += '\t';
-            }
-            return tabs;    
-        };
+        return tabs;
+      };
 
 
-        $.each( html, function( i, el ) {
-            if (el.nodeName == '#text') {
-                if (($(el).text().trim()).length) {
-                    formatHtml += setTabs() + $(el).text().trim() + '\n';
-                }    
-            } else {
-                var innerHTML = $(el).html().trim();
-                $(el).html(innerHTML.replace('\n', '').replace(/ +(?= )/g, ''));
-                
+      $.each(html, function(i, el) {
+        if (el.nodeName == '#text') {
+          if (($(el).text().trim()).length) {
+            formatHtml += setTabs() + $(el).text().trim() + '\n';
+          }
+        } else {
+          var innerHTML = $(el).html().trim();
+          $(el).html(innerHTML.replace('\n', '').replace(/ +(?= )/g, ''));
 
-                if ($(el).children().length) {
-                    $(el).html('\n' + parse(innerHTML, (tab + 1)) + setTabs());
-                    var outerHTML = $(el).prop('outerHTML').trim();
-                    formatHtml += setTabs() + outerHTML + '\n'; 
 
-                } else {
-                    var outerHTML = $(el).prop('outerHTML').trim();
-                    formatHtml += setTabs() + outerHTML + '\n';
-                }      
-            }
-        });
+          if ($(el).children().length) {
+            $(el).html('\n' + parse(innerHTML, (tab + 1)) + setTabs());
+            var outerHTML = $(el).prop('outerHTML').trim();
+            formatHtml += setTabs() + outerHTML + '\n';
 
-        return formatHtml;
-    };   
-    
-    return parse(html.replace(/(\r\n|\n|\r)/gm," ").replace(/ +(?= )/g,''));
+          } else {
+            var outerHTML = $(el).prop('outerHTML').trim();
+            formatHtml += setTabs() + outerHTML + '\n';
+          }
+        }
+      });
+
+      return formatHtml;
+    };
+
+    return parse(html.replace(/(\r\n|\n|\r)/gm, " ").replace(/ +(?= )/g, ''));
   };
-  
+
   var themePluginClipboardInit = function() {
-    if ($clipboards.length > 0) {      
+    if ($clipboards.length > 0) {
       var clipboard = new Clipboard(clipboardSelectors, {
         text: function(trigger) {
           if ($(trigger).data('clipboard-target-html')) {
@@ -1690,11 +1686,10 @@ Globals.PLUGINS.themePluginClipboard = function(context) {
       });
     }
   };
-  
+
   if ($clipboards.length > 0) {
     $document.themeLoadPlugin(
-      ["https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"],
-      [],
+      ["https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"], [],
       themePluginClipboardInit
     );
   }
@@ -1831,13 +1826,13 @@ Globals.PLUGINS.themePluginCubePortfolio = function(context) {
 
     // singlePage
     singlePageAnimation: 'fade'
-  };  
-  var themePluginCubePortfolioInit = function() {   
+  };
+  var themePluginCubePortfolioInit = function() {
     $cubePortfolios.each(function() {
       var $this = $(this),
         customSettings = $this.data('settings') || {},
         settings = $.extend({}, defaultSettings, customSettings);
-      
+
       $this.data('cbp-settings', settings);
       // Custom callbacks
       settings.singlePageInlineCallback = function(url, element) {
@@ -1900,8 +1895,7 @@ Globals.PLUGINS.themePluginCubePortfolio = function(context) {
                     context.refreshWaypoints();
                   }, 1000);
                 });
-              }
-              else {
+              } else {
                 setTimeout(function() {
                   t.resizeSinglePageInline();
                   t.singlePageInlineIsOpen.call(t);
@@ -1961,30 +1955,30 @@ Globals.PLUGINS.themePluginCubePortfolio = function(context) {
             t.updateSinglePage('AJAX Error! Please refresh the page!');
           });
       };
-      
+
       $this.data('cbp-settings-full', settings);
 
       // If imagesLoaded avaliable use it
       if ($document.imagesLoaded) {
         $this.imagesLoaded(function() {
-          $this.cubeportfolio(settings);  
+          $this.cubeportfolio(settings);
           if (settings.filters) {
             $(settings.filters).addClass('cbp-loaded show');
           }
           $this.addClass('cbp-loaded show');
-          
+
           if (settings.loader) {
             $(settings.loader).addClass('cbp-loaded loaded');
           }
-          
+
           // Refresh waypoints
           context.refreshWaypoints();
         });
       }
     });
   };
-  
-    
+
+
   // @todo - Config builder
   // @todo - live preview
   /*var $cbpDemo = $('[data-cbp-demo]') || null;
@@ -2014,11 +2008,10 @@ Globals.PLUGINS.themePluginCubePortfolio = function(context) {
       buildConfigOutput($configOutput, buildSettings);
     });
   }  */
-  
+
   if ($cubePortfolios.length > 0) {
     $document.themeLoadPlugin(
-      ["https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js", "cubeportfolio-jquery-plugin/cubeportfolio/js/jquery.cubeportfolio.min.js"],
-      ["plugin-css/plugin-magnific-popup.min.css", "plugin-css/plugin-cube-portfolio.min.css", "cubeportfolio-jquery-plugin/cubeportfolio/css/cubeportfolio.min.css"],
+      ["https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js", "cubeportfolio-jquery-plugin/cubeportfolio/js/jquery.cubeportfolio.min.js"], ["plugin-css/plugin-magnific-popup.min.css", "plugin-css/plugin-cube-portfolio.min.css", "cubeportfolio-jquery-plugin/cubeportfolio/css/cubeportfolio.min.css"],
       themePluginCubePortfolioInit
     );
   }
@@ -2115,39 +2108,39 @@ Globals.PLUGINS.themePluginFixTo = function(context) {
         return stickySettings;
       };
 
-    /*! Computed Style - v0.1.0 - 2012-07-19
-    * https://github.com/bbarakaci/computed-style
-    * Copyright (c) 2012 Burak Barakaci; Licensed MIT */
-    var computedStyle = (function() {
+      /*! Computed Style - v0.1.0 - 2012-07-19
+       * https://github.com/bbarakaci/computed-style
+       * Copyright (c) 2012 Burak Barakaci; Licensed MIT */
+      var computedStyle = (function() {
         var computedStyle = {
-            getAll : function(element){
-                return document.defaultView.getComputedStyle(element);
-            },
-            get : function(element, name){
-                return this.getAll(element)[name];
-            },
-            toFloat : function(value){
-                return parseFloat(value, 10) || 0;
-            },
-            getFloat : function(element,name){
-                return this.toFloat(this.get(element, name));
-            },
-            _getAllCurrentStyle : function(element) {
-                return element.currentStyle;
-            }
+          getAll: function(element) {
+            return document.defaultView.getComputedStyle(element);
+          },
+          get: function(element, name) {
+            return this.getAll(element)[name];
+          },
+          toFloat: function(value) {
+            return parseFloat(value, 10) || 0;
+          },
+          getFloat: function(element, name) {
+            return this.toFloat(this.get(element, name));
+          },
+          _getAllCurrentStyle: function(element) {
+            return element.currentStyle;
+          }
         };
 
         if (document.documentElement.currentStyle) {
-            computedStyle.getAll = computedStyle._getAllCurrentStyle;
+          computedStyle.getAll = computedStyle._getAllCurrentStyle;
         }
 
         return computedStyle;
 
-    }());      
-      
+      }());
+
       // Overwrite fixTo function
       var fixToProto = fixto.FixToContainer.prototype;
-      $.extend(fixto.FixToContainer.prototype, {        
+      $.extend(fixto.FixToContainer.prototype, {
         _shouldFix: function() {
           var _sticky = this._$child;
           var _stickySettings = _sticky.data('stickSettings');
@@ -2155,31 +2148,31 @@ Globals.PLUGINS.themePluginFixTo = function(context) {
           var _stickyPersist = _stickySettings.persist || false;
           var _sticking = _sticky.data('sticking') || false;
           var _unsticking = _sticky.data('unsticking') || false;
-          
+
           if (_stickyPersist) {
             return true;
           }
-          
+
           // Already at the top
           var _scroll = $(window).scrollTop();
           var _isStickyHeader = _sticky.find('.header');
           if (_isStickyHeader && _scroll === 0 && _unsticking === false) {
             return false;
           }
-          
+
           var _top = (this._fullOffset('offsetTop', this.child) - this.options.top - this._mindtop()) + _stickyTopOffset;
           if (this._scrollTop < this._parentBottom && this._scrollTop > _top) {
             if (this.options.mindViewport && !this._isViewportAvailable() && _unsticking === false) {
               return false;
             }
-            
+
             if (_sticking === false) {
               return true;
             }
           }
         }
       });
-      
+
       var stickyStart = function(sticky, state) {
         var stickySettings = stickySetSettings(sticky);
         var stickyParent = stickySettings.parent || 'body';
@@ -2189,7 +2182,7 @@ Globals.PLUGINS.themePluginFixTo = function(context) {
         var isStickyHeader = sticky.find('.header') || false;
         var $window = $(window);
         state = state || 'init';
-        
+
         if (isStickyHeader) {
           sticky.wrapInner('<div class="sticky-inner"></div>');
         }
@@ -2246,12 +2239,12 @@ Globals.PLUGINS.themePluginFixTo = function(context) {
       var stickySetPersist = function(sticky, stickySettings) {
         sticky.addClass('is-sticky-persist');
         var stickyInstance = sticky.data('fixto-instance') || null;
-        
-        var persistTop = sticky.prev()[0].getBoundingClientRect().top  + $(window).scrollTop();
+
+        var persistTop = sticky.prev()[0].getBoundingClientRect().top + $(window).scrollTop();
         if (persistTop < 0) {
           persistTop = 0;
         }
-        
+
         if (stickySettings.mind !== '') {
           $(stickySettings.mind).each(function(key, value) {
             var $this = $(value);
@@ -2276,8 +2269,7 @@ Globals.PLUGINS.themePluginFixTo = function(context) {
       });
     };
     $document.themeLoadPlugin(
-      ["https://cdnjs.cloudflare.com/ajax/libs/fixto/0.5.0/fixto.js"],
-      ["plugin-css/plugin-sticky-classes.min.css"],
+      ["https://cdnjs.cloudflare.com/ajax/libs/fixto/0.5.0/fixto.js"], ["plugin-css/plugin-sticky-classes.min.css"],
       themePluginFixToInit
     );
   }
@@ -2516,19 +2508,21 @@ Globals.PLUGINS.themePluginMagnificPopup = function(context) {
           magnificPopupSettingsExtras = $this.data('magnific-popup-settings');
         }
         magnificPopupSettings = jQuery.extend(magnificPopupSettingsDefault, magnificPopupSettingsExtras);
-        
+
         // Pass items on a single item ie. a "View Gallery" button
         if (magnificPopupItems !== null) {
           var items = [];
           $.each(magnificPopupItems.split(','), function(k, img) {
-            items.push({"src": img});
+            items.push({
+              "src": img
+            });
           });
           magnificPopupSettings.items = items;
           magnificPopupSettings.gallery.enabled = true;
           magnificPopupSettings.type = 'image';
           magnificPopupSettings.delegate = null;
         }
-        
+
         $this.magnificPopup(magnificPopupSettings);
 
         // Transitions
@@ -2557,8 +2551,7 @@ Globals.PLUGINS.themePluginMagnificPopup = function(context) {
       });
     };
     $document.themeLoadPlugin(
-      ["magnific-popup/dist/jquery.magnific-popup.min.js"],
-      ["plugin-css/plugin-magnific-popup.min.css", "magnific-popup/dist/magnific-popup.css"],
+      ["magnific-popup/dist/jquery.magnific-popup.min.js"], ["plugin-css/plugin-magnific-popup.min.css", "magnific-popup/dist/magnific-popup.css"],
       themePluginMagnificPopupInit
     );
   }
@@ -2607,7 +2600,7 @@ Globals.PLUGINS.themePluginOffCanvas = function(context) {
       var $sideBarWrap = $('<aside class="js-offcanvas"></aisde>');
       var $excludedContent = $('.jpanel-menu-exclude,.js-off-canvas-exclude,.modal,.colour-switcher') || null;
       $('body').wrapInner($bodyWrap);
-      
+
       // Move any excluded content outside wrapper (.c-offcanvas-content-wrap)
       if ($excludedContent) {
         $excludedContent.appendTo('body');
@@ -2621,7 +2614,7 @@ Globals.PLUGINS.themePluginOffCanvas = function(context) {
         modalClassExtras: "overlay overlay-dark overlay-op-4 overlay-close-cursor",
         targetClassExtras: ""
       };
-  
+
       var enforcedSettings = {
         modalClass: "c-offcanvas-bg",
         contentClass: 'c-offcanvas-content-wrap',
@@ -2650,11 +2643,11 @@ Globals.PLUGINS.themePluginOffCanvas = function(context) {
             setTimeout(function() {
               $(document).data('target-reopen', false);
               targetReopen.data('offcanvas-component').open();
-            }, 500); 
+            }, 500);
           }
         }
       }
- 
+
       $offCanvass.each(function() {
         var $offCanvas = $(this);
         var uniqid = Date.now();
@@ -2663,33 +2656,31 @@ Globals.PLUGINS.themePluginOffCanvas = function(context) {
         var customSettings = $offCanvas.data('settings') || {};
         var settings = $.extend({}, defaultSettings, customSettings, enforcedSettings);
         var targetID;
-        var targetClasses = 'js-offcanvas-target js-offcanvas-target-'+ uniqid;
+        var targetClasses = 'js-offcanvas-target js-offcanvas-target-' + uniqid;
 
-        $offCanvas.addClass('js-offcanvas-trigger js-offcanvas-trigger-'+ uniqid);
-        settings.triggerButton = '.js-offcanvas-trigger-'+ uniqid;  
+        $offCanvas.addClass('js-offcanvas-trigger js-offcanvas-trigger-' + uniqid);
+        settings.triggerButton = '.js-offcanvas-trigger-' + uniqid;
 
         if ($target) {
           // Target must have ID
           if (typeof $target.attr('id') === 'undefined') {
-            targetID = 'js-offcanvas-target-'+ uniqid;
-          }
-          else {
+            targetID = 'js-offcanvas-target-' + uniqid;
+          } else {
             targetID = $target.attr('id');
           }
-          
+
           if (settings.cloneTarget) {
             // clone target not move
             targetID += '-clone';
             var $targetClone = $target.clone(true);
-            $sideBarWrap.addClass(targetClasses +' js-offcanvas-target-clone').attr('id', targetID).append($targetClone).appendTo('body');
+            $sideBarWrap.addClass(targetClasses + ' js-offcanvas-target-clone').attr('id', targetID).append($targetClone).appendTo('body');
             $target = $sideBarWrap;
-          }
-          else {
+          } else {
             // Move outside of wrap
             $target.hide();
             $target.attr('id', targetID).addClass(targetClasses).appendTo('body').show();
           }
-          
+
           $offCanvas.data('offcanvas-trigger', targetID);
           $offCanvas.data('offcanvas-target', $target);
 
@@ -2697,17 +2688,17 @@ Globals.PLUGINS.themePluginOffCanvas = function(context) {
           settings.$trigger = $offCanvas;
           $offCanvas.data('js-offcanvas-settings', settings);
           $target.offcanvas(settings);
-          
+
           // Toggle bug if already open
           $offCanvas.off("click");
-          $offCanvas.on("click", function(e) { 
+          $offCanvas.on("click", function(e) {
             // Item already open, close it & init opening again
             var $this = $(this);
             var $target = $this.data('offcanvas-target');
             var $targets = $('.js-offcanvas-target');
             var targetOpen = $target.hasClass('is-open') || false;
             var targetDataOffcanvas = $target.data('offcanvas-component');
-            
+
             if ($('body').hasClass('has-offcanvas--visible')) {
               // Already open
               if (!targetOpen) {
@@ -2719,19 +2710,17 @@ Globals.PLUGINS.themePluginOffCanvas = function(context) {
                 tDataOffcanvas.close();
               });
               return false;
-            }
-            else {
+            } else {
               // Fire defaults
               targetDataOffcanvas.open();
             }
           });
         }
-      });     
+      });
     };
-    
+
     $document.themeLoadPlugin(
-      ["https://unpkg.com/js-offcanvas@1.2.8/dist/_js/js-offcanvas.pkgd.js"],
-      ["https://unpkg.com/js-offcanvas@1.2.8/dist/_css/prefixed/js-offcanvas.css", "plugin-css/plugin-offcanvas.min.css"],
+      ["https://unpkg.com/js-offcanvas@1.2.8/dist/_js/js-offcanvas.pkgd.js"], ["https://unpkg.com/js-offcanvas@1.2.8/dist/_css/prefixed/js-offcanvas.css", "plugin-css/plugin-offcanvas.min.css"],
       themePluginOffCanvasInit
     );
   }
@@ -2792,8 +2781,7 @@ Globals.PLUGINS.themePluginOwlCarousel = function(context) {
       });
     };
     $document.themeLoadPlugin(
-      ["https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"],
-      ["plugin-css/plugin-owl-carousel.min.css", "https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css", "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"],
+      ["https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"], ["plugin-css/plugin-owl-carousel.min.css", "https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css", "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"],
       themePluginOwlCarouselInit
     );
   }
@@ -3006,14 +2994,14 @@ Globals.PLUGINS.themePluginZoom = function(context) {
 
 (function($) {
   $.extend($.fn, {
-    
+
     themePreInit: function() {
       // Before DOM ready
       $.each(Globals.PREINITPLUGINS, function(key, func) {
         if (typeof func === 'function') {
           func($(this));
         }
-      });      
+      });
     },
 
     // ===============================================================
@@ -3106,4 +3094,3 @@ $(document).ready(function() {
   // Init theme functions
   $(document).themeInit();
 });
-
