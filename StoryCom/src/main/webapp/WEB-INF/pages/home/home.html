@@ -3,12 +3,13 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/contentTemplate}">
-<head>
-    <title th:text="#{title.home.general} + ' | ' + #{app.title}"></title>
-</head>
-<body>
-<div layout:fragment="contentDiv">
-    <p>Home page</p>
-</div>
-</body>
+    <head>
+        <title th:text="#{title.home.general} + ' | ' + #{app.title}"></title>
+    </head>
+    <body>
+        <div layout:fragment="contentDiv">
+            <p>Home page</p>
+            <!--<h3 class="font-weight-normal" data-typed="Here"></h3>-->
+        </div>
+    </body>
 </html>

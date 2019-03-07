@@ -1,0 +1,22 @@
+* {
+    /*font-family: 'Quicksand', sans-serif;*/
+    font-family: 'Comfortaa', cursive;
+    /*font-family: 'Neucha', cursive;*/
+    /*font-family: 'Jura', sans-serif;*/
+    /*font-family: 'Gabriela', serif;*/
+    /*font-family: 'Cuprum', sans-serif;*/
+
+    font-size: 102%;
+}
+
+.topbar {
+    background-color: #84bae1;
+    padding: 0;
+}
+
+.topbar ul li a {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    padding-left: 16px !important;;
+    font-size: 20px;
+}

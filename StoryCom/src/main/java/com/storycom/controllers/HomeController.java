@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
@@ -13,10 +14,14 @@ public class HomeController extends Base {
 
     private static final String GLOBAL_MENU = "home";
 
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        model.addAttribute("globalMenu", GLOBAL_MENU);
+    }
+
     @GetMapping(value = "/")
     public String home(Model model) {
-
-        model.addAttribute("globalMenu", GLOBAL_MENU);
+        
         model.addAttribute("submenu", "home");
 
         return "home/home";
@@ -24,8 +29,7 @@ public class HomeController extends Base {
 
     @GetMapping(value = "/about")
     public String about(Model model) {
-
-        model.addAttribute("globalMenu", GLOBAL_MENU);
+        
         model.addAttribute("submenu", "about");
 
         return "home/about";
@@ -34,7 +38,6 @@ public class HomeController extends Base {
     @GetMapping(value = "/contact")
     public String prepareContact(Model model) {
 
-        model.addAttribute("globalMenu", GLOBAL_MENU);
         model.addAttribute("submenu", "contact");
 
         return "home/contact";
@@ -48,7 +51,6 @@ public class HomeController extends Base {
     @GetMapping(value = "/timeline")
     public String timeline(Model model) {
 
-        model.addAttribute("globalMenu", GLOBAL_MENU);
         model.addAttribute("submenu", "timeline");
 
         return "home/timeline";
