@@ -1,4 +1,5 @@
 [![Build Status](https://semaphoreci.com/api/v1/aarshinkov/storycom/branches/master/badge.svg)](https://semaphoreci.com/aarshinkov/storycom)
+[![CircleCI](https://circleci.com/gh/aarshinkov/StoryCom/tree/master.svg?style=svg)](https://circleci.com/gh/aarshinkov/StoryCom/tree/master)
 
 # StoryCom
 
