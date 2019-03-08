@@ -1,3 +1,5 @@
+[![Build Status](https://semaphoreci.com/api/v1/aarshinkov/storycom/branches/master/badge.svg)](https://semaphoreci.com/aarshinkov/storycom)
+
 # StoryCom
 
 Share your stories completely anonymous...
