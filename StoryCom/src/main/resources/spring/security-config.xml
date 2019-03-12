@@ -20,14 +20,14 @@
 
         <!--<security:form-login/>-->
         <security:form-login
-                login-processing-url="/authentication"
-                login-page="/login"
-                username-parameter="username"
-                password-parameter="password"
-                default-target-url="/"
-                always-use-default-target="false"
-                authentication-success-handler-ref="customAuthSuccessHandler"
-                authentication-failure-handler-ref="customAuthFailureHandler"/>
+            login-processing-url="/authentication"
+            login-page="/login"
+            username-parameter="username"
+            password-parameter="password"
+            default-target-url="/"
+            always-use-default-target="false"
+            authentication-success-handler-ref="customAuthSuccessHandler"
+            authentication-failure-handler-ref="customAuthFailureHandler"/>
 
         <!--<security:logout-->
         <!--logout-success-url="/"-->

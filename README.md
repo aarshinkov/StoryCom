@@ -1,5 +1,3 @@
-[![CircleCI](https://circleci.com/gh/aarshinkov/StoryCom/tree/master.svg?style=svg)](https://circleci.com/gh/aarshinkov/StoryCom/tree/master)
-
 # StoryCom
 
 Share your stories completely anonymous...
@@ -8,7 +6,7 @@ Share your stories completely anonymous...
 
 Tools used:
 
-1. IntelliJ IDEA Ultimate 2018.2
+1. Apache NetBeans 10.0
 2. Java 8 & JDK 1.8
 3. Maven build tool
 4. Spring 5

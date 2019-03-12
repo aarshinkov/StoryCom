@@ -19,7 +19,7 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
             </props>
@@ -28,11 +28,11 @@
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 
         <!-- For testing -->
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/storycom_dev"/>
-        <property name="username" value="storycom"/>
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:aorcl"/>
+        <property name="username" value="storycom_dev"/>
         <property name="password" value="Story-1234"/>
     </bean>
 

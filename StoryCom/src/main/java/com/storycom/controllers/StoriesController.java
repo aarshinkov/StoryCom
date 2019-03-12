@@ -62,7 +62,7 @@ public class StoriesController extends Base {
 
         storiesService.addStory(story, getUser());
 
-        return "redirect:/stories/search";
+        return "redirect:/story/search";
     }
 
     @GetMapping(value = "/search")

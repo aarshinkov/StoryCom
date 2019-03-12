@@ -48,7 +48,7 @@ public class AdminController extends Base {
         model.addAttribute("globalMenu", GLOBAL_MENU);
         model.addAttribute("submenu", "addUser");
 
-        return "admin/users/createAdmin";
+        return "admin/users/createUser";
     }
 
     @PostMapping(value = "/addUser")
@@ -58,7 +58,7 @@ public class AdminController extends Base {
             model.addAttribute("globalMenu", GLOBAL_MENU);
             model.addAttribute("submenu", "addUser");
 
-            return "admin/users/createAdmin";
+            return "admin/users/createUser";
         }
 
         log.debug("username: " + user.getUsername());
@@ -66,8 +66,7 @@ public class AdminController extends Base {
         log.debug("first name: " + user.getFirstName());
         log.debug("last name: " + user.getLastName());
         log.debug("email: " + user.getEmail());
-        
 
-        return "admin/users/createAdmin";
+        return "admin/users/createUser";
     }
 }

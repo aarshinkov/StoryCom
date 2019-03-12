@@ -6,7 +6,7 @@
 
     <groupId>com.aarshinkov.storycom</groupId>
     <artifactId>story-com</artifactId>
-    <version>1.5.2</version>
+    <version>1.5.3</version>
     <packaging>war</packaging>
 
     <name>StoryCom Web Application</name>
@@ -230,11 +230,17 @@
             <version>6.0.14.Final</version>
         </dependency>
 
-        <!-- MySQL-->
+        <!-- Oracle -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.15</version>
+            <groupId>com.oracle.jdbc</groupId> 
+            <artifactId>ojdbc8</artifactId> 
+            <version>12.2.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>oracle.ucp</groupId>
+            <artifactId>UCP</artifactId>
+            <version>11.2.0.3.0</version>
         </dependency>
 
         <!-- Utilities -->

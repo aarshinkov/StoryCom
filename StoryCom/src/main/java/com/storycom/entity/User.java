@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -50,6 +51,9 @@ public class User implements Serializable {
     @Email
     @NotEmpty
     private String email;
+
+    @Column(name = "created_on")
+    private Date createdOn;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_detail_id")
