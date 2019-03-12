@@ -10,49 +10,56 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
 @Controller
-public class HomeController extends Base {
+public class HomeController extends Base
+{
 
-    private static final String GLOBAL_MENU = "home";
+  private static final String GLOBAL_MENU = "home";
 
-    @ModelAttribute
-    public void addAttributes(Model model) {
-        model.addAttribute("globalMenu", GLOBAL_MENU);
-    }
+  @ModelAttribute
+  public void addAttributes(Model model)
+  {
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+  }
 
-    @GetMapping(value = "/")
-    public String home(Model model) {
-        
-        model.addAttribute("submenu", "home");
+  @GetMapping(value = "/")
+  public String home(Model model)
+  {
 
-        return "home/home";
-    }
+    model.addAttribute("submenu", "home");
 
-    @GetMapping(value = "/about")
-    public String about(Model model) {
-        
-        model.addAttribute("submenu", "about");
+    return "home/home";
+  }
 
-        return "home/about";
-    }
+  @GetMapping(value = "/about")
+  public String about(Model model)
+  {
 
-    @GetMapping(value = "/contact")
-    public String prepareContact(Model model) {
+    model.addAttribute("submenu", "about");
 
-        model.addAttribute("submenu", "contact");
+    return "home/about";
+  }
 
-        return "home/contact";
-    }
+  @GetMapping(value = "/contact")
+  public String prepareContact(Model model)
+  {
 
-    @PostMapping(value = "/contact")
-    public String contactUs(Model model) {
-        return "redirect:/about/contact";
-    }
+    model.addAttribute("submenu", "contact");
 
-    @GetMapping(value = "/timeline")
-    public String timeline(Model model) {
+    return "home/contact";
+  }
 
-        model.addAttribute("submenu", "timeline");
+  @PostMapping(value = "/contact")
+  public String contactUs(Model model)
+  {
+    return "redirect:/about/contact";
+  }
 
-        return "home/timeline";
-    }
+  @GetMapping(value = "/timeline")
+  public String timeline(Model model)
+  {
+
+    model.addAttribute("submenu", "timeline");
+
+    return "home/timeline";
+  }
 }
