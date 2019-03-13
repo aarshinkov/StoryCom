@@ -10,29 +10,31 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "user_details")
-public class UserDetail {
+public class UserDetail
+{
 
-    @Id
-    @Column(name = "user_detail_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userDetailId;
+  @Id
+  @Column(name = "user_detail_id")
+  @SequenceGenerator(name = "SEQ_GEN_USER_DETAILS", sequenceName = "S_USER_DETAILS", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN_USER_DETAILS")
+  private Integer userDetailId;
 
-    @Column(name = "gender")
-    private String gender;
+  @Column(name = "gender")
+  private String gender;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "country_name")
-    private Country country;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "country_name")
+  private Country country;
 
-    @Column(name = "facebook")
-    private String facebook;
+  @Column(name = "facebook")
+  private String facebook;
 
-    @Column(name = "twitter")
-    private String twitter;
+  @Column(name = "twitter")
+  private String twitter;
 
-    @Column(name = "youtube")
-    private String youtube;
+  @Column(name = "youtube")
+  private String youtube;
 
-    @Column(name = "instagram")
-    private String instagram;
+  @Column(name = "instagram")
+  private String instagram;
 }
