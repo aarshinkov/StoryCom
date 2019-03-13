@@ -10,11 +10,11 @@
 <body>
 <div layout:fragment="contentDiv">
     <div class="row">
-        <div class="col-md-3 order-md-1 order-2">
+        <div class="col-md-2 order-md-1 order-2">
             <div th:insert="settings/submenu :: #submenuDiv"></div>
         </div>
 
-        <div class="col-md-9 order-md-2 order-1">
+        <div class="col-md-10 order-md-2 order-1">
             <h2 th:text="#{settings.details.title}">Details</h2>
             <hr/>
 
@@ -70,7 +70,7 @@
                                 <a class="text-brand-facebook"
                                    th:href="'https://www.facebook.com/' + ${user.userDetail.facebook}" target="_blank"
                                    href="#" th:unless="${user.userDetail.facebook} eq null"
-                                   th:text="#{settings.details.social.facebook.label}">Facebook</a>
+                                   th:text="#{settings.details.social.facebook.label}" style="color: #3b5998;">Facebook</a>
                                 <span class="text-brand-facebook"
                                       th:if="${user.userDetail.facebook} eq null"
                                       th:text="#{settings.details.social.facebook.label}">Facebook</span>
@@ -90,7 +90,7 @@
                                 <a class="text-brand-twitter"
                                    th:href="'https://twitter.com/' + ${user.userDetail.twitter}" target="_blank"
                                    href="#" th:unless="${user.userDetail.twitter} eq null"
-                                   th:text="#{settings.details.social.twitter.label}">Twitter</a>
+                                   th:text="#{settings.details.social.twitter.label}" style="color: #00aced;">Twitter</a>
                                 <span class="text-brand-twitter"
                                       th:if="${user.userDetail.twitter} eq null"
                                       th:text="#{settings.details.social.twitter.label}">Twitter</span>
@@ -109,7 +109,7 @@
                                 <a class="text-brand-youtube"
                                    th:href="'https://www.youtube.com/channel/' + ${user.userDetail.youtube}"
                                    target="_blank" href="#" th:unless="${user.userDetail.youtube} eq null"
-                                   th:text="#{settings.details.social.youtube.label}">YouTube</a>
+                                   th:text="#{settings.details.social.youtube.label}" style="color: #bb0000;">YouTube</a>
                                 <span class="text-brand-youtube"
                                       th:if="${user.userDetail.youtube} eq null"
                                       th:text="#{settings.details.social.youtube.label}">YouTube</span>
@@ -129,7 +129,7 @@
                                    th:href="'https://www.instagram.com/' + ${user.userDetail.instagram}"
                                    target="_blank" href="#"
                                    th:unless="${user.userDetail.instagram} eq null"
-                                   th:text="#{settings.details.social.instagram.label}">Instagram</a>
+                                   th:text="#{settings.details.social.instagram.label}" style="color: #517fa4;">Instagram</a>
                                 <span class="text-brand-instagram"
                                       th:if="${user.userDetail.instagram} eq null"
                                       th:text="#{settings.details.social.instagram.label}">Instagram</span>
