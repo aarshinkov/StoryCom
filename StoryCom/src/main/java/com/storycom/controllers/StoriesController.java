@@ -22,161 +22,187 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/story")
-public class StoriesController extends Base {
+@RequestMapping(value = "/stories")
+public class StoriesController extends Base
+{
 
-    private static final String GLOBAL_MENU = "story";
+  private static final String GLOBAL_MENU = "stories";
 
-    @Autowired
-    private StoriesService storiesService;
+  @Autowired
+  private StoriesService storiesService;
 
-    @Autowired
-    private MailService mailService;
+  @Autowired
+  private MailService mailService;
 
-    @Autowired
-    private StoriesRepository storiesRepo;
+  @Autowired
+  private StoriesRepository storiesRepo;
 
-    @Autowired
-    private UsersRepository usersRepo;
+  @Autowired
+  private UsersRepository usersRepo;
 
-    @GetMapping(value = "/add")
-    public String prepareAddStory(Model model) {
-        log.debug("prepareAddStory() begin ---");
+  @GetMapping(value = "/add")
+  public String prepareAddStory(Model model)
+  {
+    log.debug("prepareAddStory() begin ---");
 
-        model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("submenu", "add");
-        model.addAttribute("story", new Story());
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    model.addAttribute("submenu", "add");
+    model.addAttribute("story", new Story());
 
-        return "stories/add";
+    return "stories/add";
+  }
+
+  @PostMapping(value = "/add")
+  public String addStory(@Valid Story story, BindingResult bindingResult, Model model)
+  {
+
+    if (bindingResult.hasErrors())
+    {
+      model.addAttribute("globalMenu", GLOBAL_MENU);
+      model.addAttribute("submenu", "add");
+
+      return "stories/add";
     }
 
-    @PostMapping(value = "/add")
-    public String addStory(@Valid Story story, BindingResult bindingResult, Model model) {
+    storiesService.addStory(story, getUser());
 
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("globalMenu", GLOBAL_MENU);
-            model.addAttribute("submenu", "add");
+    return "redirect:/stories/search";
+  }
 
-            return "stories/add";
-        }
+  @GetMapping(value = "/search")
+  public String prepareSearchStory(Model model)
+  {
+    List<Story> stories = storiesRepo.findAll();
 
-        storiesService.addStory(story, getUser());
-
-        return "redirect:/story/search";
+    if (getStoryUser() != null)
+    {
+      model.addAttribute("currUserId", getStoryUser().getUserId());
     }
 
-    @GetMapping(value = "/search")
-    public String prepareSearchStory(Model model) {
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    model.addAttribute("submenu", "search");
+    model.addAttribute("stories", stories);
+    model.addAttribute("storiesCount", stories.size());
 
-        List<Story> stories = storiesRepo.findAll();
+    return "stories/search";
+  }
 
-        if (getStoryUser() != null) {
-            model.addAttribute("currUserId", getStoryUser().getUserId());
-        }
-
-        model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("submenu", "search");
-        model.addAttribute("stories", stories);
-        model.addAttribute("storiesCount", stories.size());
-
-        return "stories/search";
+  @GetMapping(value = "/search", params = "title")
+  public String searchStory(@RequestParam(name = "title") String title, Model model)
+  {
+    if (title.equals(""))
+    {
+      return "redirect:/stories/search";
     }
 
-    @GetMapping(value = "/search", params = "title")
-    public String searchStory(@RequestParam(name = "title") String title, Model model) {
+    List<Story> stories = storiesRepo.findAllByTitleContainingOrderByStoryIdDesc(title);
 
-        List<Story> stories = storiesRepo.findAllByTitleContainingOrderByStoryIdDesc(title);
-
-        if (getStoryUser() != null) {
-            model.addAttribute("currUserId", getStoryUser().getUserId());
-        }
-
-        model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("submenu", "search");
-        model.addAttribute("stories", stories);
-        model.addAttribute("storiesCount", stories.size());
-
-        return "stories/search";
+    if (getStoryUser() != null)
+    {
+      model.addAttribute("currUserId", getStoryUser().getUserId());
     }
 
-    @GetMapping(value = "/view", params = "id")
-    public String viewStory(@RequestParam(name = "id") Integer storyId, Model model) {
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    model.addAttribute("submenu", "search");
+    model.addAttribute("stories", stories);
+    model.addAttribute("storiesCount", stories.size());
 
-        log.debug("Viewing story with id: " + storyId);
+    return "stories/search";
+  }
 
-        Story story = storiesRepo.findByStoryId(storyId);
+  @GetMapping(value = "/mine")
+  public String myStories(Model model)
+  {
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    model.addAttribute("submenu", "mine");
+    return "stories/myStories";
+  }
 
-        if (story == null) {
-            log.error("Error getting story by id. Object might not exist.");
-            return "redirect:/error/404";
-        }
+  @GetMapping(value = "/view", params = "id")
+  public String viewStory(@RequestParam(name = "id") Integer storyId, Model model)
+  {
 
-        storiesService.updateStoriesViews(storyId);
+    log.debug("Viewing story with id: " + storyId);
 
-        model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("story", story);
+    Story story = storiesRepo.findByStoryId(storyId);
 
-        return "stories/view";
+    if (story == null)
+    {
+      log.error("Error getting story by id. Object might not exist.");
+      return "redirect:/error/404";
     }
 
-    @PostMapping(value = "/edit", params = "id")
-    public String prepareEditStory(@RequestParam(name = "id") Integer storyId, Model model) {
+    storiesService.updateStoriesViews(storyId);
 
-        Story story = storiesRepo.findByStoryId(storyId);
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    model.addAttribute("story", story);
 
-        model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("story", story);
+    return "stories/view";
+  }
 
-        return "stories/edit";
-    }
+  @PostMapping(value = "/edit", params = "id")
+  public String prepareEditStory(@RequestParam(name = "id") Integer storyId, Model model)
+  {
 
-    @PostMapping(value = "/edit")
-    public String editStory(Story story, Model model) {
-        log.debug("Editing story with id: " + story.getStoryId());
+    Story story = storiesRepo.findByStoryId(storyId);
 
-        storiesService.editStory(story);
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    model.addAttribute("story", story);
 
-        return "redirect:/story/search";
-    }
+    return "stories/edit";
+  }
 
-    @PostMapping(value = "/delete", params = "id")
-    public String deleteStory(@RequestParam(name = "id") Integer storyId, Model model) {
-        log.debug("Deleting story with id: " + storyId);
+  @PostMapping(value = "/edit")
+  public String editStory(Story story, Model model)
+  {
+    log.debug("Editing story with id: " + story.getStoryId());
 
-        storiesService.deleteStory(storyId);
+    storiesService.editStory(story);
 
-        return "redirect:/story/search";
-    }
+    return "redirect:/story/search";
+  }
 
-    @GetMapping(value = "/warn", params = "id")
-    public String warnStory(@RequestParam(name = "id") Integer storyId, Model model) {
+  @PostMapping(value = "/delete", params = "id")
+  public String deleteStory(@RequestParam(name = "id") Integer storyId, Model model)
+  {
+    log.debug("Deleting story with id: " + storyId);
 
-        log.debug("Warning story with id: " + storyId);
+    storiesService.deleteStory(storyId);
 
-        Story story = storiesRepo.findByStoryId(storyId);
-        log.debug("Story with id " + storyId + " found in the database!");
+    return "redirect:/story/search";
+  }
 
-        User user = usersRepo.findByUserId(story.getUser().getUserId());
-        log.debug("Author of the story found with id: " + user.getUserId());
+  @GetMapping(value = "/warn", params = "id")
+  public String warnStory(@RequestParam(name = "id") Integer storyId, Model model)
+  {
 
-        mailService.sendWarningMail(user, story);
+    log.debug("Warning story with id: " + storyId);
 
-        //FIXME change the redirect in the future release
-        return "redirect:/";
-    }
+    Story story = storiesRepo.findByStoryId(storyId);
+    log.debug("Story with id " + storyId + " found in the database!");
 
-    @GetMapping(value = "/upvote", params = "id")
-    public String upvoteStory(@RequestParam(name = "id") Integer storyId, Model model) {
-        log.debug("Upvoting story with id: " + storyId);
+    User user = usersRepo.findByUserId(story.getUser().getUserId());
+    log.debug("Author of the story found with id: " + user.getUserId());
 
+    mailService.sendWarningMail(user, story);
 
-        return "Upvoted";
-    }
+    //FIXME change the redirect in the future release
+    return "redirect:/";
+  }
 
-    @GetMapping(value = "/downvote", params = "id")
-    public String downvoteStory(@RequestParam(name = "id") Integer storyId, Model model) {
-        log.debug("Downvoting story with id: " + storyId);
+  @GetMapping(value = "/upvote", params = "id")
+  public String upvoteStory(@RequestParam(name = "id") Integer storyId, Model model)
+  {
+    log.debug("Upvoting story with id: " + storyId);
 
-        return "Downvoted";
-    }
+    return "Upvoted";
+  }
+
+  @GetMapping(value = "/downvote", params = "id")
+  public String downvoteStory(@RequestParam(name = "id") Integer storyId, Model model)
+  {
+    log.debug("Downvoting story with id: " + storyId);
+
+    return "Downvoted";
+  }
 }

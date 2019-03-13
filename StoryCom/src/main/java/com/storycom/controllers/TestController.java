@@ -8,6 +8,7 @@ import com.storycom.repository.CountriesRepository;
 import com.storycom.repository.StoriesRepository;
 import com.storycom.repository.UsersRepository;
 import java.sql.*;
+import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.simple.*;
 import org.springframework.jdbc.support.*;
@@ -142,10 +142,76 @@ public class TestController extends Base
   }
 
   @ResponseBody
-  @GetMapping(value = "/tableTest/{text}")
+  @GetMapping(value = "/tableTest2/{text}", produces = "application/json")
+  public int tableTest3(@PathVariable("text") String text)
+  {
+    String sql = "INSERT INTO test(text) VALUES (?)";
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+
+    PreparedStatementCreator preparedStatementCreator = (Connection connection) ->
+    {
+      PreparedStatement ps = connection.prepareStatement(sql, new String[]
+      {
+        "test_id"
+      });
+      
+      ps.setString(1, text);
+      
+      return ps;
+    };
+    jdbcTemplate.update(preparedStatementCreator, keyHolder);
+
+    return keyHolder.getKey().intValue();
+  }
+
+  @ResponseBody
+  @GetMapping(value = "/tableTest/{text}", produces = "application/json")
+  public Integer tableTest2(@PathVariable("text") String text)
+  {
+    List<SqlParameter> parameters = Arrays.asList(new SqlParameter(Types.VARCHAR), new SqlParameter(Types.INTEGER));
+
+    String sqlInsert = "INSERT INTO test(text) VALUES (?) RETURNING test_id INTO ?";
+
+    Map<String, Object> call = jdbcTemplate.call(new CallableStatementCreator()
+    {
+      public CallableStatement createCallableStatement(Connection connection) throws SQLException
+      {
+        CallableStatement cs = connection.prepareCall(sqlInsert);
+        cs.setString(1, text);
+        cs.registerOutParameter(2, Types.INTEGER);
+        return cs;
+      }
+    }, parameters);
+
+    System.out.println(call);
+
+    return 1;
+  }
+
+  @ResponseBody
+  @GetMapping(value = "/kkk/{text}", produces = "application/json")
   public String tableTest(@PathVariable("text") String text)
   {
-    String sql = "insert into test (text) values (?)";
-    return null;
+    String sqlInsert = "INSERT INTO test(text) VALUES (?)";
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+    jdbcTemplate.update(new PreparedStatementCreator()
+    {
+      public PreparedStatement createPreparedStatement(Connection connection) throws SQLException
+      {
+        PreparedStatement ps = connection.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, text);
+        return ps;
+      }
+    }, keyHolder);
+
+    //Понеже се връща rowid на новия запис ще го използваме, за да вземем стойността на customer_id
+    String testId = keyHolder.getKeys().get("test_id").toString();
+    log.debug("testId = " + testId);
+//    String newRowid = keyHolder.getKeys().get("test_id").toString();
+//    log.debug("newRowid = " + newRowid);
+//    SqlRowSet rs = jdbcTemplate.queryForRowSet("SELECT test_id FROM test WHERE rowid = ?", newRowid);
+//    rs.next();
+//    log.debug("testId = " + rs.getInt("test_id"));
+    return testId;
   }
 }

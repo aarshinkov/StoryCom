@@ -6,7 +6,7 @@
 
     <groupId>com.aarshinkov.storycom</groupId>
     <artifactId>story-com</artifactId>
-    <version>1.5.5</version>
+    <version>1.5.6</version>
     <packaging>war</packaging>
 
     <name>StoryCom Web Application</name>
