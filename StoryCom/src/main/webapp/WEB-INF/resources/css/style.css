@@ -6,7 +6,38 @@
     /*font-family: 'Gabriela', serif;*/
     /*font-family: 'Cuprum', sans-serif;*/
 
-    font-size: 102%;
+    /*font-size: 100%;*/
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+.module {
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 7px;
+  border: 1px solid #d8d8d8;
+  margin-bottom: 1em;
+}
+
+.sidebar {
+  font-size: 14px;
+}
+
+#submenuDiv .nav-link {
+  padding-left: 10px !important;
+  padding-right: 0 !important;
+}
+
+#submenuDiv .subTitle {
+  font-size: 150%;
+  padding-left: 10px;
+}
+
+#submenuDiv hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .topbar {

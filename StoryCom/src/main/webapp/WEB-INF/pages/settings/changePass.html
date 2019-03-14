@@ -3,73 +3,76 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/contentTemplate}">
-<head>
+  <head>
     <title th:text="#{title.settings.password} + ' | ' + #{app.title}"></title>
-</head>
-<body>
-<div layout:fragment="contentDiv">
-    <div class="row">
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <h2 th:text="#{settings.changepass.title}">Change password</h2>
+      <hr/>
+      <div class="row">
         <div class="col-md-2 order-md-1 order-2">
+          <div class="module">
             <div th:insert="settings/submenu :: #submenuDiv"></div>
+          </div>
         </div>
 
         <div class="col-md-10 order-md-2 order-1">
-            <h2 th:text="#{settings.changepass.title}">Change password</h2>
-            <hr/>
-
+          <div class="module">
             <div th:unless="${error} eq null" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
-                <span th:text="${error}">Error</span>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                  aria-hidden="true">×</span></button>
+              <span th:text="${error}">Error</span>
             </div>
 
             <form action="#" th:action="@{/settings/changepass}" th:object="${password}" method="POST">
-                <div class="form-group">
-                    <label class="sr-only" for="currPassword" th:text="#{settings.changepass.current}">Current
-                        password</label>
-                    <input type="password" class="form-control form-control-rounded" id="currPassword"
-                           th:classappend="${#fields.hasErrors('currentPassword')} ? 'is-invalid'"
-                           th:field="*{currentPassword}" th:placeholder="#{settings.changepass.current}"/>
-                    <div class="invalid-feedback" th:errors="*{currentPassword}">Error</div>
+              <div class="form-group">
+                <label class="sr-only" for="currPassword" th:text="#{settings.changepass.current}">Current
+                  password</label>
+                <input type="password" class="form-control form-control-rounded" id="currPassword"
+                       th:classappend="${#fields.hasErrors('currentPassword')} ? 'is-invalid'"
+                       th:field="*{currentPassword}" th:placeholder="#{settings.changepass.current}"/>
+                <div class="invalid-feedback" th:errors="*{currentPassword}">Error</div>
+              </div>
+
+              <div class="form-group">
+                <label class="sr-only" for="newPassword" th:text="#{settings.changepass.new}">New password</label>
+                <input type="password" class="form-control form-control-rounded" id="newPassword"
+                       th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+                       th:field="*{password}" th:placeholder="#{settings.changepass.new}"/>
+                <div class="invalid-feedback" th:errors="*{password}">Error</div>
+              </div>
+
+              <div class="form-group">
+                <label class="sr-only" for="confirmPassword" th:text="#{settings.changepass.confirm}">Confirm
+                  password</label>
+                <input type="password" class="form-control form-control-rounded" id="confirmPassword"
+                       th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
+                       th:field="*{confirmPassword}" th:placeholder="#{settings.changepass.confirm}"/>
+                <div class="invalid-feedback" th:errors="*{confirmPassword}">Error</div>
+                <div class="invalid-feedback" th:text="${confirmError}">
+                  Passwords do not match
                 </div>
+              </div>
 
-                <div class="form-group">
-                    <label class="sr-only" for="newPassword" th:text="#{settings.changepass.new}">New password</label>
-                    <input type="password" class="form-control form-control-rounded" id="newPassword"
-                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
-                           th:field="*{password}" th:placeholder="#{settings.changepass.new}"/>
-                    <div class="invalid-feedback" th:errors="*{password}">Error</div>
-                </div>
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+              <button type="submit" class="btn btn-primary btn-md d-none d-md-block">
+                <i class="fas fa-save"></i>
+                <span th:text="#{settings.changepass.button}">Save</span>
+              </button>
 
-                <div class="form-group">
-                    <label class="sr-only" for="confirmPassword" th:text="#{settings.changepass.confirm}">Confirm
-                        password</label>
-                    <input type="password" class="form-control form-control-rounded" id="confirmPassword"
-                           th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
-                           th:field="*{confirmPassword}" th:placeholder="#{settings.changepass.confirm}"/>
-                    <div class="invalid-feedback" th:errors="*{confirmPassword}">Error</div>
-                    <div class="invalid-feedback" th:text="${confirmError}">
-                        Passwords do not match
-                    </div>
-                </div>
-
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-primary btn-md d-none d-md-block">
-                    <i class="fas fa-save"></i>
-                    <span th:text="#{settings.changepass.button}">Save</span>
-                </button>
-
-                <button type="submit" class="mb-1 btn btn-block btn-primary btn-rounded btn-lg d-block d-md-none">
-                    <i class="fas fa-save"></i>
-                    <span th:text="#{settings.changepass.button}">Save</span>
-                </button>
+              <button type="submit" class="mb-1 btn btn-block btn-primary btn-rounded btn-lg d-block d-md-none">
+                <i class="fas fa-save"></i>
+                <span th:text="#{settings.changepass.button}">Save</span>
+              </button>
             </form>
+          </div>
         </div>
+      </div>
+
+      <script>
+
+      </script>
     </div>
-
-    <script>
-
-    </script>
-</div>
-</body>
+  </body>
 </html>

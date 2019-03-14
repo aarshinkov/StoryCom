@@ -44,46 +44,6 @@ public class SettingsController extends Base {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @GetMapping(value = "/profile")
-    public String viewProfile(Model model) {
-
-        User user = getUser();
-
-        log.debug(user.toString());
-
-        model.addAttribute("user", user);
-
-        model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("submenu", "profile");
-
-        return "settings/profile";
-    }
-
-    @PostMapping(value = "/profile")
-    public String saveProfile(User user, Model model) {
-
-        log.debug("Saving user profile...");
-
-        user.setUserId(getStoryUser().getUserId());
-
-        log.debug("User id: " + user.getUserId());
-
-        try {
-            CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_USERS.UPDATE_USER_INFORMATION(?,?,?,?)}");
-            cstmt.setInt(1, user.getUserId());
-            cstmt.setString(2, user.getFirstName());
-            cstmt.setString(3, user.getLastName());
-            cstmt.setString(4, user.getEmail());
-
-            cstmt.execute();
-            log.debug("User profile saved successfully!");
-        } catch (Exception e) {
-            log.error("Error saving user profile!", e);
-        }
-
-        return "redirect:/settings/profile";
-    }
-
     @GetMapping(value = "/details")
     public String viewDetails(Model model) {
 
