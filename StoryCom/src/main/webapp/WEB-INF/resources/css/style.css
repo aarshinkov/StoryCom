@@ -19,6 +19,7 @@ body {
   border-radius: 7px;
   border: 1px solid #d8d8d8;
   margin-bottom: 1em;
+  box-shadow: 3px 3px 5px -5px #000;
 }
 
 .sidebar {
