@@ -106,6 +106,15 @@
           </ul>
         </div>
       </nav>
+      <div class="container-fluid" sec:authorize="isAuthenticated()">
+        <div class="row" style="background-color: #cbcbcb;">
+          <div class="col-12 text-right">
+            <div style="font-size: 14px;">
+              <div th:text="#{app.login(${@usersBean.storyPrincipal.username})}">Logged in as: username</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
