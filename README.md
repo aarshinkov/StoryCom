@@ -1,6 +1,6 @@
 # StoryCom
 
-Share your stories completely anonymous...
+Share your stories with the world...
 
 ## Overview
 
