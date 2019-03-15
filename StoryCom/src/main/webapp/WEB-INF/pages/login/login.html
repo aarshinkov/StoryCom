@@ -19,7 +19,7 @@
 
             <div class="alert alert-info alert-dismissible fade show" role="alert"
                  th:if="${(param.logout != null) and (param.logout[0] == '')}">
-              <span th:text="#{login.logout}">You have been logged out successfully.</span>
+              <span th:text="#{message.login.logout}">You have been logged out successfully.</span>
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -27,7 +27,7 @@
 
             <div th:if="${@errorsBean.badCredentials} and ${(param.error != null) and (param.error[0] == '')}"
                  th:scope="session" class="alert alert-danger alert-dismissible fade show" role="alert">
-              <span th:text="#{login.invalid}">Invalid username/password!</span>
+              <span th:text="#{error.login.badcredentials}">Invalid username/password!</span>
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
