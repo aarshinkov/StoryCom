@@ -47,6 +47,9 @@ public class Story implements Serializable
 
   @Column(name = "created_on")
   private Date createdOn;
+  
+  @Transient
+  private String createdOnFormatted;
 
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")

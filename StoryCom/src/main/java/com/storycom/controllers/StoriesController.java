@@ -7,6 +7,8 @@ import com.storycom.repository.StoriesRepository;
 import com.storycom.repository.UsersRepository;
 import com.storycom.services.MailService;
 import com.storycom.services.StoriesService;
+import java.text.*;
+import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -73,6 +74,12 @@ public class StoriesController extends Base
   public String prepareSearchStory(Model model)
   {
     List<Story> stories = storiesRepo.findAll();
+
+    for (Story story : stories)
+    {
+      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+      story.setCreatedOnFormatted(sdf.format(story.getCreatedOn()));
+    }
 
     if (getStoryUser() != null)
     {
