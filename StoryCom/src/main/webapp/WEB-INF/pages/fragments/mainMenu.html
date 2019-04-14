@@ -43,6 +43,8 @@
                 <a class="dropdown-item" th:classappend="${submenu eq 'search'} ? 'active'"
                    href="#" th:href="@{/stories/search}" th:text="#{nav.story.search}">Search
                   story</a>
+                <a class="dropdown-item" th:classappend="${submenu eq 'mine'} ? 'active'" sec:authorize="isAuthenticated()"
+                   href="#"  th:href="@{'/stories/' + ${#authentication.name}}" th:text="#{nav.story.mine}">My stories</a>
               </div>
             </li>
 
@@ -78,8 +80,11 @@
               <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" th:classappend="${submenu eq 'personal'} ? 'active'"
                    href="#" th:href="@{/profile}" >My account</a>
-                <a class="dropdown-item" th:classappend="${submenu eq 'public'} ? 'active'"
-                   href="#" th:href="@{'/profile/' + ${@usersBean.storyPrincipal.username}}" >My stories</a>
+                <a class="dropdown-item" th:classappend="${submenu eq 'details'} ? 'active'"
+                   href="#" th:href="@{/profile/details}" th:text="#{nav.profile.details}">User
+                  details</a>
+                <!--                <a class="dropdown-item" th:classappend="${submenu eq 'public'} ? 'active'"
+                                   href="#" th:href="@{'/profile/' + ${@usersBean.storyPrincipal.username}}" >My stories</a>-->
               </div>
             </li>
 
@@ -87,9 +92,6 @@
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" 
                  aria-haspopup="true" aria-expanded="false" th:text="#{nav.settings}">Settings</a>
               <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" th:classappend="${submenu eq 'details'} ? 'active'"
-                   href="#" th:href="@{/settings/details}" th:text="#{nav.settings.details}">User
-                  details</a>
                 <a class="dropdown-item" th:classappend="${submenu eq 'password'} ? 'active'"
                    href="#" th:href="@{/settings/changepass}"
                    th:text="#{nav.settings.password}">Change password</a>

@@ -12,13 +12,13 @@
       <h2 th:text="'Stories from ' + ${@usersBean.storyPrincipal.fullName}">First name's stories</h2>
       <hr/>
       <div class="row">
-        <div class="col-md-2 order-md-1 order-2">
+        <div class="col-xl-2 order-xl-1 order-2">
           <div class="module">
             <div th:insert="profile/submenu :: #submenuDiv"></div>
           </div>
         </div>
 
-        <div class="col-md-10 order-md-2 order-1">
+        <div class="col-xl-10 order-xl-2 order-1">
           <div th:insert="stories/story :: #storyDiv"></div>
         </div>
       </div>

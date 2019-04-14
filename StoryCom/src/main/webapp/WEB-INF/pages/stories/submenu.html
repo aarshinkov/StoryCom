@@ -14,6 +14,8 @@
            th:classappend="${submenu eq 'add'} ? 'active'">Add story</a>
         <a th:href="@{/stories/search}" href="#" class="nav-link"
            th:classappend="${submenu eq 'search'} ? 'active'">Search story</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{'/stories/' + ${#authentication.name}}" href="#" class="nav-link"
+           th:classappend="${submenu eq 'mine'} ? 'active'">My stories</a>
       </div>
 
       <!--      <i class="d-none d-md-block fa fa-angle-right"></i>

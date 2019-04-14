@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -40,35 +41,6 @@ public class StoriesController extends Base
 
   @Autowired
   private UsersRepository usersRepo;
-
-  @GetMapping(value = "/add")
-  public String prepareAddStory(Model model)
-  {
-    log.debug("prepareAddStory() begin ---");
-
-    model.addAttribute("globalMenu", GLOBAL_MENU);
-    model.addAttribute("submenu", "add");
-    model.addAttribute("story", new Story());
-
-    return "stories/add";
-  }
-
-  @PostMapping(value = "/add")
-  public String addStory(@Valid Story story, BindingResult bindingResult, Model model)
-  {
-
-    if (bindingResult.hasErrors())
-    {
-      model.addAttribute("globalMenu", GLOBAL_MENU);
-      model.addAttribute("submenu", "add");
-
-      return "stories/add";
-    }
-
-    storiesService.addStory(story, getUser());
-
-    return "redirect:/stories/search";
-  }
 
   @GetMapping(value = "/search")
   public String prepareSearchStory(Model model)
@@ -104,6 +76,12 @@ public class StoriesController extends Base
 
     List<Story> stories = storiesRepo.findAllByTitleContainingOrderByStoryIdDesc(title);
 
+    for (Story story : stories)
+    {
+      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+      story.setCreatedOnFormatted(sdf.format(story.getCreatedOn()));
+    }
+
     if (getStoryUser() != null)
     {
       model.addAttribute("currUserId", getStoryUser().getUserId());
@@ -117,12 +95,59 @@ public class StoriesController extends Base
     return "stories/search";
   }
 
-  @GetMapping(value = "/mine")
-  public String myStories(Model model)
+  @GetMapping(value = "/{username}")
+  public String myStories(@PathVariable("username") String username, Model model)
   {
+    User user = usersRepo.findUserByUsername(username);
+    List<Story> stories = storiesRepo.findAllByUserOrderByStoryIdDesc(user);
+
+    for (Story story : stories)
+    {
+      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+      story.setCreatedOnFormatted(sdf.format(story.getCreatedOn()));
+    }
+
+    if (getStoryUser() != null)
+    {
+      model.addAttribute("currUserId", getStoryUser().getUserId());
+    }
+
     model.addAttribute("globalMenu", GLOBAL_MENU);
     model.addAttribute("submenu", "mine");
+    model.addAttribute("stories", stories);
+    model.addAttribute("storiesCount", stories.size());
+    model.addAttribute("user", user);
+
     return "stories/myStories";
+  }
+
+  @GetMapping(value = "/add")
+  public String prepareAddStory(Model model)
+  {
+    log.debug("prepareAddStory() begin ---");
+
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    model.addAttribute("submenu", "add");
+    model.addAttribute("story", new Story());
+
+    return "stories/add";
+  }
+
+  @PostMapping(value = "/add")
+  public String addStory(@Valid Story story, BindingResult bindingResult, Model model)
+  {
+
+    if (bindingResult.hasErrors())
+    {
+      model.addAttribute("globalMenu", GLOBAL_MENU);
+      model.addAttribute("submenu", "add");
+
+      return "stories/add";
+    }
+
+    storiesService.addStory(story, getUser());
+
+    return "redirect:/stories/search";
   }
 
   @GetMapping(value = "/view", params = "id")

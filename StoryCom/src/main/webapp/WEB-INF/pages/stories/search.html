@@ -13,7 +13,10 @@
       <hr/>
 
       <div class="row">
-        <div class="col-lg-3 order-lg-1 order-2">
+        <div class="col-xl-3 order-xl-1 order-2">
+          <div class="module">
+            <div th:insert="stories/submenu :: #submenuDiv"></div>
+          </div>
           <div class="module">
             <form th:action="@{/stories/search}" method="GET" style="border: 1px solid rgba(0,0,0,.125); padding: 20px;">
               <h5 th:text="#{story.search.form.title}">Search</h5>
@@ -35,11 +38,8 @@
             </div>
             <hr class="d-block d-xs-block d-md-block d-lg-none d-xl-none"/>
           </div>
-          <div class="module">
-            <div th:insert="stories/submenu :: #submenuDiv"></div>
-          </div>
         </div>
-        <div class="col-lg-9 order-lg-2 order-1">
+        <div class="col-xl-9 order-xl-2 order-1">
           <div th:insert="stories/story :: #storyDiv"></div>
         </div>
         <!--<div class="col-lg-3">-->

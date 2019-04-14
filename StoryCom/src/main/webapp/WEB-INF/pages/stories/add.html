@@ -11,27 +11,29 @@
       <h2 th:text="#{story.add.title}">Here you can add your personal story</h2>
       <hr/>
       <div class="row">
-        <div class="col-md-2 order-md-1 order-2">
+        <div class="col-xl-2 order-xl-1 order-2">
           <div class="module">
             <div th:insert="stories/submenu :: #submenuDiv"></div>
           </div>
         </div>
-        <div class="col-md-10 order-md-2 order-1">
+        <div class="col-xl-10 order-xl-2 order-1">
           <div class="module">
+            <h2 th:text="#{story.add.form.title}">Create an awesome story...</h2>
+            <hr/>
             <form th:action="@{/stories/add}" th:object="${story}" method="post">
               <div class="form-group">
-                <label class="sr-only" for="titleId" th:text="#{story.add.form.title}">Title</label>
+                <label class="sr-only" for="titleId" th:text="#{story.add.form.input.title}">Title</label>
                 <input type="text" class="form-control form-control-rounded" id="titleId"
                        th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"
-                       th:field="*{title}" th:placeholder="#{story.add.form.title}"
+                       th:field="*{title}" th:placeholder="#{story.add.form.input.title}"
                        oninput="validateTitle()"/>
                 <div class="invalid-feedback" th:errors="*{title}">Error</div>
               </div>
               <div class="form-group">
-                <label class="sr-only" for="overviewId" th:text="#{story.add.form.overview}">Overview</label>
+                <label class="sr-only" for="overviewId" th:text="#{story.add.form.input.overview}">Overview</label>
                 <input type="text" class="form-control form-control-rounded" id="overviewId"
                        th:classappend="${#fields.hasErrors('overview')} ? 'is-invalid'"
-                       th:field="*{overview}" th:placeholder="#{story.add.form.overview}"
+                       th:field="*{overview}" th:placeholder="#{story.add.form.input.overview}"
                        oninput="validateOverview()"/>
                 <div class="invalid-feedback" th:errors="*{overview}">Error</div>
               </div>
@@ -40,7 +42,7 @@
                 <textarea class="form-control" style="border-radius: 15px; border-bottom-right-radius: 0;" id="contentTAId"
                           rows="5"
                           th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'"
-                          th:field="*{content}" th:placeholder="#{story.add.form.story}"
+                          th:field="*{content}" th:placeholder="#{story.add.form.input.story}"
                           oninput="validateContent()"></textarea>
                 <!--<input type="text" class="form-control form-control-rounded" id="contentId"-->
                 <!--th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'"-->

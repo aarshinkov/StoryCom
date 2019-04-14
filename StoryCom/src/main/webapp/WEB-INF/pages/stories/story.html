@@ -7,7 +7,9 @@
   <body>
 
     <div id="storyDiv">
-      <p th:if="${storiesCount} eq 0" th:text="#{story.search.noresults}">No results found</p>
+      <div class="module" th:if="${storiesCount} eq 0" >
+        <p th:text="#{story.search.noresults}">No results found</p>
+      </div>
 
       <div class="row">
         <div class="col-lg-12" th:each="story : ${stories}">

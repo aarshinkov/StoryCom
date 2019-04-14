@@ -9,5 +9,5 @@ public interface StoriesRepository extends CrudRepository<Story, Integer> {
     List<Story> findAll();
     Story findByStoryId(Integer storyId);
     List<Story> findAllByTitleContainingOrderByStoryIdDesc(String title);
-    List<Story> findAllByUser(User user);
+    List<Story> findAllByUserOrderByStoryIdDesc(User user);
 }

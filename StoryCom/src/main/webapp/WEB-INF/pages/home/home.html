@@ -72,7 +72,7 @@
         </div>
         <p class="lead">
           <a class="btn btn-success btn-lg" th:href="@{/stories/add}" href="#" role="button" sec:authorize="isAuthenticated()">Create a story</a>
-          <a class="btn btn-primary btn-lg" th:href="@{'/profile/' + ${@usersBean.storyPrincipal.username}}" href="#" role="button" sec:authorize="isAuthenticated()">Мy Stories</a>
+          <a class="btn btn-primary btn-lg" th:href="@{'/stories/' + ${@usersBean.storyPrincipal.username}}" href="#" role="button" sec:authorize="isAuthenticated()">Мy Stories</a>
           <a class="btn btn-success btn-lg" th:href="@{/signup}" href="#" role="button" sec:authorize="!isAuthenticated()">Register</a>
           <a class="btn btn-primary btn-lg" th:href="@{/login}" href="#" role="button" sec:authorize="!isAuthenticated()">Login</a>
         </p>
