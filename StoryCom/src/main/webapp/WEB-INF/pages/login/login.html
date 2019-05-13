@@ -11,7 +11,7 @@
       <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-lg-4">
           <div class="module">
-            
+
             <!-- For testing purposes - enable it when you have TEST/PROD environments -->
             <!--<div class="alert alert-success" role="alert" th:if="${@configBean.getEnv()} eq 'TEST'">-->
             <!--<strong th:text="${@configBean.getEnvStyled()}">Test</strong> <span>environment!</span>-->
@@ -81,7 +81,7 @@
 
               <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
               <button type="submit" class="btn btn-primary btn-md d-none d-md-block">
-                <i class="fa fa-sign-in-alt"></i>
+                <i class="fas fa-sign-in-alt"></i>
                 <span th:text="#{login.form.button}">Login</span>
               </button>
 
