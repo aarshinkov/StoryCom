@@ -11,11 +11,20 @@
       <hr/>
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
         <a th:href="@{/stories/add}" href="#" class="nav-link" sec:authorize="hasRole('ROLE_USER')"
-           th:classappend="${submenu eq 'add'} ? 'active'">Add story</a>
+           th:classappend="${submenu eq 'add'} ? 'active'">
+          <i class="fas fa-plus-square"></i>
+          <span th:text="#{nav.story.add}">Add story</span>
+        </a>
         <a th:href="@{/stories/search}" href="#" class="nav-link"
-           th:classappend="${submenu eq 'search'} ? 'active'">Search story</a>
+           th:classappend="${submenu eq 'search'} ? 'active'">
+          <i class="fas fa-search"></i>
+          <span th:text="#{nav.story.search}">Search story</span>
+        </a>
         <a sec:authorize="isAuthenticated()" th:href="@{'/stories/' + ${#authentication.name}}" href="#" class="nav-link"
-           th:classappend="${submenu eq 'mine'} ? 'active'">My stories</a>
+           th:classappend="${submenu eq 'mine'} ? 'active'">
+          <i class="fas fa-file-alt"></i>
+          <span th:text="#{nav.story.mine}">My stories</span>
+        </a>
       </div>
 
       <!--      <i class="d-none d-md-block fa fa-angle-right"></i>

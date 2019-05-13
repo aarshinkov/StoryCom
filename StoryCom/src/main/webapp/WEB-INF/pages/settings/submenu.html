@@ -11,7 +11,13 @@
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
         <a th:href="@{/settings/changepass}" href="#" class="nav-link"
            th:classappend="${submenu eq 'password'} ? 'active'">
+          <i class="fas fa-key"></i>
           <span th:text="#{nav.settings.password}">Change password</span>
+        </a>
+        <a th:href="@{/settings/preferences}" href="#" class="nav-link"
+           th:classappend="${submenu eq 'preferences'} ? 'active'">
+          <i class="fas fa-sliders-h"></i>
+          <span th:text="#{nav.settings.preferences}">Preferences</span>
         </a>
       </div>
 

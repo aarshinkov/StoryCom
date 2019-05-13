@@ -29,6 +29,8 @@ import org.springframework.jdbc.support.*;
 public class TestController extends Base
 {
 
+  private static final String GLOBAL_MENU = "test";
+
   @Autowired
   private StoriesRepository storiesRepository;
 
@@ -45,11 +47,19 @@ public class TestController extends Base
   private JdbcTemplate jdbcTemplate;
 
   @GetMapping(value = "/design")
-  public String designTest()
+  public String designTest(Model model)
   {
     log.debug("Design test");
+    model.addAttribute("story", storiesRepository.findByStoryId(1));
 
     return "test/designTest";
+  }
+
+  @GetMapping(value = {"/", "/general"})
+  public String generalTest(Model model)
+  {
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    return "test/testGeneral";
   }
 
   @GetMapping(value = "/design/story")
@@ -154,9 +164,9 @@ public class TestController extends Base
       {
         "test_id"
       });
-      
+
       ps.setString(1, text);
-      
+
       return ps;
     };
     jdbcTemplate.update(preparedStatementCreator, keyHolder);

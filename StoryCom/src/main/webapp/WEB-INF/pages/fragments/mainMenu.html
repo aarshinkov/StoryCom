@@ -6,7 +6,7 @@
 
     <div id="mainMenu">
       <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4d96cc;">
-        <a class="navbar-brand" th:href="@{/}" href="#" th:title="#{title.home.general}">StoryCom</a>
+        <a class="navbar-brand" th:href="@{/}" href="#" th:text="#{app.title}">StoryCom</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,18 +19,28 @@
               </a>
               <div class="dropdown-menu">
                 <a class="dropdown-item" th:classappend="${submenu eq 'home'} ? 'active'"
-                   href="#" th:href="@{/}" th:text="#{nav.home.general}">Home</a>
+                   href="#" th:href="@{/}">
+                  <i class="fas fa-home"></i>
+                  <span th:text="#{nav.home.general}">Home</span>
+                </a>
 
                 <div class="dropdown-divider"></div>
 
                 <a class="dropdown-item" th:classappend="${submenu eq 'about'} ? 'active'"
-                   href="#" th:href="@{/about}" th:text="#{nav.home.about}">About</a>
-
+                   href="#" th:href="@{/about}">
+                  <i class="fas fa-info-circle"></i>
+                  <span th:text="#{nav.home.about}">About</span>
+                </a>
                 <a class="dropdown-item" th:classappend="${submenu eq 'contact'} ? 'active'"
-                   href="#" th:href="@{/contact}" th:text="#{nav.home.contact}">Contact</a>
-
+                   href="#" th:href="@{/contact}">
+                  <i class="fas fa-address-book"></i>
+                  <span th:text="#{nav.home.contact}">Contact</span>
+                </a>
                 <a class="dropdown-item" th:classappend="${submenu eq 'timeline'} ? 'active'"
-                   href="#" th:href="@{/timeline}" th:text="#{nav.home.timeline}">Timeline</a>
+                   href="#" th:href="@{/timeline}">
+                  <i class="fas fa-clock"></i>
+                  <span th:text="#{nav.home.timeline}">Timeline</span>
+                </a>
               </div>
             </li>
             <li class="nav-item dropdown" th:classappend="${globalMenu eq 'stories'} ? 'active'">
@@ -38,13 +48,20 @@
                  aria-haspopup="true" aria-expanded="false" th:text="#{nav.story}">Stories</a>
               <div class="dropdown-menu">
                 <a class="dropdown-item" th:classappend="${submenu eq 'add'} ? 'active'"
-                   href="#" sec:authorize="hasRole('ROLE_USER')" th:href="@{/stories/add}"
-                   th:text="#{nav.story.add}">Add story</a>
+                   href="#" sec:authorize="hasRole('ROLE_USER')" th:href="@{/stories/add}">
+                  <i class="fas fa-plus-square"></i>
+                  <span th:text="#{nav.story.add}">Add story</span>
+                </a>
                 <a class="dropdown-item" th:classappend="${submenu eq 'search'} ? 'active'"
-                   href="#" th:href="@{/stories/search}" th:text="#{nav.story.search}">Search
-                  story</a>
+                   href="#" th:href="@{/stories/search}">
+                  <i class="fas fa-search"></i>
+                  <span th:text="#{nav.story.search}">Search story</span>
+                </a>
                 <a class="dropdown-item" th:classappend="${submenu eq 'mine'} ? 'active'" sec:authorize="isAuthenticated()"
-                   href="#"  th:href="@{'/stories/' + ${#authentication.name}}" th:text="#{nav.story.mine}">My stories</a>
+                   href="#"  th:href="@{'/stories/' + ${#authentication.name}}">
+                  <i class="fas fa-file-alt"></i>
+                  <span th:text="#{nav.story.mine}">My stories</span>
+                </a>
               </div>
             </li>
 
@@ -53,10 +70,15 @@
                  aria-haspopup="true" aria-expanded="false" th:text="#{nav.admin}">Admin</a>
               <div class="dropdown-menu">
                 <a class="dropdown-item" th:classappend="${submenu eq 'users'} ? 'active'"
-                   href="#" th:href="@{/admin/users}" th:text="#{nav.admin.users}">Users</a>
+                   href="#" th:href="@{/admin/users}">
+                  <i class="fas fa-users"></i>
+                  <span th:text="#{nav.admin.users}">Users</span>
+                </a>
                 <a class="dropdown-item" th:classappend="${submenu eq 'addUser'} ? 'active'"
-                   href="#" th:href="@{/admin/addUser}"
-                   th:text="#{nav.admin.addUser}">Add user</a>
+                   href="#" th:href="@{/admin/addUser}">
+                  <i class="fas fa-user-plus"></i>
+                  <span th:text="#{nav.admin.addUser}">Add user</span>
+                </a>
               </div>
             </li>
           </ul>
@@ -74,15 +96,27 @@
               </a>
             </li>
 
+            <li class="nav-item" th:classappend="${globalMenu eq 'test'} ? 'active'" sec:authorize="hasRole('ROLE_ADMIN')">
+              <a class="nav-link" th:href="@{/test/}" href="#">
+                <i class="fas fa-drafting-compass"></i>
+                <span th:text="#{nav.test}">Test</span>
+              </a>
+            </li>
+
             <li class="nav-item dropdown" th:classappend="${globalMenu eq 'profile'} ? 'active'" sec:authorize="isAuthenticated()">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" 
                  aria-haspopup="true" aria-expanded="false" th:text="#{nav.profile}">Profile</a>
               <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" th:classappend="${submenu eq 'personal'} ? 'active'"
-                   href="#" th:href="@{/profile}" >My account</a>
+                   href="#" th:href="@{/profile}">
+                  <i class="fas fa-user-circle"></i>
+                  <span th:text="#{nav.profile.account}">My account</span>
+                </a>
                 <a class="dropdown-item" th:classappend="${submenu eq 'details'} ? 'active'"
-                   href="#" th:href="@{/profile/details}" th:text="#{nav.profile.details}">User
-                  details</a>
+                   href="#" th:href="@{/profile/details}">
+                  <i class="fas fa-info-circle"></i>
+                  <span th:text="#{nav.profile.details}">User details</span>
+                </a>
                 <!--                <a class="dropdown-item" th:classappend="${submenu eq 'public'} ? 'active'"
                                    href="#" th:href="@{'/profile/' + ${@usersBean.storyPrincipal.username}}" >My stories</a>-->
               </div>
@@ -93,8 +127,15 @@
                  aria-haspopup="true" aria-expanded="false" th:text="#{nav.settings}">Settings</a>
               <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" th:classappend="${submenu eq 'password'} ? 'active'"
-                   href="#" th:href="@{/settings/changepass}"
-                   th:text="#{nav.settings.password}">Change password</a>
+                   href="#" th:href="@{/settings/changepass}">
+                  <i class="fas fa-key"></i>
+                  <span th:text="#{nav.settings.password}">Change password</span>
+                </a>
+                <a class="dropdown-item" th:classappend="${submenu eq 'preferences'} ? 'active'"
+                   href="#" th:href="@{/settings/preferences}">
+                  <i class="fas fa-sliders-h"></i>
+                  <span th:text="#{nav.settings.preferences}">Preferences</span>
+                </a>
               </div>
             </li>
 

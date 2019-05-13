@@ -1,9 +1,7 @@
 package com.storycom.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +12,6 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Table(name = "mailbox")
-@DynamicUpdate
 public class Mail implements Serializable
 {
   @Id

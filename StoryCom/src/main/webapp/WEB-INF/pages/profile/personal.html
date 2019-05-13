@@ -8,7 +8,7 @@
   </head>
   <body>
     <div layout:fragment="contentDiv">
-      <h2 th:text="#{settings.profile.title}">Profile</h2>
+      <h2 th:text="#{profile.personal.title}">Profile</h2>
       <hr/>
       <div class="row">
         <div class="col-xl-2 order-xl-1 order-2">
@@ -20,42 +20,45 @@
         <div class="col-xl-10 order-xl-2 order-1">
           <div class="module">
 
+            <h4 th:text="#{profile.details.personal.title}">Personal</h4>
+            <hr/>
+
             <form action="#" th:action="@{/settings/profile}" th:object="${user}" method="post">
 
               <div class="form-group row">
                 <div class="col-lg-2 col-md-3 col-12">
-                  <label for="firstName" th:text="#{settings.profile.firstname}">First name</label>
+                  <label for="firstName" th:text="#{profile.personal.firstname}">First name</label>
                 </div>
                 <div class="col-lg-10 col-md-9 col-12">
                   <input type="text" id="firstName" class="form-control form-control-rounded"
                          th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"
                          th:field="*{firstName}" th:value="${user.firstName}"
-                         th:placeholder="#{settings.profile.firstname}"/>
+                         th:placeholder="#{profile.personal.firstname}"/>
                   <div class="invalid-feedback" th:errors="*{firstName}">Error</div>
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-lg-2 col-md-3 col-12">
-                  <label for="lastName" th:text="#{settings.profile.lastname}">Last name</label>
+                  <label for="lastName" th:text="#{profile.personal.lastname}">Last name</label>
                 </div>
                 <div class="col-lg-10 col-md-9 col-12">
                   <input type="text" id="lastName" class="form-control form-control-rounded"
                          th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"
                          th:field="*{lastName}" th:value="${user.lastName}"
-                         th:placeholder="#{settings.profile.lastname}"/>
+                         th:placeholder="#{profile.personal.lastname}"/>
                   <div class="invalid-feedback" th:errors="*{lastName}">Error</div>
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-lg-2 col-md-3 col-12">
-                  <label for="email" th:text="#{settings.profile.email}">Email</label>
+                  <label for="email" th:text="#{profile.personal.email}">Email</label>
                 </div>
                 <div class="col-lg-10 col-md-9 col-12">
                   <input type="text" id="email" class="form-control form-control-rounded"
                          th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
-                         th:field="*{email}" th:value="${user.email}" th:placeholder="#{settings.profile.email}"/>
+                         th:field="*{email}" th:value="${user.email}" th:placeholder="#{profile.personal.email}"/>
                   <div class="invalid-feedback" th:errors="*{email}">Error</div>
                 </div>
               </div>
@@ -63,12 +66,12 @@
               <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
               <button type="submit" class="btn btn-primary btn-md d-none d-md-block">
                 <i class="fas fa-save"></i>
-                <span th:text="#{settings.profile.button}">Save</span>
+                <span th:text="#{profile.personal.button}">Save</span>
               </button>
 
               <button type="submit" class="mb-1 btn btn-block btn-primary btn-rounded btn-lg d-block d-md-none">
                 <i class="fas fa-save"></i>
-                <span th:text="#{settings.profile.button}">Save</span>
+                <span th:text="#{profile.personal.button}">Save</span>
               </button>
             </form>
           </div>

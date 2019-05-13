@@ -25,63 +25,69 @@ import java.util.Objects;
 @Slf4j
 @Controller
 @RequestMapping(value = "/settings")
-public class SettingsController extends Base {
+public class SettingsController extends Base
+{
 
-    private static final String GLOBAL_MENU = "settings";
+  private static final String GLOBAL_MENU = "settings";
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+  @Autowired
+  private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
-    @GetMapping(value = "/changepass")
-    public String prepareChangePassword(Model model) {
+  @GetMapping(value = "/changepass")
+  public String prepareChangePassword(Model model)
+  {
 
-        log.debug("Preparing change password!");
+    log.debug("Preparing change password!");
 
-        model.addAttribute("password", new Password());
+    model.addAttribute("password", new Password());
 
-        model.addAttribute("globalMenu", GLOBAL_MENU);
-        model.addAttribute("submenu", "password");
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    model.addAttribute("submenu", "password");
 
-        return "settings/changePass";
+    return "settings/changePass";
+  }
+
+  @PostMapping(value = "/changepass")
+  public String changePassword(@Valid Password password, BindingResult bindingResult, Model model)
+  {
+
+    String sql = "SELECT U.PASSWORD FROM USERS U WHERE USER_ID = ?";
+    SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, getStoryUser().getUserId());
+
+    String dbPassword = null;
+
+    while (rs.next())
+    {
+      dbPassword = rs.getString("password");
     }
 
-    @PostMapping(value = "/changepass")
-    public String changePassword(@Valid Password password, BindingResult bindingResult, Model model) {
+    if (!passwordEncoder.matches(password.getCurrentPassword(), dbPassword))
+    {
 
-        String sql = "SELECT U.PASSWORD FROM USERS U WHERE USER_ID = ?";
-        SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, getStoryUser().getUserId());
+      model.addAttribute("submenu", "password");
+      model.addAttribute("globalMenu", GLOBAL_MENU);
 
-        String dbPassword = null;
+      model.addAttribute("error", getMessage("error.password.currentpass"));
 
-        while (rs.next()) {
-            dbPassword = rs.getString("password");
-        }
+      return "settings/changePass";
+    }
 
-        if (!passwordEncoder.matches(password.getCurrentPassword(), dbPassword)) {
+    if (!password.getPassword().equals(password.getConfirmPassword()))
+    {
 
-            model.addAttribute("submenu", "password");
-            model.addAttribute("globalMenu", GLOBAL_MENU);
+      model.addAttribute("submenu", "password");
+      model.addAttribute("globalMenu", GLOBAL_MENU);
 
-            model.addAttribute("error", getMessage("error.password.currentpass"));
+      model.addAttribute("error", getMessage("error.password.confirm"));
 
-            return "settings/changePass";
-        }
-
-        if (!password.getPassword().equals(password.getConfirmPassword())) {
-
-            model.addAttribute("submenu", "password");
-            model.addAttribute("globalMenu", GLOBAL_MENU);
-
-            model.addAttribute("error", getMessage("error.password.confirm"));
-
-            return "settings/changePass";
-        }
+      return "settings/changePass";
+    }
 //
 //        log.debug("Changing password for user: " + getStoryUser().getUsername());
 //        log.debug("User id: " + getStoryUser().getUserId());
@@ -89,11 +95,19 @@ public class SettingsController extends Base {
 //        log.debug("Password: " + password.getPassword());
 //        log.debug("Confirmed password: " + password.getConfirmPassword());
 //
-        password.setEncodedPassword(passwordEncoder.encode(password.getConfirmPassword()));
+    password.setEncodedPassword(passwordEncoder.encode(password.getConfirmPassword()));
 
-        userService.changePassword(getStoryUser(), password);
+    userService.changePassword(getStoryUser(), password);
 
-        return "redirect:/settings/changepass";
-    }
+    return "redirect:/settings/changepass";
+  }
+
+  @GetMapping(value = "/preferences")
+  public String preparePreferences(Model model)
+  {
+    model.addAttribute("globalMenu", GLOBAL_MENU);
+    model.addAttribute("submenu", "preferences");
+    return "settings/preferences";
+  }
 
 }

@@ -41,7 +41,7 @@ public class LoginController extends Base {
     }
 
     @PostMapping(value = "/signup")
-    public String signup(@ModelAttribute("regUser") @Valid RegisterUser regUser, BindingResult bindingResult) {
+    public String signup(@ModelAttribute("regUser") @Valid RegisterUser regUser, BindingResult bindingResult, Model model) {
 
         log.debug("RegisterUser: " + regUser.toString());
 
