@@ -1,14 +1,13 @@
 package com.storycom.controllers;
 
 import com.storycom.base.Base;
-import com.storycom.entity.Country;
-import com.storycom.entity.Story;
-import com.storycom.entity.User;
+import com.storycom.entity.*;
 import com.storycom.repository.CountriesRepository;
 import com.storycom.repository.StoriesRepository;
 import com.storycom.repository.UsersRepository;
 import java.sql.*;
 import java.util.*;
+import javax.validation.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.simple.*;
 import org.springframework.jdbc.support.*;
+import org.springframework.validation.*;
 
 @Slf4j
 @Controller
@@ -55,11 +55,36 @@ public class TestController extends Base
     return "test/designTest";
   }
 
-  @GetMapping(value = {"/", "/general"})
+  @GetMapping(value =
+  {
+    "/", "/general"
+  })
   public String generalTest(Model model)
   {
     model.addAttribute("globalMenu", GLOBAL_MENU);
     return "test/testGeneral";
+  }
+
+  @GetMapping(value = "/formAjax")
+  public String prepareFormAjax(Model model)
+  {
+    model.addAttribute("test", new Test());
+    return "test/formAjax";
+  }
+
+  @PostMapping(value = "/formAjax")
+  public String formAjax(@Valid Test test, Model model)
+  {
+    log.debug(test.toString());
+
+    return "redirect:/test/formAjax";
+  }
+
+  @PostMapping(value = "/heree")
+  @ResponseBody
+  public String here(Model model)
+  {
+    return "nice try";
   }
 
   @GetMapping(value = "/design/story")
