@@ -7,13 +7,25 @@ import javax.persistence.*;
 public class Test
 {
   @Id
-//  @SequenceGenerator(name = "SEQ_GEN_TEST", sequenceName = "S_TEST", allocationSize = 1)
-//  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN_TEST")
+  @SequenceGenerator(name = "SEQ_GEN_TEST", sequenceName = "S_TEST", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN_TEST")
   @Column(name = "test_id")
   private Integer testId;
+
+  @Column(name = "test_name")
+  private String testName;
   
-  @Column(name = "text")
-  private String text;
+  @Column(name = "test_one")
+  private String testOne;
+  
+  @Column(name = "test_two")
+  private String testTwo;
+
+  @Override
+  public String toString()
+  {
+    return "Test{" + "testId=" + testId + ", testName=" + testName + ", testOne=" + testOne + ", testTwo=" + testTwo + '}';
+  }
 
   public Integer getTestId()
   {
@@ -25,16 +37,33 @@ public class Test
     this.testId = testId;
   }
 
-  public String getText()
+  public String getTestName()
   {
-    return text;
+    return testName;
   }
 
-  public void setText(String text)
+  public void setTestName(String testName)
   {
-    this.text = text;
+    this.testName = testName;
   }
-  
-  
 
+  public String getTestOne()
+  {
+    return testOne;
+  }
+
+  public void setTestOne(String testOne)
+  {
+    this.testOne = testOne;
+  }
+
+  public String getTestTwo()
+  {
+    return testTwo;
+  }
+
+  public void setTestTwo(String testTwo)
+  {
+    this.testTwo = testTwo;
+  }
 }
