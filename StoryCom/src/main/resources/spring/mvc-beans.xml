@@ -4,13 +4,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--<bean id="versionBean" class="com.storycom.beans.VersionBean"/>-->
-    <!--<bean id="messagesBean" class="com.storycom.beans.MessagesBean"/>-->
-    <bean id="errorsBean" class="com.storycom.beans.ErrorsBean"/>
-    <bean id="configBean" class="com.storycom.beans.ConfigurationBean"/>
-    <bean id="usersBean" class="com.storycom.beans.UsersBean"/>
-    <!--<bean id="settingsBean" class="com.storycom.beans.SettingsBean"/>-->
-    <!--<bean id="transfersBean" class="com.storycom.beans.TransfersBean"/>-->
-    <!--  <bean id="notifsBean" class="com.storycom.beans.NotificationsBean"/>-->
+  <!--<bean id="versionBean" class="com.safb.storycom.beans.VersionBean"/>-->
+  <!--<bean id="messagesBean" class="com.storycom.beans.MessagesBean"/>-->
+  <bean id="errorsBean" class="com.safb.storycom.beans.ErrorsBean"/>
+  <bean id="configBean" class="com.safb.storycom.beans.ConfigurationBean"/>
+  <bean id="usersBean" class="com.safb.storycom.beans.UsersBean"/>
+  <!--<bean id="settingsBean" class="com.safb.storycom.beans.SettingsBean"/>-->
+  <!--<bean id="transfersBean" class="com.safb.storycom.beans.TransfersBean"/>-->
+  <!--  <bean id="notifsBean" class="com.safb.storycom.beans.NotificationsBean"/>-->
 
 </beans>

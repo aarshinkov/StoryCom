@@ -1,19 +1,17 @@
 package com.storycom.test.controllers;
 
-import com.storycom.controllers.*;
+import com.safb.storycom.controllers.HomeController;
 import org.junit.*;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.setup.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import org.springframework.test.web.servlet.result.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 public class HomeControllerTest
 {
-
   private MockMvc mockMvc;
 
   @Before
@@ -32,5 +30,4 @@ public class HomeControllerTest
             .andDo(MockMvcResultHandlers.print())
             .andReturn();
   }
-
 }

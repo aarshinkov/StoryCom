@@ -5,7 +5,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <context:component-scan base-package="com.storycom.repository"/>
+  <context:component-scan base-package="com.safb.storycom.repository"/>
 
   <security:global-method-security pre-post-annotations="enabled"/>
 
@@ -39,10 +39,10 @@
     <security:logout success-handler-ref="logoutSuccessHandler" invalidate-session="true"/>
   </security:http>
 
-  <bean id="customAuthSuccessHandler" class="com.storycom.security.CustomAuthSuccessHandler"/>
-  <bean id="customAuthFailureHandler" class="com.storycom.security.CustomAuthFailureHandler"/>
+  <bean id="customAuthSuccessHandler" class="com.safb.storycom.security.CustomAuthSuccessHandler"/>
+  <bean id="customAuthFailureHandler" class="com.safb.storycom.security.CustomAuthFailureHandler"/>
 
-  <bean id="logoutSuccessHandler" class="com.storycom.security.CustomLogoutSuccessHandler">
+  <bean id="logoutSuccessHandler" class="com.safb.storycom.security.CustomLogoutSuccessHandler">
     <constructor-arg value="/login?logout"/>
   </bean>
 
@@ -66,5 +66,5 @@
     <constructor-arg value="12"/>
   </bean>
 
-  <bean id="userDetailsService" class="com.storycom.security.UserDetailsServiceImpl"/>
+  <bean id="userDetailsService" class="com.safb.storycom.security.UserDetailsServiceImpl"/>
 </beans>
