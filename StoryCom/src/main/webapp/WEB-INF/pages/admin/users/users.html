@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-12 col-lg-3 col-md-6 text-center" style="margin-bottom: 1em;" th:each="user : ${users}">
           <div class="custom-card">
-            <h4 th:text="${user.userFullName}" style="margin-bottom: 0; margin-top: 1em; color: #4d96cc; font-weight: bold;">Full name</h4>
+            <h4 th:text="${user.fullName}" style="margin-bottom: 0; margin-top: 1em; color: #4d96cc; font-weight: bold;">Full name</h4>
             <small class="text-muted" th:text="'@' + ${user.username}">@username</small>
             <p>
               <i class="fas fa-envelope" style="color: 5c5c5c;"></i>
@@ -38,9 +38,9 @@
                       <div class="col-12 col-md-6" th:each="user : ${users}">
                           <div class="card d-flex align-items-stretch" style="height: 100%;">
                               <h5 class="card-header">
-                                  <a href="#" th:if="${user.userId} eq ${@usersBean.storyPrincipal.userId}" title="View my profile"
+                                  <a href="#" th:if="${user.userId} eq ${@usersBean.principal.userId}" title="View my profile"
                                      class="text-red" th:text="${user.userFullName}">Name</a>
-                                  <a href="#" th:unless="${user.userId} eq ${@usersBean.storyPrincipal.userId}"
+                                  <a href="#" th:unless="${user.userId} eq ${@usersBean.principal.userId}"
                                      th:title="'View ' + ${user.userFullName} + '\'s profile'"
                                      th:text="${user.userFullName}">Name</a>
                               </h5>
@@ -93,9 +93,9 @@
                                               <div class="row">
                                                   <div class="col-12">
                                                       <h4 class="name">
-                                                          <a href="#" th:if="${user.userId} eq ${@usersBean.storyPrincipal.userId}" title="View my profile"
+                                                          <a href="#" th:if="${user.userId} eq ${@usersBean.principal.userId}" title="View my profile"
                                                              class="text-red" th:text="${user.userFullName}">Name</a>
-                                                          <a href="#" th:unless="${user.userId} eq ${@usersBean.storyPrincipal.userId}"
+                                                          <a href="#" th:unless="${user.userId} eq ${@usersBean.principal.userId}"
                                                              th:title="'View ' + ${user.userFullName} + '\'s profile'"
                                                              th:text="${user.userFullName}">Name</a>
                                                       </h4>

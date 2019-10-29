@@ -55,9 +55,9 @@ public class StoriesController extends Base
       story.setCreatedOnFormatted(sdf.format(story.getCreatedOn()));
     }
 
-    if (getStoryUser() != null)
+    if (getLoggedUser() != null)
     {
-      model.addAttribute("currUserId", getStoryUser().getUserId());
+      model.addAttribute("currUserId", getLoggedUser().getUserId());
     }
 
     model.addAttribute("globalMenu", GLOBAL_MENU);
@@ -83,9 +83,9 @@ public class StoriesController extends Base
       story.setCreatedOnFormatted(sdf.format(story.getCreatedOn()));
     }
 
-    if (getStoryUser() != null)
+    if (getLoggedUser() != null)
     {
-      model.addAttribute("currUserId", getStoryUser().getUserId());
+      model.addAttribute("currUserId", getLoggedUser().getUserId());
     }
 
     model.addAttribute("globalMenu", GLOBAL_MENU);
@@ -107,9 +107,9 @@ public class StoriesController extends Base
       story.setCreatedOnFormatted(sdf.format(story.getCreatedOn()));
     }
 
-    if (getStoryUser() != null)
+    if (getLoggedUser() != null)
     {
-      model.addAttribute("currUserId", getStoryUser().getUserId());
+      model.addAttribute("currUserId", getLoggedUser().getUserId());
     }
 
     model.addAttribute("globalMenu", GLOBAL_MENU);

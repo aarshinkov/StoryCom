@@ -218,7 +218,7 @@
               </div>-->
       </div>
 
-      <!-- Izpolzva ${@usersBean.storyPrincipal.userId}-->
+      <!-- Izpolzva ${@usersBean.principal.userId}-->
 
       <!--    <div id="storyDiv2">
             <p th:if="${storiesCount} eq 0" th:text="#{story.search.noresults}">No results found</p>
@@ -246,11 +246,11 @@
                             <a class="dropdown-item"
                                th:href="@{'/stories/view' + '?id=' + ${story.storyId}}" href="#">View</a>
                             <a class="dropdown-item" sec:authorize="isAuthenticated()"
-                            th:if="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}" href="#">Edit</a>
+                            th:if="${story.user.userId} eq ${@usersBean.principal.userId}" href="#">Edit</a>
       
                             <form id="editForm" method="post" th:action="@{/stories/edit}" action="#"
                                   sec:authorize="isAuthenticated()"
-                                  th:if="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}">
+                                  th:if="${story.user.userId} eq ${@usersBean.principal.userId}">
                               <input type="hidden" name="id" th:value="${story.storyId}"/>
                               <button type="submit" class="dropdown-item" style="cursor: pointer;">Edit
                               </button>
@@ -258,7 +258,7 @@
       
                             <form id="deleteForm" method="post" th:action="@{/stories/delete}" action="#"
                                   sec:authorize="isAuthenticated()"
-                                  th:if="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}">
+                                  th:if="${story.user.userId} eq ${@usersBean.principal.userId}">
                               <input type="hidden" name="id" th:value="${story.storyId}"/>
                               <button type="submit" class="dropdown-item" style="cursor: pointer;">
                                 Delete
@@ -266,7 +266,7 @@
                             </form>
       
                             <a class="dropdown-item" sec:authorize="isAuthenticated()"
-                               th:unless="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}" href="#">Report</a>
+                               th:unless="${story.user.userId} eq ${@usersBean.principal.userId}" href="#">Report</a>
                           </div>
                         </div>
                         <div class="col-2 text-right">
@@ -277,9 +277,9 @@
                       <small title="Author">
                         <i class="far fa-user"></i>
                         <i class="lnr lnr-user"></i>
-                        <span th:if="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}"
+                        <span th:if="${story.user.userId} eq ${@usersBean.principal.userId}"
                               th:text="${story.user.userFullName} + ' (Me)'"></span>
-                        <span th:unless="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}"
+                        <span th:unless="${story.user.userId} eq ${@usersBean.principal.userId}"
                               th:text="${story.user.userFullName}"></span>
                       </small>
                       <small> |</small>
@@ -291,24 +291,24 @@
                       <p class="card-text" th:text="${story.content}">Text</p>
                       <p class="card-text" th:text="${story.overview}">Overview</p>
       
-                      <a sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}"
+                      <a sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${@usersBean.principal.userId}"
                          class="btn btn-outline-success" href="#"
                          th:href="@{'/stories/upvote' + '?id=' + ${story.storyId}}">
                         <i class="far fa-thumbs-up"></i>
                       </a>
-                      <a sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}"
+                      <a sec:authorize="isAuthenticated()" th:unless="${story.user.userId} eq ${@usersBean.principal.userId}"
                          class="btn btn-outline-danger" href="#"
                          th:href="@{'/stories/downvote' + '?id=' + ${story.storyId}}">
                         <i class="far fa-thumbs-down"></i>
                       </a>
                       <a href="#" class="btn btn-primary">View</a>
-                      <a href="#" class="btn btn-success" th:if="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}">Edit</a>
+                      <a href="#" class="btn btn-success" th:if="${story.user.userId} eq ${@usersBean.principal.userId}">Edit</a>
                       <a style="vertical-align: bottom; float:right;" href="#"
                          th:href="@{'/stories/warn' + '?id=' + ${story.storyId}}"
                          class=" btn btn-outline-warning btn-sm"
-                         th:unless="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}"
+                         th:unless="${story.user.userId} eq ${@usersBean.principal.userId}"
                          sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DBA')">Warn</a>
-                      <a href="#" class="btn btn-danger" th:if="${story.user.userId} eq ${@usersBean.storyPrincipal.userId}">Delete</a>
+                      <a href="#" class="btn btn-danger" th:if="${story.user.userId} eq ${@usersBean.principal.userId}">Delete</a>
                       <hr style="margin-bottom: 1px;"/>
                       <div class="row">
       

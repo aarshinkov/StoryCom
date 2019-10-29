@@ -2,7 +2,7 @@ package com.safb.storycom.base;
 
 import com.safb.storycom.entity.UserEntity;
 import com.safb.storycom.repository.UsersRepository;
-import com.safb.storycom.security.LoggedInUser;
+import com.safb.storycom.security.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -66,13 +66,13 @@ public class Base
     }
   }
 
-  protected LoggedInUser getStoryUser()
+  protected LoggedUser getLoggedUser()
   {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
     try
     {
-      return (LoggedInUser) auth.getPrincipal();
+      return (LoggedUser) auth.getPrincipal();
     }
     catch (ClassCastException ex)
     {
@@ -81,13 +81,13 @@ public class Base
     }
     catch (Exception e)
     {
-      log.error("Error getting StoryUser!", e);
+      log.error("Error getting LoggedUser!", e);
       return null;
     }
   }
 
   protected UserEntity getUser()
   {
-    return usersRepository.findByUserId(getStoryUser().getUserId());
+    return usersRepository.findByUserId(getLoggedUser().getUserId());
   }
 }

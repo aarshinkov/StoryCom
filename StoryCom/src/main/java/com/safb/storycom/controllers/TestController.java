@@ -132,7 +132,7 @@ public class TestController extends Base
   @GetMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
   public UserEntity getUser()
   {
-    return usersRepository.findByUserId(getStoryUser().getUserId());
+    return usersRepository.findByUserId(getLoggedUser().getUserId());
   }
 
   @ResponseBody

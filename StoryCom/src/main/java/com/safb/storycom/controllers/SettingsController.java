@@ -53,7 +53,7 @@ public class SettingsController extends Base
   {
 
     String sql = "SELECT U.PASSWORD FROM USERS U WHERE USER_ID = ?";
-    SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, getStoryUser().getUserId());
+    SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, getLoggedUser().getUserId());
 
     String dbPassword = null;
 
@@ -84,15 +84,15 @@ public class SettingsController extends Base
       return "settings/changePass";
     }
 //
-//        log.debug("Changing password for user: " + getStoryUser().getUsername());
-//        log.debug("User id: " + getStoryUser().getUserId());
+//        log.debug("Changing password for user: " + getLoggedUser().getUsername());
+//        log.debug("User id: " + getLoggedUser().getUserId());
 //
 //        log.debug("Password: " + password.getPassword());
 //        log.debug("Confirmed password: " + password.getConfirmPassword());
 //
     password.setEncodedPassword(passwordEncoder.encode(password.getConfirmPassword()));
 
-    userService.changePassword(getStoryUser(), password);
+    userService.changePassword(getLoggedUser(), password);
 
     return "redirect:/settings/changepass";
   }

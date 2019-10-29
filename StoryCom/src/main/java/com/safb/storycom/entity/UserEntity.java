@@ -59,7 +59,7 @@ public class UserEntity implements Serializable
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rolename"))
   private List<Role> roles = new ArrayList<>();
 
-  public String getUserFullName()
+  public String getFullName()
   {
     if (lastName == null || "".equalsIgnoreCase(lastName))
     {

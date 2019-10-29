@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/contentTemplate}">
   <head>
@@ -17,7 +18,7 @@
         <div class="col-12">
           <div class="jumbotron">
             <div class="container-fluid">
-              <h1 class="display-4" sec:authorize="isAuthenticated()" th:text="#{home.greeting.personal(${@usersBean.storyPrincipal.getFullName()})}">Welcome to StoryCom, full name</h1>
+              <h1 class="display-4" sec:authorize="isAuthenticated()" th:text="#{home.greeting.personal(${@usersBean.principal.fullName})}">Welcome to StoryCom, full name</h1>
               <h1 class="display-4" sec:authorize="!isAuthenticated()" th:text="#{home.greeting}">Welcome to StoryCom</h1>
               <div class="lead">
                 <blockquote class="blockquote">
@@ -27,7 +28,7 @@
               </div>
               <p class="lead">
                 <a class="btn btn-success btn-lg" th:href="@{/stories/add}" href="#" role="button" sec:authorize="isAuthenticated()">Create a story</a>
-                <a class="btn btn-primary btn-lg" th:href="@{'/stories/' + ${@usersBean.storyPrincipal.username}}" href="#" role="button" sec:authorize="isAuthenticated()">Мy Stories</a>
+                <a class="btn btn-primary btn-lg" th:href="@{'/stories/' + ${@usersBean.principal.username}}" href="#" role="button" sec:authorize="isAuthenticated()">Мy Stories</a>
                 <a class="btn btn-success btn-lg" th:href="@{/signup}" href="#" role="button" sec:authorize="!isAuthenticated()">Register</a>
                 <a class="btn btn-primary btn-lg" th:href="@{/login}" href="#" role="button" sec:authorize="!isAuthenticated()">Login</a>
               </p>

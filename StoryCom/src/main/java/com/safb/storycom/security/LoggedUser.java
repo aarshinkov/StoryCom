@@ -5,14 +5,14 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
-public class LoggedInUser extends User
+public class LoggedUser extends User
 {
   private Integer userId;
   private String email;
   private String firstName;
   private String lastName;
 
-  public LoggedInUser(String username, String password, String email, boolean enabled,
+  public LoggedUser(String username, String password, String email, boolean enabled,
           boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
           Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, Integer userId)
   {

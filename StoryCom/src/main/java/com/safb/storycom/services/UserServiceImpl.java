@@ -3,7 +3,7 @@ package com.safb.storycom.services;
 import com.safb.storycom.domain.Password;
 import com.safb.storycom.domain.RegisterUser;
 import com.safb.storycom.entity.UserEntity;
-import com.safb.storycom.security.LoggedInUser;
+import com.safb.storycom.security.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService
   }
 
   @Override
-  public void changePassword(LoggedInUser storyUser, Password password)
+  public void changePassword(LoggedUser loggedUser, Password password)
   {
     String sql = "UPDATE USERS SET PASSWORD = ? WHERE USER_ID = ?";
 
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService
     {
       CallableStatement cstm = dataSource.getConnection().prepareCall(sql);
       cstm.setString(1, password.getEncodedPassword());
-      cstm.setInt(2, storyUser.getUserId());
+      cstm.setInt(2, loggedUser.getUserId());
 
       cstm.executeUpdate();
       log.debug("Password updated successfully!");

@@ -21,13 +21,13 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
     log.debug("Authentication successful.");
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    LoggedInUser storyUser = (LoggedInUser) auth.getPrincipal();
+    LoggedUser loggedUser = (LoggedUser) auth.getPrincipal();
 
     SavedRequest savedRequest = (SavedRequest) request.getSession(false).getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 
     String redirectUrl = request.getContextPath() + "/";
 
-    request.getSession(false).setAttribute("user", "(" + storyUser.getFullName() + ") " + storyUser.getUsername());
+    request.getSession(false).setAttribute("user", "(" + loggedUser.getFullName() + ") " + loggedUser.getUsername());
 
     if (savedRequest != null)
     {

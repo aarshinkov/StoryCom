@@ -54,7 +54,7 @@ public class ProfileController extends Base
   {
     log.debug("Saving user profile...");
 
-    user.setUserId(getStoryUser().getUserId());
+    user.setUserId(getLoggedUser().getUserId());
 
     log.debug("User id: " + user.getUserId());
 
@@ -96,7 +96,7 @@ public class ProfileController extends Base
   {
     log.debug("Saving user details...");
 
-    user.setUserId(getStoryUser().getUserId());
+    user.setUserId(getLoggedUser().getUserId());
 
     try
     {
@@ -124,7 +124,7 @@ public class ProfileController extends Base
 //  public String myStories(@PathVariable("username") String username, Model model)
 //  {
 //    boolean isMe = true;
-//    String currentUsername = getStoryUser().getUsername();
+//    String currentUsername = getLoggedUser().getUsername();
 //
 //    log.debug("username: " + currentUsername);
 //
@@ -150,7 +150,7 @@ public class ProfileController extends Base
 //    model.addAttribute("stories", stories);
 //
 //    model.addAttribute("isMe", isMe);
-//    model.addAttribute("currUserId", getStoryUser().getUserId());
+//    model.addAttribute("currUserId", getLoggedUser().getUserId());
 //    model.addAttribute("user", user);
 //
 //    model.addAttribute("globalMenu", GLOBAL_MENU);

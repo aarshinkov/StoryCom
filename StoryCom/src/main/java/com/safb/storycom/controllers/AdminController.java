@@ -35,7 +35,7 @@ public class AdminController extends Base
 
     model.addAttribute("globalMenu", GLOBAL_MENU);
     model.addAttribute("submenu", "users");
-    model.addAttribute("currUserId", getStoryUser().getUserId());
+    model.addAttribute("currUserId", getLoggedUser().getUserId());
 
     return "admin/users/users";
   }

@@ -56,7 +56,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
       authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRolename()));
     }
 
-    return new LoggedInUser(identificator, user.getPassword(), user.getEmail(),
+    return new LoggedUser(identificator, user.getPassword(), user.getEmail(),
             true, true, true, true,
             authorities, user.getFirstName(), user.getLastName(), user.getUserId());
   }
