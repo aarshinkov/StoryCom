@@ -1,13 +1,14 @@
-/** {*/
+* {
   /*font-family: 'Quicksand', sans-serif;*/
   /*font-family: 'Comfortaa', cursive;*/
   /*font-family: 'Neucha', cursive;*/
   /*font-family: 'Jura', sans-serif;*/
   /*font-family: 'Gabriela', serif;*/
   /*font-family: 'Cuprum', sans-serif;*/
+  font-family: 'Helvetica', serif; 
 
   /*font-size: 100%;*/
-/*}*/
+}
 
 /*body {
   background-color: #f5f5f5;
