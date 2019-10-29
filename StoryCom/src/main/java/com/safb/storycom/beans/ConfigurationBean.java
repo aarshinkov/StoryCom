@@ -2,7 +2,6 @@ package com.safb.storycom.beans;
 
 import com.safb.storycom.base.Base;
 import com.safb.storycom.beans.settings.EmailSettings;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;

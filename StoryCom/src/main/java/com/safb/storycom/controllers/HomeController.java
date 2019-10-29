@@ -1,7 +1,6 @@
 package com.safb.storycom.controllers;
 
 import com.safb.storycom.base.Base;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

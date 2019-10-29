@@ -1,8 +1,6 @@
 package com.safb.storycom.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,11 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import lombok.*;
 
-@Getter
-@Setter
-@ToString
 @Entity
 @Table(name = "users")
 public class UserEntity implements Serializable
@@ -72,5 +66,95 @@ public class UserEntity implements Serializable
       return firstName;
     }
     return firstName + " " + lastName;
+  }
+
+  public Integer getUserId()
+  {
+    return userId;
+  }
+
+  public void setUserId(Integer userId)
+  {
+    this.userId = userId;
+  }
+
+  public String getUsername()
+  {
+    return username;
+  }
+
+  public void setUsername(String username)
+  {
+    this.username = username;
+  }
+
+  public String getFirstName()
+  {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName)
+  {
+    this.firstName = firstName;
+  }
+
+  public String getLastName()
+  {
+    return lastName;
+  }
+
+  public void setLastName(String lastName)
+  {
+    this.lastName = lastName;
+  }
+
+  public String getPassword()
+  {
+    return password;
+  }
+
+  public void setPassword(String password)
+  {
+    this.password = password;
+  }
+
+  public String getEmail()
+  {
+    return email;
+  }
+
+  public void setEmail(String email)
+  {
+    this.email = email;
+  }
+
+  public Date getCreatedOn()
+  {
+    return createdOn;
+  }
+
+  public void setCreatedOn(Date createdOn)
+  {
+    this.createdOn = createdOn;
+  }
+
+  public UserDetail getUserDetail()
+  {
+    return userDetail;
+  }
+
+  public void setUserDetail(UserDetail userDetail)
+  {
+    this.userDetail = userDetail;
+  }
+
+  public List<Role> getRoles()
+  {
+    return roles;
+  }
+
+  public void setRoles(List<Role> roles)
+  {
+    this.roles = roles;
   }
 }

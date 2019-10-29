@@ -3,7 +3,6 @@ package com.safb.storycom.controllers;
 import com.safb.storycom.base.Base;
 import com.safb.storycom.entity.UserEntity;
 import com.safb.storycom.repository.UsersRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

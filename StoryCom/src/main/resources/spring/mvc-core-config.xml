@@ -17,14 +17,17 @@
   <import resource="mvc-beans.xml"/>
   <import resource="language-config.xml"/>
   <import resource="tasks.xml"/>
+  
+  <context:property-placeholder location="classpath:env.properties" ignore-unresolvable="true"/>
+  
+  <aop:aspectj-autoproxy proxy-target-class="true"/>
 
   <context:component-scan
-    base-package="com.sbc.ebank.aop, com.safb.storycom.controllers, com.safb.storycom.entity, com.safb.storycom.security, com.safb.storycom.services, com.safb.storycom.tasks"/>
+    base-package="com.safb.storycom.aop, com.safb.storycom.controllers, com.safb.storycom.entity, com.safb.storycom.security, com.safb.storycom.services, com.safb.storycom.tasks"/>
 
   <mvc:annotation-driven/>
 
   <mvc:resources mapping="/resources/**" location="WEB-INF/resources/"/>
   <!--<mvc:resources mapping="/favicon.ico" location="WEB-INF/resources/images/logo/favicon.ico"/>-->
   
-  <aop:aspectj-autoproxy proxy-target-class="true"/>
 </beans>

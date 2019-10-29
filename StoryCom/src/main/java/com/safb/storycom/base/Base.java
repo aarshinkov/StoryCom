@@ -3,7 +3,6 @@ package com.safb.storycom.base;
 import com.safb.storycom.entity.UserEntity;
 import com.safb.storycom.repository.UsersRepository;
 import com.safb.storycom.security.LoggedInUser;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

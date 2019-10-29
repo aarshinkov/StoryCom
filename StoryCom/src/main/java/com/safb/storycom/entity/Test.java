@@ -2,11 +2,7 @@ package com.safb.storycom.entity;
 
 import java.io.*;
 import javax.persistence.*;
-import lombok.*;
 
-@Getter
-@Setter
-@ToString
 @Entity
 @Table(name = "TEST")
 public class Test implements Serializable
@@ -25,4 +21,44 @@ public class Test implements Serializable
 
   @Column(name = "test_two")
   private String testTwo;
+
+  public Integer getTestId()
+  {
+    return testId;
+  }
+
+  public void setTestId(Integer testId)
+  {
+    this.testId = testId;
+  }
+
+  public String getTestName()
+  {
+    return testName;
+  }
+
+  public void setTestName(String testName)
+  {
+    this.testName = testName;
+  }
+
+  public String getTestOne()
+  {
+    return testOne;
+  }
+
+  public void setTestOne(String testOne)
+  {
+    this.testOne = testOne;
+  }
+
+  public String getTestTwo()
+  {
+    return testTwo;
+  }
+
+  public void setTestTwo(String testTwo)
+  {
+    this.testTwo = testTwo;
+  }
 }

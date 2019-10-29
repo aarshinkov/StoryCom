@@ -1,15 +1,10 @@
 package com.safb.storycom.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "mailbox")
 public class Mail implements Serializable
@@ -38,4 +33,54 @@ public class Mail implements Serializable
   @Column(name = "content")
   @NotNull
   private String content;
+
+  public Integer getMailId()
+  {
+    return mailId;
+  }
+
+  public void setMailId(Integer mailId)
+  {
+    this.mailId = mailId;
+  }
+
+  public String getSender()
+  {
+    return sender;
+  }
+
+  public void setSender(String sender)
+  {
+    this.sender = sender;
+  }
+
+  public String getReceivers()
+  {
+    return receivers;
+  }
+
+  public void setReceivers(String receivers)
+  {
+    this.receivers = receivers;
+  }
+
+  public String getSubject()
+  {
+    return subject;
+  }
+
+  public void setSubject(String subject)
+  {
+    this.subject = subject;
+  }
+
+  public String getContent()
+  {
+    return content;
+  }
+
+  public void setContent(String content)
+  {
+    this.content = content;
+  }
 }

@@ -11,7 +11,6 @@ import com.safb.storycom.repository.UsersRepository;
 import java.sql.*;
 import java.util.*;
 import javax.validation.*;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

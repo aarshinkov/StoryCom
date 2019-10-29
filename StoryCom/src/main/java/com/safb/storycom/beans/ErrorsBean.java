@@ -1,7 +1,6 @@
 package com.safb.storycom.beans;
 
 import com.safb.storycom.base.Base;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;

@@ -4,243 +4,81 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
   <body>
 
-    <div class="container-fluid" sec:authorize="isAuthenticated()">
-      <div class="row" style="background-color: #dedede;">
-        <div class="row" style="background-color: #7dbbe9; color: #fff;">
-          <div class="col-12 text-right">
-            <div style="font-size: 14px;">
-              <div th:text="#{app.login(${@usersBean.storyPrincipal.username})}">Logged in as: username</div>
+    <nav id="mainMenu" class="navbar navbar-expand-md navbar-dark bg-info">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+              aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" th:text="#{app.title}" th:href="@{/}" href="#">StoryCom</a>
+
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-0">
+          <li class="nav-item" th:classappend="${globalMenu eq 'home'}  ? 'active'">
+            <a class="nav-link" th:href="@{/}" th:text="#{nav.home.general}">Home</a>
+          </li>
+
+          <li class="nav-item dropdown" th:classappend="${globalMenu eq 'story'} ? 'active'">
+            <a class="nav-link" href="#" id="storiesDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              <span th:text="#{nav.story}">Stories</span>
+              <i class="fas fa-caret-down"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="storiesDropdown">
+              <a class="dropdown-item" th:classappend="${subMenu eq 'add'} ? 'active'" href="#"
+                 sec:authorize="hasRole('ROLE_USER')" th:href="@{/story/add}"
+                 th:text="#{nav.story.add}">Add story</a>
+              <a class="dropdown-item" th:classappend="${subMenu eq 'search'} ? 'active'" href="#"
+                 th:href="@{/story/search}" th:text="#{nav.story.search}">Search
+                story</a>
+              <!--<div class="dropdown-divider"></div>-->
             </div>
-          </div>
-        </div>
+          </li>
+
+          <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"
+              th:classappend="${globalMenu eq 'admin'} ? 'active'">
+            <a class="nav-link" th:href="@{/admin}" th:text="#{nav.admin}">Admin</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav mt-lg-0">
+          <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" th:href="@{/}" th:text="'Hello, ' + ${@usersBean.storyPrincipal.getName()}" href="#">Hello, user</a>
+          </li>
+
+          <li class="nav-item dropdown" sec:authorize="isAuthenticated()"
+              th:classappend="${globalMenu eq 'settings'} ? 'active'">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              <span th:text="#{nav.settings}">Settings</span>
+              <i class="fas fa-caret-down"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="settingsDropdown">
+              <a class="dropdown-item" href="#" th:href="@{/settings/profile}" th:text="#{nav.settings.profile}">Profile</a>
+              <!--<div class="dropdown-divider"></div>-->
+            </div>
+          </li>
+
+          <li class="nav-item" sec:authorize="!isAuthenticated()"
+              th:classappend="${globalMenu eq 'login'} ? 'active'">
+            <a class="nav-link" th:href="@{/login}" th:text="#{nav.login}" href="#">Login</a>
+          </li>
+
+          <li class="nav-item" sec:authorize="!isAuthenticated()"
+              th:classappend="${globalMenu eq 'signup'} ? 'active'">
+            <a class="nav-link" th:href="@{/signup}" th:text="#{nav.signup}" href="#">Sign up</a>
+          </li>
+
+          <li class="nav-item" sec:authorize="isAuthenticated()" style="cursor: pointer;">
+            <a class="nav-link" onclick="$('#formLogout').submit();" th:text="#{nav.logout}">Logout</a>
+          </li>
+
+          <form style="visibility: hidden;" id="formLogout" method="post" action="#" th:action="@{/logout}"></form>
+
+          <!--<li class="nav-item" sec:authorize="isAuthenticated()">-->
+          <!--<a class="nav-link" th:href="@{/logout}" th:text="#{nav.logout}" href="#">Logout</a>-->
+          <!--</li>-->
+        </ul>
       </div>
-    </div>
-
-    <div id="mainMenu" th:remove="tag">
-      <header id="js-header" class="u-header u-header--static">
-        <div class="u-header__section u-header__section--light g-bg-white g-transition-0_3 g-py-10">
-          <nav class="js-mega-menu navbar navbar-expand-lg hs-menu-initialized hs-menu-horizontal">
-            <div class="container">
-              <!-- Responsive Toggle Button -->
-              <button class="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-minus-3 g-right-0" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
-                <span class="hamburger hamburger--slider">
-                  <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                  </span>
-                </span>
-              </button>
-              <!-- End Responsive Toggle Button -->
-
-              <!-- Logo -->
-              <a th:href="@{/}" href="#" class="navbar-brand d-flex" th:text="#{app.title}">StoryCom</a>
-              <!-- End Logo -->
-
-              <!-- Navigation -->
-              <div class="collapse navbar-collapse align-items-center flex-sm-row g-pt-10 g-pt-5--lg g-mr-10--lg" id="navBar">
-                <ul class="navbar-nav text-uppercase g-pos-rel g-font-weight-600 ml-auto">
-
-                  <!-- Home -->
-                  <li class="nav-item hs-has-sub-menu g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut"
-                      th:classappend="${globalMenu eq 'home'} ? 'active'">
-                    <a id="nav-link-demos" class="nav-link g-py-7 g-px-0" href="#"aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu-demos">
-                      <i class="fa fa-home"></i>
-                    </a>
-
-                    <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling animated fadeOut"
-                        id="nav-submenu-demos" aria-labelledby="nav-link-demos" style="display: none;">
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'home'} ? 'active'" 
-                           href="#" th:href="@{/}">
-                          <!--<i class="fa fa-home"></i>-->
-                          <span th:text="#{nav.home.general}">Home</span>
-                        </a>
-                      </li>
-
-                      <li class="dropdown-divider"></li>
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'about'} ? 'active'"
-                           href="#" th:href="@{/about}">
-                          <!--<i class="fa fa-info"></i>-->
-                          <span th:text="#{nav.home.about}">About</span>
-                        </a>
-                      </li>
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'contact'} ? 'active'"
-                           href="#" th:href="@{/contact}">
-                          <span th:text="#{nav.home.contact}">Contact</span>
-                        </a>
-                      </li>
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'timeline'} ? 'active'"
-                           href="#" th:href="@{/timeline}">
-                          <span th:text="#{nav.home.timeline}">Timeline</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <!-- End Home -->
-
-                  <!-- Stories -->
-                  <li class="nav-item hs-has-sub-menu g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut"
-                      th:classappend="${globalMenu eq 'stories'} ? 'active'">
-                    <a id="nav-link-demos" class="nav-link g-py-7 g-px-0" href="#" accesskey=""aria-haspopup="true" 
-                       aria-expanded="false" aria-controls="nav-submenu-demos" th:text="#{nav.story}">Stories</a>
-
-                    <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling animated fadeOut"
-                        id="nav-submenu-demos" aria-labelledby="nav-link-demos" style="display: none;">
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'add'} ? 'active'"
-                           href="#" sec:authorize="hasRole('ROLE_USER')" th:href="@{/stories/add}">
-                          <span th:text="#{nav.story.add}">Add story</span>
-                        </a>
-                      </li>
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'search'} ? 'active'"
-                           href="#" th:href="@{/stories/search}">
-                          <span th:text="#{nav.story.search}">Search story</span>
-                        </a>
-                      </li>
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'mine'} ? 'active'" sec:authorize="isAuthenticated()"
-                           href="#"  th:href="@{'/stories/' + ${#authentication.name}}">
-                          <span th:text="#{nav.story.mine}">My stories</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <!-- End Stories -->
-
-                  <!-- Admin -->
-                  <li class="nav-item hs-has-sub-menu g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut"
-                      th:classappend="${globalMenu eq 'admin'} ? 'active'" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a id="nav-link-demos" class="nav-link g-py-7 g-px-0" href="#" accesskey=""aria-haspopup="true" 
-                       aria-expanded="false" aria-controls="nav-submenu-demos" th:text="#{nav.admin}">Admin</a>
-
-                    <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling animated fadeOut"
-                        id="nav-submenu-demos" aria-labelledby="nav-link-demos" style="display: none;">
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'users'} ? 'active'"
-                           href="#" th:href="@{/admin/users}">
-                          <span th:text="#{nav.admin.users}">Users</span>
-                        </a>
-                      </li>
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'addUser'} ? 'active'"
-                           href="#" th:href="@{/admin/addUser}">
-                          <span th:text="#{nav.admin.addUser}">Add user</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <!-- End Admin -->
-
-
-                  <!-- Signup -->
-                  <li class="nav-item  g-mx-10--lg g-mx-15--xl" th:classappend="${globalMenu eq 'signup'} ? 'active'" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link g-py-7 g-px-0" href="#" th:href="@{/signup}">
-                      <span th:text="#{nav.signup}">Sign Up</span>
-                    </a>
-                  </li>
-                  <!-- End Signup -->
-
-                  <!-- Login -->
-                  <li class="nav-item  g-mx-10--lg g-mx-15--xl" th:classappend="${globalMenu eq 'login'} ? 'active'" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link g-py-7 g-px-0" href="#" th:href="@{/login}">
-                      <span th:text="#{nav.login}">Login</span>
-                    </a>
-                  </li>
-                  <!-- End Login -->
-
-                  <!-- Test -->
-                  <li class="nav-item  g-mx-10--lg g-mx-15--xl" th:classappend="${globalMenu eq 'test'} ? 'active'" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="nav-link g-py-7 g-px-0" href="#" th:href="@{/test/}">
-                      <span th:text="#{nav.test}">Test</span>
-                    </a>
-                  </li>
-                  <!-- End Test -->
-
-                  <!-- Profile -->
-                  <li class="nav-item hs-has-sub-menu g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut"
-                      th:classappend="${globalMenu eq 'profile'} ? 'active'" sec:authorize="isAuthenticated()">
-                    <a id="nav-link-demos" class="nav-link g-py-7 g-px-0" href="#" accesskey=""aria-haspopup="true" 
-                       aria-expanded="false" aria-controls="nav-submenu-demos" th:text="#{nav.profile}">Profile</a>
-
-                    <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling animated fadeOut"
-                        id="nav-submenu-demos" aria-labelledby="nav-link-demos" style="display: none;">
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'personal'} ? 'active'"
-                           href="#" th:href="@{/profile}">
-                          <span th:text="#{nav.profile.account}">My account</span>
-                        </a>
-                      </li>
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'details'} ? 'active'"
-                           href="#" th:href="@{/profile/details}">
-                          <span th:text="#{nav.profile.details}">User details</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <!-- End Profile -->
-
-                  <!-- Preferences -->
-                  <li class="nav-item hs-has-sub-menu g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut"
-                      th:classappend="${globalMenu eq 'settings'} ? 'active'" sec:authorize="isAuthenticated()">
-                    <a id="nav-link-demos" class="nav-link g-py-7 g-px-0" href="#" accesskey=""aria-haspopup="true" 
-                       aria-expanded="false" aria-controls="nav-submenu-demos" th:text="#{nav.settings}">Settings</a>
-
-                    <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling animated fadeOut"
-                        id="nav-submenu-demos" aria-labelledby="nav-link-demos" style="display: none;">
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'password'} ? 'active'"
-                           href="#" th:href="@{/settings/changepass}">
-                          <span th:text="#{nav.settings.password}">Change password</span>
-                        </a>
-                      </li>
-
-                      <li class="dropdown-item">
-                        <a class="nav-link" th:classappend="${submenu eq 'preferences'} ? 'active'"
-                           href="#" th:href="@{/settings/preferences}">
-                          <span th:text="#{nav.settings.preferences}">Preferences</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <!-- End Preferences -->
-
-                  <!-- Logout -->
-                  <li class="nav-item  g-mx-10--lg g-mx-15--xl" sec:authorize="isAuthenticated()">
-                    <a class="nav-link g-py-7 g-px-0" onclick="$('#formLogout').submit();" style="cursor: pointer;">
-                      <i class="fas fa-door-open"></i>
-                      <span class="d-inline d-lg-none" th:text="#{nav.logout}">Logout</span>
-                    </a>
-                    <form style="visibility: hidden;" id="formLogout" method="post" action="#" th:action="@{/logout}"></form>
-                  </li>
-                  <!-- End Logout -->
-
-                </ul>
-              </div>
-
-              <div class="d-inline-block g-hidden-md-down g-pos-rel g-valign-middle g-pl-30 g-pl-0--lg">
-                <a class="btn u-btn-outline-primary g-font-size-13 text-uppercase g-py-10 g-px-15"
-                   sec:authorize="hasRole('ROLE_USER')" th:href="@{/stories/add}">Create a story</a>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </header>
-    </div>
+    </nav>
   </body>
 </html>

@@ -1,0 +1,13 @@
+2019-10-29 13:51:53.064 DEBUG ConfigurationBean - Loading configuration params...
+2019-10-29 13:51:53.124 DEBUG ConfigurationBean - MAIL.HOST = smtp.gmail.com
+2019-10-29 13:51:53.124 DEBUG ConfigurationBean - MAIL.PASSWORD = Changeisgood1234
+2019-10-29 13:51:53.124 DEBUG ConfigurationBean - MAIL.PORT = 587
+2019-10-29 13:51:53.125 DEBUG ConfigurationBean - MAIL.PROTOCOL = smtp
+2019-10-29 13:51:53.125 DEBUG ConfigurationBean - MAIL.SENDER = pureshotssupp@gmail.com
+2019-10-29 13:51:53.125 DEBUG ConfigurationBean - MAIL.USERNAME = pureshotssupp@gmail.com
+2019-10-29 13:51:53.149 DEBUG ConfigurationBean - APPURL = http://127.0.0.1:8085/StoryCom
+2019-10-29 13:51:53.150 DEBUG ConfigurationBean - Configuration params loaded.
+2019-10-29 13:51:54.926 DEBUG LogAspect - HomeController -> addAttributes begin --
+2019-10-29 13:51:54.931 DEBUG LogAspect - HomeController -> addAttributes ended in 3.8136 millis --
+2019-10-29 13:51:54.933 DEBUG LogAspect - HomeController -> home begin --
+2019-10-29 13:51:54.933 DEBUG LogAspect - HomeController -> home ended in 0.353 millis --

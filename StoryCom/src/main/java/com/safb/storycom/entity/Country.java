@@ -1,16 +1,11 @@
 package com.safb.storycom.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "countries")
 public class Country implements Serializable
@@ -21,4 +16,24 @@ public class Country implements Serializable
 
   @Column(name = "country_full")
   private String countryFull;
+
+  public String getCountryName()
+  {
+    return countryName;
+  }
+
+  public void setCountryName(String countryName)
+  {
+    this.countryName = countryName;
+  }
+
+  public String getCountryFull()
+  {
+    return countryFull;
+  }
+
+  public void setCountryFull(String countryFull)
+  {
+    this.countryFull = countryFull;
+  }
 }

@@ -7,7 +7,6 @@ import com.safb.storycom.entity.UserEntity;
 import com.safb.storycom.base.Base;
 import java.sql.*;
 import java.util.*;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.jdbc.core.*;
