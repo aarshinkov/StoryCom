@@ -182,7 +182,7 @@ public class StoriesController extends Base
   {
     storiesService.editStory(story);
 
-    return "redirect:/story/search";
+    return "redirect:/stories/search";
   }
 
   @PostMapping(value = "/delete", params = "id")
@@ -190,7 +190,7 @@ public class StoriesController extends Base
   {
     storiesService.deleteStory(storyId);
 
-    return "redirect:/story/search";
+    return "redirect:/stories/search";
   }
 
   @GetMapping(value = "/warn", params = "id")

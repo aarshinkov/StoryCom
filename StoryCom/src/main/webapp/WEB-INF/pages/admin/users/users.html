@@ -39,10 +39,10 @@
                           <div class="card d-flex align-items-stretch" style="height: 100%;">
                               <h5 class="card-header">
                                   <a href="#" th:if="${user.userId} eq ${@usersBean.principal.userId}" title="View my profile"
-                                     class="text-red" th:text="${user.userFullName}">Name</a>
+                                     class="text-red" th:text="${user.fullName}">Name</a>
                                   <a href="#" th:unless="${user.userId} eq ${@usersBean.principal.userId}"
-                                     th:title="'View ' + ${user.userFullName} + '\'s profile'"
-                                     th:text="${user.userFullName}">Name</a>
+                                     th:title="'View ' + ${user.fullName} + '\'s profile'"
+                                     th:text="${user.fullName}">Name</a>
                               </h5>
                               <div class="card-body" style="padding-top: 0;">
                                   <div class="card-title text-muted">
@@ -94,10 +94,10 @@
                                                   <div class="col-12">
                                                       <h4 class="name">
                                                           <a href="#" th:if="${user.userId} eq ${@usersBean.principal.userId}" title="View my profile"
-                                                             class="text-red" th:text="${user.userFullName}">Name</a>
+                                                             class="text-red" th:text="${user.fullName}">Name</a>
                                                           <a href="#" th:unless="${user.userId} eq ${@usersBean.principal.userId}"
-                                                             th:title="'View ' + ${user.userFullName} + '\'s profile'"
-                                                             th:text="${user.userFullName}">Name</a>
+                                                             th:title="'View ' + ${user.fullName} + '\'s profile'"
+                                                             th:text="${user.fullName}">Name</a>
                                                       </h4>
                       
                                                       <span th:each="role : ${user.roles}">

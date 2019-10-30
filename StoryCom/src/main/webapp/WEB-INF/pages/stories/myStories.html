@@ -4,11 +4,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/contentTemplate}">
   <head>
-    <title th:text="#{title.story.mine(${user.userFullName})} + ' | ' + #{app.title}"></title>
+    <title th:text="#{title.story.mine(${user.fullName})} + ' | ' + #{app.title}"></title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
-      <h2 th:text="#{story.mine.title(${user.userFullName})}">Username's stories</h2>
+      <h2 th:text="#{story.mine.title(${user.fullName})}">Username's stories</h2>
       <hr/>
       <div class="row">
         <div class="col-xl-2 order-xl-1 order-2">

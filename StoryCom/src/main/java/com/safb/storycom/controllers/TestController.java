@@ -100,10 +100,9 @@ public class TestController extends Base
   }
 
   @ResponseBody
-  @GetMapping(value = "/story/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/stories/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Story storyById(@PathVariable("id") Integer storyId)
   {
-    log.debug("storyById() begin --");
     return storiesRepository.findByStoryId(storyId);
   }
 
@@ -111,7 +110,6 @@ public class TestController extends Base
   @GetMapping(value = "/story", produces = MediaType.APPLICATION_JSON_VALUE)
   public Story storyByIdParam(@RequestParam(name = "id") Integer storyId)
   {
-    log.debug("storyByIdParam() begin --");
     return storiesRepository.findByStoryId(storyId);
   }
 
@@ -119,8 +117,6 @@ public class TestController extends Base
   @GetMapping(value = "/encoding", produces = MediaType.APPLICATION_JSON_VALUE)
   public String testEncoding()
   {
-    log.debug("testEncoding() begin --");
-
     String word = "Здравейте, приятели";
 
     log.debug("word: " + word);

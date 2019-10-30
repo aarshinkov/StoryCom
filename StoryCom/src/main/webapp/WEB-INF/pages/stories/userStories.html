@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/contentTemplate}">
   <head>
-    <title th:text="#{title.story.mine(${user.userFullName})} | ' + #{app.title}"></title>
+    <title th:text="#{title.story.mine(${user.fullName})} | ' + #{app.title}"></title>
   </head>
   <body>
     <div layout:fragment="contentDiv">

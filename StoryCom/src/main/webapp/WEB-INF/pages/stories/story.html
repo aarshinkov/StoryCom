@@ -31,9 +31,7 @@
                      style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 30px, 0px);">
                   <a class="dropdown-item"
                      th:href="@{'/stories/view' + '?id=' + ${story.storyId}}" href="#">View</a>
-                  <a class="dropdown-item" sec:authorize="isAuthenticated()"
-                     th:if="${story.user.userId} eq ${currUserId}" href="#">Edit</a>
-
+                  
                   <form id="editForm" method="post" th:action="@{/stories/edit}" action="#"
                         sec:authorize="isAuthenticated()"
                         th:if="${story.user.userId} eq ${currUserId}">
@@ -60,9 +58,9 @@
                   <i class="far fa-user"></i>
                   <i class="lnr lnr-user"></i>
                   <span th:if="${story.user.userId} eq ${currUserId}"
-                        th:text="${story.user.userFullName} + ' (Me)'"></span>
+                        th:text="${story.user.fullName} + ' (Me)'"></span>
                   <span th:unless="${story.user.userId} eq ${currUserId}"
-                        th:text="${story.user.userFullName}"></span>
+                        th:text="${story.user.fullName}"></span>
                 </small>
                 <small> |</small>
                 <small title="Created on">
@@ -164,9 +162,9 @@
                           <i class="far fa-user"></i>
                           <i class="lnr lnr-user"></i>
                           <span th:if="${story.user.userId} eq ${currUserId}"
-                                th:text="${story.user.userFullName} + ' (Me)'"></span>
+                                th:text="${story.user.fullName} + ' (Me)'"></span>
                           <span th:unless="${story.user.userId} eq ${currUserId}"
-                                th:text="${story.user.userFullName}"></span>
+                                th:text="${story.user.fullName}"></span>
                         </small>
                         <small> |</small>
                         <small title="Created on">
@@ -278,9 +276,9 @@
                         <i class="far fa-user"></i>
                         <i class="lnr lnr-user"></i>
                         <span th:if="${story.user.userId} eq ${@usersBean.principal.userId}"
-                              th:text="${story.user.userFullName} + ' (Me)'"></span>
+                              th:text="${story.user.fullName} + ' (Me)'"></span>
                         <span th:unless="${story.user.userId} eq ${@usersBean.principal.userId}"
-                              th:text="${story.user.userFullName}"></span>
+                              th:text="${story.user.fullName}"></span>
                       </small>
                       <small> |</small>
                       <small title="Created on">
