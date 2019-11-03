@@ -159,6 +159,10 @@
           </div>
         </div>
       </div>
+
+      <div th:if="${#httpSession ne null}" th:remove="tag">
+        <div th:replace="fragments/messages :: #notify"/>
+      </div>
     </div>
   </body>
 </html>

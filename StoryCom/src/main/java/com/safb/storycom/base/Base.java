@@ -1,18 +1,18 @@
 package com.safb.storycom.base;
 
-import com.safb.storycom.entity.UserEntity;
-import com.safb.storycom.repository.UsersRepository;
-import com.safb.storycom.security.LoggedUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import javax.annotation.Resource;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import com.safb.storycom.entity.*;
+import com.safb.storycom.repository.*;
+import com.safb.storycom.security.*;
+import com.safb.storycom.utils.*;
+import java.text.*;
+import javax.annotation.*;
+import javax.servlet.http.*;
 import org.slf4j.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.*;
+import org.springframework.context.i18n.*;
+import org.springframework.security.core.*;
+import org.springframework.security.core.context.*;
 
 public class Base
 {
@@ -23,6 +23,9 @@ public class Base
 
   @Autowired
   private UsersRepository usersRepository;
+
+  @Autowired
+  private HttpSession session;
 
   private DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -88,6 +91,14 @@ public class Base
 
   protected UserEntity getUser()
   {
-    return usersRepository.findByUserId(getLoggedUser().getUserId());
+    if (session.getAttribute(SessionAttributes.LOADED_USER) != null)
+    {
+      return (UserEntity) session.getAttribute(SessionAttributes.LOADED_USER);
+    }
+
+    UserEntity user = usersRepository.findByUserId(getLoggedUser().getUserId());
+    session.setAttribute(SessionAttributes.LOADED_USER, user);
+
+    return user;
   }
 }

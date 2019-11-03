@@ -1,15 +1,14 @@
 package com.safb.storycom.services;
 
-import com.safb.storycom.entity.Story;
-import com.safb.storycom.entity.UserEntity;
-import com.safb.storycom.repository.StoriesRepository;
+import com.safb.storycom.entity.*;
+import com.safb.storycom.repository.*;
 import java.sql.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
-
-import java.util.Objects;
+import java.util.*;
+import javax.servlet.http.*;
 import org.slf4j.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.jdbc.core.*;
+import org.springframework.stereotype.*;
 
 @Service
 public class StoriesServiceImpl implements StoriesService
@@ -20,26 +19,20 @@ public class StoriesServiceImpl implements StoriesService
   private JdbcTemplate jdbcTemplate;
 
   @Autowired
-  private StoriesRepository storiesRepo;
+  private HttpSession session;
+
+  @Autowired
+  private StoriesRepository storiesRepository;
 
   @Override
-  public void updateStoriesViews(Integer storyId)
+  public List<Story> getAllStories()
   {
-    try
+    if (session.getAttribute("stories") != null)
     {
-      Integer storyViews = storiesRepo.findByStoryId(storyId).getViews();
-
-      String sqlUpd = "UPDATE STORIES SET VIEWS = ? WHERE STORY_ID = ?";
-
-      storyViews++;
-
-      jdbcTemplate.update(sqlUpd, storyViews, storyId);
-
+      return (List<Story>) session.getAttribute("stories");
     }
-    catch (Exception e)
-    {
-      log.debug("Error updating story's views!");
-    }
+
+    return storiesRepository.findAll();
   }
 
   @Override
@@ -59,6 +52,26 @@ public class StoriesServiceImpl implements StoriesService
     catch (SQLException e)
     {
       log.error("Error adding story to database!");
+    }
+  }
+
+  @Override
+  public void updateStoriesViews(Integer storyId)
+  {
+    try
+    {
+      Integer storyViews = storiesRepository.findByStoryId(storyId).getViews();
+
+      String sqlUpd = "UPDATE STORIES SET VIEWS = ? WHERE STORY_ID = ?";
+
+      storyViews++;
+
+      jdbcTemplate.update(sqlUpd, storyViews, storyId);
+
+    }
+    catch (Exception e)
+    {
+      log.debug("Error updating story's views!");
     }
   }
 

@@ -1,16 +1,12 @@
 package com.safb.storycom.controllers;
 
-import com.safb.storycom.repository.CountriesRepository;
-import com.safb.storycom.repository.UsersRepository;
-import com.safb.storycom.repository.StoriesRepository;
-import com.safb.storycom.entity.UserEntity;
-import com.safb.storycom.base.Base;
-import java.sql.*;
-import java.util.*;
+import com.safb.storycom.base.*;
+import com.safb.storycom.entity.*;
+import com.safb.storycom.services.*;
+import javax.servlet.http.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.jdbc.core.*;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,25 +19,18 @@ public class ProfileController extends Base
   private static final String GLOBAL_MENU = "profile";
 
   @Autowired
-  private UsersRepository usersRepository;
+  private ProfileService profileService;
 
   @Autowired
-  private CountriesRepository countriesRepository;
+  private SystemService systemService;
 
   @Autowired
-  private StoriesRepository storiesRepository;
-
-  @Autowired
-  private JdbcTemplate jdbcTemplate;
+  private HttpSession session;
 
   @GetMapping
   public String viewProfile(Model model)
   {
-    UserEntity user = getUser();
-
-    log.debug(user.toString());
-
-    model.addAttribute("user", user);
+    model.addAttribute("user", getUser());
 
     model.addAttribute("globalMenu", GLOBAL_MENU);
     model.addAttribute("submenu", "personal");
@@ -52,39 +41,19 @@ public class ProfileController extends Base
   @PostMapping
   public String saveProfile(UserEntity user, Model model)
   {
-    log.debug("Saving user profile...");
-
     user.setUserId(getLoggedUser().getUserId());
 
-    log.debug("User id: " + user.getUserId());
+    profileService.savePersonalInfo(user);
 
-    try
-    {
-      CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_USERS.UPDATE_USER_INFORMATION(?,?,?,?)}");
-      cstmt.setInt(1, user.getUserId());
-      cstmt.setString(2, user.getFirstName());
-      cstmt.setString(3, user.getLastName());
-      cstmt.setString(4, user.getEmail());
-
-      cstmt.execute();
-      log.debug("User profile saved successfully!");
-    }
-    catch (Exception e)
-    {
-      log.error("Error saving user profile!", e);
-    }
-
-    return "redirect:/personal";
+    return "redirect:/profile";
   }
 
   @GetMapping(value = "/details")
   public String viewDetails(Model model)
   {
-    UserEntity user = getUser();
-
-    model.addAttribute("user", user);
-    model.addAttribute("countries", countriesRepository.findAll());
-
+    model.addAttribute("user", getUser());
+    model.addAttribute("countries", systemService.getAllCountries(session));
+    
     model.addAttribute("globalMenu", GLOBAL_MENU);
     model.addAttribute("submenu", "details");
 
@@ -94,28 +63,9 @@ public class ProfileController extends Base
   @PostMapping(value = "/details")
   public String saveDetails(UserEntity user, Model model)
   {
-    log.debug("Saving user details...");
-
     user.setUserId(getLoggedUser().getUserId());
 
-    try
-    {
-      CallableStatement cstmt = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection().prepareCall("{call STORYCOM_USERS.UPDATE_USER_DETAILS(?,?,?,?,?,?,?)}");
-      cstmt.setInt(1, user.getUserId());
-      cstmt.setString(2, user.getUserDetail().getGender());
-      cstmt.setString(3, user.getUserDetail().getCountry().getCountryName());
-      cstmt.setString(4, user.getUserDetail().getFacebook());
-      cstmt.setString(5, user.getUserDetail().getTwitter());
-      cstmt.setString(6, user.getUserDetail().getYoutube());
-      cstmt.setString(7, user.getUserDetail().getInstagram());
-
-      cstmt.execute();
-      log.debug("User details saved successfully!");
-    }
-    catch (Exception e)
-    {
-      log.error("Error saving user details!", e);
-    }
+    profileService.saveDetails(user);
 
     return "redirect:/profile/details";
   }

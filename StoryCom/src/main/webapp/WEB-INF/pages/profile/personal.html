@@ -23,7 +23,7 @@
             <h4 th:text="#{profile.details.personal.title}">Personal</h4>
             <hr/>
 
-            <form action="#" th:action="@{/settings/profile}" th:object="${user}" method="post">
+            <form action="#" th:action="@{/profile}" th:object="${user}" method="post">
 
               <div class="form-group row">
                 <div class="col-lg-2 col-md-3 col-12">
@@ -76,6 +76,10 @@
             </form>
           </div>
         </div>
+      </div>
+
+      <div th:if="${#httpSession ne null}" th:remove="tag">
+        <div th:replace="fragments/messages :: #notify"/>
       </div>
     </div>
   </body>

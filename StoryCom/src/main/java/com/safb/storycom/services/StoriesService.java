@@ -1,13 +1,15 @@
 package com.safb.storycom.services;
 
-import com.safb.storycom.entity.Story;
-import com.safb.storycom.entity.UserEntity;
+import com.safb.storycom.entity.*;
+import java.util.*;
 
 public interface StoriesService
 {
-  void updateStoriesViews(Integer storyId);
-
+  List<Story> getAllStories();
+  
   void addStory(Story story, UserEntity user);
+
+  void updateStoriesViews(Integer storyId);
 
   boolean editStory(Story story);
 
