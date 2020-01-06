@@ -2,15 +2,20 @@ package com.safb.storycom.entity;
 
 import java.io.*;
 import javax.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user_details")
 public class UserDetail implements Serializable
 {
   @Id
   @Column(name = "user_detail_id")
-  @SequenceGenerator(name = "SEQ_GEN_USER_DETAILS", sequenceName = "S_USER_DETAILS", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN_USER_DETAILS")
+  @SequenceGenerator(name = "seq_gen_user_details", sequenceName = "s_user_details", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_user_details")
   private Integer userDetailId;
 
   @Column(name = "gender")
@@ -18,7 +23,7 @@ public class UserDetail implements Serializable
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "country_name")
-  private Country country;
+  private CountryEntity country;
 
   @Column(name = "facebook")
   private String facebook;
@@ -31,74 +36,4 @@ public class UserDetail implements Serializable
 
   @Column(name = "instagram")
   private String instagram;
-
-  public Integer getUserDetailId()
-  {
-    return userDetailId;
-  }
-
-  public void setUserDetailId(Integer userDetailId)
-  {
-    this.userDetailId = userDetailId;
-  }
-
-  public String getGender()
-  {
-    return gender;
-  }
-
-  public void setGender(String gender)
-  {
-    this.gender = gender;
-  }
-
-  public Country getCountry()
-  {
-    return country;
-  }
-
-  public void setCountry(Country country)
-  {
-    this.country = country;
-  }
-
-  public String getFacebook()
-  {
-    return facebook;
-  }
-
-  public void setFacebook(String facebook)
-  {
-    this.facebook = facebook;
-  }
-
-  public String getTwitter()
-  {
-    return twitter;
-  }
-
-  public void setTwitter(String twitter)
-  {
-    this.twitter = twitter;
-  }
-
-  public String getYoutube()
-  {
-    return youtube;
-  }
-
-  public void setYoutube(String youtube)
-  {
-    this.youtube = youtube;
-  }
-
-  public String getInstagram()
-  {
-    return instagram;
-  }
-
-  public void setInstagram(String instagram)
-  {
-    this.instagram = instagram;
-  }
 }

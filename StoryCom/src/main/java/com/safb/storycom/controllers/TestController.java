@@ -2,8 +2,8 @@ package com.safb.storycom.controllers;
 
 import com.safb.storycom.entity.Test;
 import com.safb.storycom.entity.UserEntity;
-import com.safb.storycom.entity.Story;
-import com.safb.storycom.entity.Country;
+import com.safb.storycom.entity.StoryEntity;
+import com.safb.storycom.entity.CountryEntity;
 import com.safb.storycom.base.Base;
 import com.safb.storycom.repository.CountriesRepository;
 import com.safb.storycom.repository.StoriesRepository;
@@ -92,7 +92,7 @@ public class TestController extends Base
   {
     log.debug("Design story");
 
-    Story story = storiesRepository.findByStoryId(storyId);
+    StoryEntity story = storiesRepository.findByStoryId(storyId);
 
     model.addAttribute("story", story);
 
@@ -101,14 +101,14 @@ public class TestController extends Base
 
   @ResponseBody
   @GetMapping(value = "/stories/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Story storyById(@PathVariable("id") Integer storyId)
+  public StoryEntity storyById(@PathVariable("id") Integer storyId)
   {
     return storiesRepository.findByStoryId(storyId);
   }
 
   @ResponseBody
   @GetMapping(value = "/story", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Story storyByIdParam(@RequestParam(name = "id") Integer storyId)
+  public StoryEntity storyByIdParam(@RequestParam(name = "id") Integer storyId)
   {
     return storiesRepository.findByStoryId(storyId);
   }
@@ -165,7 +165,7 @@ public class TestController extends Base
   public String countries(Model model)
   {
 
-    List<Country> countries = countriesRepository.findAll();
+    List<CountryEntity> countries = countriesRepository.findAll();
 
     model.addAttribute("countries", countries);
 

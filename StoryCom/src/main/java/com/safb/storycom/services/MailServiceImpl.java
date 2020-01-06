@@ -1,8 +1,8 @@
 package com.safb.storycom.services;
 
 import com.safb.storycom.beans.ConfigurationBean;
-import com.safb.storycom.entity.Mail;
-import com.safb.storycom.entity.Story;
+import com.safb.storycom.entity.MailEntity;
+import com.safb.storycom.entity.StoryEntity;
 import com.safb.storycom.entity.UserEntity;
 import com.safb.storycom.repository.MailsRepository;
 import com.safb.storycom.tasks.MailSender;
@@ -31,7 +31,7 @@ public class MailServiceImpl implements MailService
   private MailsRepository mailsRepo;
 
   @Override
-  public Mail createMail(String sender, String subject, String content, String... recipients)
+  public MailEntity createMail(String sender, String subject, String content, String... recipients)
   {
     StringBuilder to = new StringBuilder();
     for (String recipient : recipients)
@@ -42,7 +42,7 @@ public class MailServiceImpl implements MailService
     String recips = to.substring(0, to.length() - 1);
     log.debug("Recips: " + recips);
 
-    Mail mail = new Mail();
+    MailEntity mail = new MailEntity();
     mail.setSender(sender);
     mail.setReceivers(recips);
     mail.setSubject(subject);
@@ -52,7 +52,7 @@ public class MailServiceImpl implements MailService
   }
 
   @Override
-  public void sendSimpleWarningMail(UserEntity user, Story story)
+  public void sendSimpleWarningMail(UserEntity user, StoryEntity story)
   {
     SimpleMailMessage message = new SimpleMailMessage();
     message.setTo(user.getEmail());
@@ -62,7 +62,7 @@ public class MailServiceImpl implements MailService
   }
 
   @Override
-  public void sendWarningMail(UserEntity user, Story story)
+  public void sendWarningMail(UserEntity user, StoryEntity story)
   {
     try
     {
@@ -77,7 +77,7 @@ public class MailServiceImpl implements MailService
 
       String htmlContent = templateEngine.process("warningStoryMail.html", ctx);
 
-      Mail mail = createMail(configBean.getEmailSettings().getSender(), "Warning for inappropriate story", htmlContent, user.getEmail());
+      MailEntity mail = createMail(configBean.getEmailSettings().getSender(), "Warning for inappropriate story", htmlContent, user.getEmail());
       mailSender.sendMail(mail, user, story);
 
     }

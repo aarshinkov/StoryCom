@@ -1,55 +1,44 @@
 package com.safb.storycom.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.*;
+import java.io.*;
+import java.sql.*;
+import java.util.*;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import lombok.*;
+import org.springframework.security.core.*;
+import org.springframework.security.core.authority.*;
+import org.springframework.security.core.userdetails.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class UserEntity implements Serializable
+public class UserEntity implements Serializable, UserDetails
 {
   @Id
   @Column(name = "user_id")
-  @SequenceGenerator(name = "SEQ_GEN_USER", sequenceName = "S_USERS", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN_USER")
+  @SequenceGenerator(name = "seq_gen_user", sequenceName = "s_users", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_user")
   private Integer userId;
 
-  @Column(name = "username")
-  @Size(min = 4, max = 50)
-  @NotNull
-  private String username;
-
-  @Column(name = "first_name")
-  @Size(min = 4, max = 100)
-  @NotNull
-  private String firstName;
-
-  @Column(name = "last_name")
-//    @Size(min = 4, max = 100)
-//    @NotNull
-  private String lastName;
+  @Column(name = "email")
+  private String email;
 
   @Column(name = "password")
-  @Size(min = 4, max = 100)
   @JsonIgnore
   private String password;
 
-  @Column(name = "email")
-  @Size(max = 200)
-  @Email
-  @NotEmpty
-  private String email;
+  @Column(name = "first_name")
+  private String firstName;
+
+  @Column(name = "last_name")
+  private String lastName;
 
   @Column(name = "created_on")
-  private Date createdOn;
+  private Timestamp createdOn;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "user_detail_id")
@@ -57,7 +46,7 @@ public class UserEntity implements Serializable
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rolename"))
-  private List<Role> roles = new ArrayList<>();
+  private Set<RoleEntity> roles = new HashSet<>();
 
   public String getFullName()
   {
@@ -68,93 +57,46 @@ public class UserEntity implements Serializable
     return firstName + " " + lastName;
   }
 
-  public Integer getUserId()
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities()
   {
-    return userId;
+    Set<GrantedAuthority> authorities = new HashSet<>();
+
+    for (RoleEntity role : roles)
+    {
+      authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRolename()));
+    }
+
+    return authorities;
   }
 
-  public void setUserId(Integer userId)
-  {
-    this.userId = userId;
-  }
-
+  @Override
   public String getUsername()
   {
-    return username;
+    return this.email;
   }
 
-  public void setUsername(String username)
+  @Override
+  public boolean isAccountNonExpired()
   {
-    this.username = username;
+    return true;
   }
 
-  public String getFirstName()
+  @Override
+  public boolean isAccountNonLocked()
   {
-    return firstName;
+    return true;
   }
 
-  public void setFirstName(String firstName)
+  @Override
+  public boolean isCredentialsNonExpired()
   {
-    this.firstName = firstName;
+    return true;
   }
 
-  public String getLastName()
+  @Override
+  public boolean isEnabled()
   {
-    return lastName;
-  }
-
-  public void setLastName(String lastName)
-  {
-    this.lastName = lastName;
-  }
-
-  public String getPassword()
-  {
-    return password;
-  }
-
-  public void setPassword(String password)
-  {
-    this.password = password;
-  }
-
-  public String getEmail()
-  {
-    return email;
-  }
-
-  public void setEmail(String email)
-  {
-    this.email = email;
-  }
-
-  public Date getCreatedOn()
-  {
-    return createdOn;
-  }
-
-  public void setCreatedOn(Date createdOn)
-  {
-    this.createdOn = createdOn;
-  }
-
-  public UserDetail getUserDetail()
-  {
-    return userDetail;
-  }
-
-  public void setUserDetail(UserDetail userDetail)
-  {
-    this.userDetail = userDetail;
-  }
-
-  public List<Role> getRoles()
-  {
-    return roles;
-  }
-
-  public void setRoles(List<Role> roles)
-  {
-    this.roles = roles;
+    return true;
   }
 }

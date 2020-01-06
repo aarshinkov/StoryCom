@@ -5,13 +5,13 @@ import java.util.*;
 
 public interface StoriesService
 {
-  List<Story> getAllStories();
+  List<StoryEntity> getAllStories();
   
-  void addStory(Story story, UserEntity user);
+  void addStory(StoryEntity story, UserEntity user);
 
   void updateStoriesViews(Integer storyId);
 
-  boolean editStory(Story story);
+  boolean editStory(StoryEntity story);
 
   boolean deleteStory(Integer storyId);
 }

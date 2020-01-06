@@ -6,5 +6,5 @@ import javax.servlet.http.*;
 
 public interface SystemService
 {
-  List<Country> getAllCountries(HttpSession session);
+  List<CountryEntity> getAllCountries(HttpSession session);
 }

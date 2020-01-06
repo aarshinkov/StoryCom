@@ -25,18 +25,18 @@ public class StoriesServiceImpl implements StoriesService
   private StoriesRepository storiesRepository;
 
   @Override
-  public List<Story> getAllStories()
+  public List<StoryEntity> getAllStories()
   {
     if (session.getAttribute("stories") != null)
     {
-      return (List<Story>) session.getAttribute("stories");
+      return (List<StoryEntity>) session.getAttribute("stories");
     }
 
     return storiesRepository.findAll();
   }
 
   @Override
-  public void addStory(Story story, UserEntity user)
+  public void addStory(StoryEntity story, UserEntity user)
   {
     try
     {
@@ -76,7 +76,7 @@ public class StoriesServiceImpl implements StoriesService
   }
 
   @Override
-  public boolean editStory(Story story)
+  public boolean editStory(StoryEntity story)
   {
     try
     {

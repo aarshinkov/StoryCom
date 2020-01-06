@@ -30,12 +30,12 @@ public class StoriesController extends Base
   @GetMapping(value = "/search")
   public String prepareSearchStory(Model model)
   {
-    List<Story> stories = storiesService.getAllStories();
+    List<StoryEntity> stories = storiesService.getAllStories();
 
-    for (Story story : stories)
-    {
-      story.setCreatedOnFormatted(sdf.format(story.getCreatedOn()));
-    }
+//    for (StoryEntity story : stories)
+//    {
+//      story.setCreatedOnFormatted(sdf.format(story.getCreatedOn()));
+//    }
 
     if (getLoggedUser() != null)
     {
@@ -106,7 +106,7 @@ public class StoriesController extends Base
   {
     model.addAttribute("globalMenu", GLOBAL_MENU);
     model.addAttribute("submenu", "add");
-    model.addAttribute("story", new Story());
+    model.addAttribute("story", new StoryEntity());
 
     return "stories/add";
   }

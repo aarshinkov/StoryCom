@@ -18,14 +18,14 @@ public class SystemServiceImpl implements SystemService
   private CountriesRepository countriesRepository;
 
   @Override
-  public List<Country> getAllCountries(HttpSession session)
+  public List<CountryEntity> getAllCountries(HttpSession session)
   {
     if (session.getAttribute(SessionAttributes.COUNTRIES) != null)
     {
-      return (List<Country>) session.getAttribute(SessionAttributes.COUNTRIES);
+      return (List<CountryEntity>) session.getAttribute(SessionAttributes.COUNTRIES);
     }
 
-    List<Country> countries = countriesRepository.findAll();
+    List<CountryEntity> countries = countriesRepository.findAll();
 
     //TODO uncomment when necessary
 //    session.setAttribute(SessionAttributes.COUNTRIES, countries);

@@ -2,14 +2,19 @@ package com.safb.storycom.entity;
 
 import java.io.*;
 import javax.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "TEST")
+@Table(name = "test")
 public class Test implements Serializable
 {
   @Id
-  @SequenceGenerator(name = "SEQ_GEN_TEST", sequenceName = "S_TEST", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN_TEST")
+  @SequenceGenerator(name = "seq_gen_test", sequenceName = "s_test", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_test")
   @Column(name = "test_id")
   private Integer testId;
 
@@ -21,44 +26,4 @@ public class Test implements Serializable
 
   @Column(name = "test_two")
   private String testTwo;
-
-  public Integer getTestId()
-  {
-    return testId;
-  }
-
-  public void setTestId(Integer testId)
-  {
-    this.testId = testId;
-  }
-
-  public String getTestName()
-  {
-    return testName;
-  }
-
-  public void setTestName(String testName)
-  {
-    this.testName = testName;
-  }
-
-  public String getTestOne()
-  {
-    return testOne;
-  }
-
-  public void setTestOne(String testOne)
-  {
-    this.testOne = testOne;
-  }
-
-  public String getTestTwo()
-  {
-    return testTwo;
-  }
-
-  public void setTestTwo(String testTwo)
-  {
-    this.testTwo = testTwo;
-  }
 }

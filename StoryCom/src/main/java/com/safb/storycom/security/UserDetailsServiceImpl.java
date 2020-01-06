@@ -1,6 +1,6 @@
 package com.safb.storycom.security;
 
-import com.safb.storycom.entity.Role;
+import com.safb.storycom.entity.RoleEntity;
 import com.safb.storycom.entity.UserEntity;
 import com.safb.storycom.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
 //    SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, user.getUserId());
 
     //while (rs.next())
-    for (Role role : user.getRoles())
+    for (RoleEntity role : user.getRoles())
     {
 //      authorities.add(new SimpleGrantedAuthority("ROLE_" + rs.getString("rolename")));
       authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRolename()));

@@ -1,19 +1,16 @@
 package com.safb.storycom.services;
 
-import com.safb.storycom.domain.Password;
-import com.safb.storycom.domain.RegisterUser;
-import com.safb.storycom.entity.UserEntity;
-import com.safb.storycom.security.LoggedUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import javax.sql.DataSource;
-import java.sql.CallableStatement;
-import java.sql.SQLException;
-import java.util.Objects;
+import com.safb.storycom.domain.*;
+import com.safb.storycom.entity.*;
+import com.safb.storycom.security.*;
+import java.sql.*;
+import java.util.*;
+import javax.sql.*;
 import org.slf4j.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.jdbc.core.*;
+import org.springframework.security.crypto.password.*;
+import org.springframework.stereotype.*;
 
 @Service
 public class UserServiceImpl implements UserService
@@ -34,11 +31,10 @@ public class UserServiceImpl implements UserService
   {
 
     UserEntity user = new UserEntity();
-    user.setUsername(registerUser.getUsername());
+    user.setEmail(registerUser.getEmail());
+    user.setPassword(registerUser.getPassword());
     user.setFirstName(registerUser.getFirstName());
     user.setLastName(registerUser.getLastName());
-    user.setPassword(registerUser.getPassword());
-    user.setEmail(registerUser.getEmail());
 
     return user;
   }

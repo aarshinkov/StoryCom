@@ -2,8 +2,8 @@ package com.safb.storycom.tasks;
 
 import com.safb.storycom.beans.ConfigurationBean;
 import com.safb.storycom.beans.settings.EmailSettings;
-import com.safb.storycom.entity.Mail;
-import com.safb.storycom.entity.Story;
+import com.safb.storycom.entity.MailEntity;
+import com.safb.storycom.entity.StoryEntity;
 import com.safb.storycom.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,7 +48,7 @@ public class MailSender
 
   @Async
   @Transactional(rollbackFor = Exception.class)
-  public void sendMail(Mail mail, UserEntity user, Story story)
+  public void sendMail(MailEntity mail, UserEntity user, StoryEntity story)
   {
     log.debug("Sending mail: " + mail.getMailId());
 

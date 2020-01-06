@@ -1,19 +1,19 @@
 package com.safb.storycom.repository;
 
 import com.safb.storycom.entity.UserEntity;
-import com.safb.storycom.entity.Story;
+import com.safb.storycom.entity.StoryEntity;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.*;
 
-public interface StoriesRepository extends JpaRepository<Story, Integer>
+public interface StoriesRepository extends JpaRepository<StoryEntity, Integer>
 {
   @Override
-  List<Story> findAll();
+  List<StoryEntity> findAll();
 
-  Story findByStoryId(Integer storyId);
+  StoryEntity findByStoryId(Integer storyId);
 
-  List<Story> findAllByTitleContainingOrderByStoryIdDesc(String title);
+  List<StoryEntity> findAllByTitleContainingOrderByStoryIdDesc(String title);
 
-  List<Story> findAllByUserOrderByStoryIdDesc(UserEntity user);
+  List<StoryEntity> findAllByUserOrderByStoryIdDesc(UserEntity user);
 }
