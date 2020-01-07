@@ -1,6 +1,6 @@
 package com.safb.storycom.controllers;
 
-import com.safb.storycom.entity.Test;
+import com.safb.storycom.entity.TestEntity;
 import com.safb.storycom.entity.UserEntity;
 import com.safb.storycom.entity.StoryEntity;
 import com.safb.storycom.entity.CountryEntity;
@@ -68,12 +68,12 @@ public class TestController extends Base
   @GetMapping(value = "/formAjax")
   public String prepareFormAjax(Model model)
   {
-    model.addAttribute("test", new Test());
+    model.addAttribute("test", new TestEntity());
     return "test/formAjax";
   }
 
   @PostMapping(value = "/formAjax")
-  public String formAjax(@Valid Test test, Model model)
+  public String formAjax(@Valid TestEntity test, Model model)
   {
     log.debug(test.toString());
 

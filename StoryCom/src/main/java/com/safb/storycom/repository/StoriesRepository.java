@@ -5,7 +5,9 @@ import com.safb.storycom.entity.StoryEntity;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.*;
 
+@Repository
 public interface StoriesRepository extends JpaRepository<StoryEntity, Integer>
 {
   @Override

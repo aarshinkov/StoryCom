@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "test")
-public class Test implements Serializable
+public class TestEntity implements Serializable
 {
   @Id
   @SequenceGenerator(name = "seq_gen_test", sequenceName = "s_test", allocationSize = 1)

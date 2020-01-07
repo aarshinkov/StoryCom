@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
   {
     log.debug("Looking for user with username: " + identificator);
 
-    UserEntity user = usersRepository.findByUsername(identificator);
+    UserEntity user = usersRepository.findByEmail(identificator);
 
     if (user == null)
     {

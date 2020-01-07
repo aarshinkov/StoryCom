@@ -40,9 +40,9 @@ public class UserEntity implements Serializable, UserDetails
   @Column(name = "created_on")
   private Timestamp createdOn;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_detail_id")
-  private UserDetail userDetail;
+  private UserDetailEntity userDetail;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rolename"))

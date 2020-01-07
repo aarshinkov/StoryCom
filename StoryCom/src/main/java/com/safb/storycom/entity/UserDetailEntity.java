@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "user_details")
-public class UserDetail implements Serializable
+public class UserDetailEntity implements Serializable
 {
   @Id
   @Column(name = "user_detail_id")

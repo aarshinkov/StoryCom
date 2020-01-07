@@ -2,7 +2,6 @@ package com.safb.storycom.base;
 
 import com.safb.storycom.entity.*;
 import com.safb.storycom.repository.*;
-import com.safb.storycom.security.*;
 import com.safb.storycom.utils.*;
 import java.text.*;
 import javax.annotation.*;
@@ -69,13 +68,13 @@ public class Base
     }
   }
 
-  protected LoggedUser getLoggedUser()
+  protected UserEntity getLoggedUser()
   {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
     try
     {
-      return (LoggedUser) auth.getPrincipal();
+      return (UserEntity) auth.getPrincipal();
     }
     catch (ClassCastException ex)
     {

@@ -9,9 +9,12 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.scheduling.annotation.Async;
 
 import javax.annotation.PostConstruct;
+import lombok.*;
 import org.slf4j.*;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.*;
 
+@Getter
 public class ConfigurationBean extends Base
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
@@ -54,7 +57,7 @@ public class ConfigurationBean extends Base
         return rs.getString("value");
       }
     }
-    catch (Exception e)
+    catch (DataAccessException e)
     {
       log.error("Error loading app URL from database!", e);
     }
@@ -69,7 +72,7 @@ public class ConfigurationBean extends Base
   @Async
   public EmailSettings loadEmailSettings()
   {
-    EmailSettings emailSettings = new EmailSettings();
+    EmailSettings settings = new EmailSettings();
 
     try
     {
@@ -80,80 +83,70 @@ public class ConfigurationBean extends Base
       {
         if ("MAIL.HOST".equalsIgnoreCase(rs.getString("name")))
         {
-          emailSettings.setHost(rs.getString("value"));
+          settings.setHost(rs.getString("value"));
           log.debug("MAIL.HOST = " + rs.getString("value"));
           continue;
         }
 
         if ("MAIL.PORT".equalsIgnoreCase(rs.getString("name")))
         {
-          emailSettings.setPort(rs.getInt("value"));
+          settings.setPort(rs.getInt("value"));
           log.debug("MAIL.PORT = " + rs.getString("value"));
           continue;
         }
 
         if ("MAIL.PROTOCOL".equalsIgnoreCase(rs.getString("name")))
         {
-          emailSettings.setProtocol(rs.getString("value"));
+          settings.setProtocol(rs.getString("value"));
           log.debug("MAIL.PROTOCOL = " + rs.getString("value"));
           continue;
         }
 
         if ("MAIL.SENDER".equalsIgnoreCase(rs.getString("name")))
         {
-          emailSettings.setSender(rs.getString("value"));
+          settings.setSender(rs.getString("value"));
           log.debug("MAIL.SENDER = " + rs.getString("value"));
           continue;
         }
 
         if ("MAIL.USERNAME".equalsIgnoreCase(rs.getString("name")))
         {
-          emailSettings.setUsername(rs.getString("value"));
+          settings.setUsername(rs.getString("value"));
           log.debug("MAIL.USERNAME = " + rs.getString("value"));
           continue;
         }
 
         if ("MAIL.PASSWORD".equalsIgnoreCase(rs.getString("name")))
         {
-          emailSettings.setPassword(rs.getString("value"));
+          settings.setPassword(rs.getString("value"));
           log.debug("MAIL.PASSWORD = " + rs.getString("value"));
           //continue
         }
 
 //                if ("MAIL.DELAY_CHECK".equalsIgnoreCase(rs.getString("name")))
 //                {
-//                    emailSettings.setDelayCheck(rs.getInt("value"));
+//                    settings.setDelayCheck(rs.getInt("value"));
 //                    log.debug("MAIL.DELAY_CHECK = " + rs.getString("value"));
 //                    continue;
 //                }
 //
 //                if ("MAIL.INITIAL_DELAY".equalsIgnoreCase(rs.getString("name")))
 //                {
-//                    emailSettings.setInitialDelay(rs.getInt("value"));
+//                    settings.setInitialDelay(rs.getInt("value"));
 //                    log.debug("MAIL.INITIAL_DELAY = " + rs.getString("value"));
 //                    continue;
 //                }
       }
     }
-    catch (Exception e)
+    catch (DataAccessException e)
     {
       log.error("Error loading e-mail configuration from database!", e);
     }
-    return emailSettings;
-  }
-
-  public String getEnv()
-  {
-    return env;
+    return settings;
   }
 
   public String getEnvStyled()
   {
-    return this.env.equalsIgnoreCase("TEST") ? "Test" : "Production";
-  }
-
-  public String getAppUrl()
-  {
-    return appUrl;
+    return this.env.equalsIgnoreCase("DEV") ? "Development" : "Production";
   }
 }

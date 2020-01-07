@@ -23,7 +23,7 @@
     <security:form-login
       login-processing-url="/authentication"
       login-page="/login"
-      username-parameter="username"
+      username-parameter="email"
       password-parameter="password"
       default-target-url="/"
       always-use-default-target="false"
@@ -66,5 +66,5 @@
     <constructor-arg value="12"/>
   </bean>
 
-  <bean id="userDetailsService" class="com.safb.storycom.security.UserDetailsServiceImpl"/>
+  <bean id="userDetailsService" class="com.safb.storycom.security.UserServiceImpl"/>
 </beans>

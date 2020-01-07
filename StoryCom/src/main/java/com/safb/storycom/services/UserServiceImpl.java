@@ -2,13 +2,16 @@ package com.safb.storycom.services;
 
 import com.safb.storycom.domain.*;
 import com.safb.storycom.entity.*;
-import com.safb.storycom.security.*;
+import com.safb.storycom.repository.*;
 import java.sql.*;
 import java.util.*;
 import javax.sql.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.jdbc.core.*;
+import org.springframework.security.core.*;
+import org.springframework.security.core.authority.*;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 
@@ -19,6 +22,9 @@ public class UserServiceImpl implements UserService
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
+
+  @Autowired
+  private UsersRepository usersRepository;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -61,7 +67,7 @@ public class UserServiceImpl implements UserService
   }
 
   @Override
-  public void changePassword(LoggedUser loggedUser, Password password)
+  public void changePassword(UserEntity loggedUser, Password password)
   {
     String sql = "UPDATE USERS SET PASSWORD = ? WHERE USER_ID = ?";
 
@@ -78,5 +84,25 @@ public class UserServiceImpl implements UserService
     {
       log.error("Error updating password", e);
     }
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
+  {
+    UserEntity userEntity = usersRepository.findByEmail(email);
+
+    if (userEntity == null)
+    {
+      throw new UsernameNotFoundException(email);
+    }
+
+    Set<GrantedAuthority> roles = new HashSet<>();
+
+    userEntity.getRoles().forEach((roleEntity) ->
+    {
+      roles.add(new SimpleGrantedAuthority(roleEntity.getRolename()));
+    });
+
+    return new User(userEntity.getEmail(), userEntity.getPassword(), roles);
   }
 }

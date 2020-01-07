@@ -6,11 +6,10 @@
 
   <groupId>com.safb.storycom</groupId>
   <artifactId>story-com-web</artifactId>
-  <version>2.0.3</version>
+  <version>3.0.0</version>
   <packaging>war</packaging>
 
   <name>StoryCom</name>
-  <url>http://www.example.com</url>
 
   <properties>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

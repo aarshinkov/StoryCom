@@ -21,5 +21,5 @@ public class RoleEntity implements Serializable
   private String displayName;
 
   @ManyToMany(mappedBy = "users")
-  private Set<UserEntity> users = new HashSet<>();
+  private Set<UserEntity> users;
 }

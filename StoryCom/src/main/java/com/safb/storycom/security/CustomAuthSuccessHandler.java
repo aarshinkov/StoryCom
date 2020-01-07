@@ -1,5 +1,6 @@
 package com.safb.storycom.security;
 
+import com.safb.storycom.entity.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -21,7 +22,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
     log.debug("Authentication successful.");
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    LoggedUser loggedUser = (LoggedUser) auth.getPrincipal();
+    UserEntity loggedUser = (UserEntity) auth.getPrincipal();
 
     SavedRequest savedRequest = (SavedRequest) request.getSession(false).getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 

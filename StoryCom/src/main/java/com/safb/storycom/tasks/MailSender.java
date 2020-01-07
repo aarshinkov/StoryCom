@@ -18,7 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import javax.mail.*;
 import org.slf4j.*;
+import org.springframework.dao.*;
+import org.springframework.mail.*;
 
 @Component
 public class MailSender
@@ -40,7 +43,7 @@ public class MailSender
     {
       sender.send(message);
     }
-    catch (Exception e)
+    catch (MailException e)
     {
       log.debug("Error sending mail!");
     }
@@ -68,7 +71,7 @@ public class MailSender
       jdbcTemplate.update(sqlUpd, "Y", mail.getMailId());
       log.debug("Mail sent: " + mail.getMailId());
     }
-    catch (Exception e)
+    catch (MessagingException | DataAccessException | MailException e)
     {
       log.error("Sending mail with id = " + mail.getMailId() + " failed!");
     }
