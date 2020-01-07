@@ -25,6 +25,9 @@ public class ProfileController extends Base
   private SystemService systemService;
 
   @Autowired
+  private UserService userService;
+
+  @Autowired
   private HttpSession session;
 
   @GetMapping
@@ -51,9 +54,11 @@ public class ProfileController extends Base
   @GetMapping(value = "/details")
   public String viewDetails(Model model)
   {
-    model.addAttribute("user", getUser());
+    Integer userId = getLoggedUserId();
+    UserEntity user = userService.getUserByUserId(userId);
+    model.addAttribute("user", user);
     model.addAttribute("countries", systemService.getAllCountries(session));
-    
+
     model.addAttribute("globalMenu", GLOBAL_MENU);
     model.addAttribute("submenu", "details");
 

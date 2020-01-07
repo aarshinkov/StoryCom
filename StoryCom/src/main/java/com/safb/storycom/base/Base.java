@@ -88,6 +88,11 @@ public class Base
     }
   }
 
+  protected Integer getLoggedUserId()
+  {
+    return (Integer) session.getAttribute("userId");
+  }
+
   protected UserEntity getUser()
   {
     if (session.getAttribute(SessionAttributes.LOADED_USER) != null)

@@ -8,7 +8,7 @@
   <!-- To enable JMX Management -->
   <jmxConfigurator/>
   
-  <property name="LOG_DIR" value="${catalina.home}/logs" />
+  <property name="LOG_DIR" value="target" />
 
   <appender name="FILE_GENERAL" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>${LOG_DIR}/storycom.log</file>

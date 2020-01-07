@@ -17,7 +17,7 @@
     <security:intercept-url pattern="/stories/add/**" access="hasRole('USER')"/>
     <security:intercept-url pattern="/settings/**" access="isAuthenticated()"/>
     <security:intercept-url pattern="/login/**" access="!isAuthenticated()"/>
-    <security:intercept-url pattern="/test/**" access="hasAnyRole('ADMIN', 'DBA')"/>
+    <security:intercept-url pattern="/test/**" access="permitAll()"/>
 
     <!--<security:form-login/>-->
     <security:form-login
@@ -57,7 +57,7 @@
   <!--</security:authentication-manager>-->
 
   <security:authentication-manager>
-    <security:authentication-provider user-service-ref="userDetailsService" >
+    <security:authentication-provider user-service-ref="userService" >
       <security:password-encoder ref="passwordEncoder"/>
     </security:authentication-provider>
   </security:authentication-manager>
@@ -66,5 +66,5 @@
     <constructor-arg value="12"/>
   </bean>
 
-  <bean id="userDetailsService" class="com.safb.storycom.security.UserServiceImpl"/>
+  <bean id="userService" class="com.safb.storycom.services.UserServiceImpl"/>
 </beans>

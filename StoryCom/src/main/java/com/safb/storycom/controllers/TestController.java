@@ -1,28 +1,21 @@
 package com.safb.storycom.controllers;
 
-import com.safb.storycom.entity.TestEntity;
-import com.safb.storycom.entity.UserEntity;
-import com.safb.storycom.entity.StoryEntity;
-import com.safb.storycom.entity.CountryEntity;
-import com.safb.storycom.base.Base;
-import com.safb.storycom.repository.CountriesRepository;
-import com.safb.storycom.repository.StoriesRepository;
-import com.safb.storycom.repository.UsersRepository;
+import com.safb.storycom.base.*;
+import com.safb.storycom.entity.*;
+import com.safb.storycom.repository.*;
 import java.sql.*;
 import java.util.*;
 import javax.validation.*;
 import org.slf4j.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.*;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.*;
+import org.springframework.jdbc.support.rowset.*;
+import org.springframework.security.crypto.bcrypt.*;
+import org.springframework.stereotype.*;
+import org.springframework.ui.*;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "/test")
@@ -135,6 +128,7 @@ public class TestController extends Base
   @GetMapping(value = "/encodePass/{pass}")
   public String encodePass(@PathVariable(value = "pass") String password)
   {
+    log.debug("HERE");
     return passwordEncoder.encode(password);
   }
 

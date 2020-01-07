@@ -15,6 +15,4 @@
     <property name="basenames" value="classpath:messages/messages, classpath:env"/>
     <property name="defaultEncoding" value="UTF-8"/>
   </bean>
-
-
 </beans>

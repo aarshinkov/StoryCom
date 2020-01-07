@@ -1,16 +1,16 @@
 package com.safb.storycom.security;
 
+import com.safb.storycom.dto.*;
 import com.safb.storycom.entity.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.savedrequest.SavedRequest;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import com.safb.storycom.utils.*;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import org.slf4j.*;
+import org.springframework.security.core.*;
+import org.springframework.security.core.context.*;
+import org.springframework.security.web.authentication.*;
+import org.springframework.security.web.savedrequest.*;
 
 public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
 {
@@ -22,13 +22,18 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
     log.debug("Authentication successful.");
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    UserEntity loggedUser = (UserEntity) auth.getPrincipal();
+    UserEntity userEntity = (UserEntity) auth.getPrincipal();
+
+    UserDto userDto = new UserDto();
 
     SavedRequest savedRequest = (SavedRequest) request.getSession(false).getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 
     String redirectUrl = request.getContextPath() + "/";
 
-    request.getSession(false).setAttribute("user", "(" + loggedUser.getFullName() + ") " + loggedUser.getUsername());
+    HttpSession session = request.getSession(false);
+
+    session.setAttribute(SessionAttributes.LOADED_USER, userDto.getUserId());
+    session.setAttribute("user", userDto.getFirstName() + " " + userDto.getLastName());
 
     if (savedRequest != null)
     {

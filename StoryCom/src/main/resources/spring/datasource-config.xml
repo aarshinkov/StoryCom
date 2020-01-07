@@ -28,7 +28,7 @@
 
   <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+    <property name="driverClassName" value="org.postgresql.Driver"/>
 
     <!-- For testing -->
     <property name="url" value="jdbc:postgresql://localhost:5432/storycom_test"/>

@@ -14,8 +14,10 @@ import org.springframework.security.core.authority.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
@@ -31,6 +33,12 @@ public class UserServiceImpl implements UserService
 
   @Autowired
   private DataSource dataSource;
+
+  @Override
+  public UserEntity getUserByUserId(Integer userId)
+  {
+    return usersRepository.findByUserId(userId);
+  }
 
   @Override
   public UserEntity registerUserToUser(RegisterUser registerUser)
@@ -103,6 +111,6 @@ public class UserServiceImpl implements UserService
       roles.add(new SimpleGrantedAuthority(roleEntity.getRolename()));
     });
 
-    return new User(userEntity.getEmail(), userEntity.getPassword(), roles);
+    return userEntity;
   }
 }

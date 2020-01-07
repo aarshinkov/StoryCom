@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
