@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+  <head>
+    <title th:text="'Stories' + ' | StoryCom'">Stories</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="row">
+        <div class="col-12 col-md-9">
+          <h3>Stories</h3>
+          <hr/>
+
+          <div class="row">
+            <div class="col-12 mb-4" th:each="s : ${stories}">
+              <div class="card">
+                <div class="card-body">
+
+                  <h5 class="card-title mb-2">
+                    <a href="#" th:href="@{/story/} + ${s.storyId}">
+                      <span th:text="${s.title}" >Title</span>
+                    </a>
+                  </h5>
+                  <div class="text-muted">
+                    <span th:text="${#dates.format(s.createdOn, 'dd.MM.yyyy HH:mm')}">Time</span>
+                    <span>&bull;</span>
+                    <span>Visits</span>
+                    <span th:text="${#numbers.formatDecimal(s.visits, 1, 'WHITESPACE', 0, 'DEFAULT')}"></span>
+                  </div>
+<!--                  <div th:remove="tag" th:if="${s.story.lenth}">-->
+                    <p class="card-text mt-3" th:text="${s.story}">Story</p>
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+          <div th:replace="stories/sideMenu :: #sideMenu"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

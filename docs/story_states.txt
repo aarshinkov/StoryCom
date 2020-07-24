@@ -1,6 +1,0 @@
-Story states
-
-1 - Safe - color #28a745 - class: text-success
-2 - Inappropriate - color #ffc107 - class: text-warning
-3 - Reviewed - color #007bff - class: text-primary
-4 - Removed - color #dc3545 - class: text-danger

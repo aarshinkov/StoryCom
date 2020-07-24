@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+  <head>
+    <title th:text="${story.title} + ' | StoryCom'">Stories</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="row">
+        <div class="col-12 col-md-9">
+          <h2 th:text="${story.title}">Title</h2>
+          <div class="text-muted">
+            <span th:text="${#dates.format(story.createdOn, 'dd.MM.yyyy HH:mm')}">Created on</span>
+            <span>&bull;</span>
+            <span>Visits</span>
+            <span th:text="${#numbers.formatDecimal(story.visits, 1, 'WHITESPACE', 0, 'DEFAULT')}"></span>
+          </div>
+          <hr/>
+
+          <div class="row mb-5">
+            <div class="col-12">
+              <p th:utext="${story.story}"></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <h4>
+                <span>Comments</span>
+                <span>(4)</span>
+              </h4>
+              <hr/>
+
+              <div class="row">
+                <div class="col-12 mb-3" th:each="s : ${#numbers.sequence(0, 2)}">
+                  <div class="card">
+                    <div class="card-body">
+
+                      <h5 class="card-title mb-2">
+                        <a href="#">
+                          <span >John Doe</span>
+                        </a>
+                      </h5>
+                      <hr/>
+                      <p class="card-text mt-3">Comment</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+          <div th:replace="stories/sideMenu :: #sideMenu"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
