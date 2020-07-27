@@ -3,31 +3,56 @@
       xmlns:th="http://www.thymeleaf.org">
   <body>
     <div id="sideMenu">
-      <h3>Categories</h3>
+      <h3 th:text="#{stories.categories}">Categories</h3>
       <hr/>
 
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="#">Любов</a>
-          <span class="badge badge-primary badge-pill">12</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="#">Тийн</a>
-          <span class="badge badge-primary badge-pill">2</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="#">Семейство</a>
-          <span class="badge badge-primary badge-pill">1</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="#">Здраве</a>
-          <span class="badge badge-primary badge-pill">1</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="#">Образование</a>
-          <span class="badge badge-primary badge-pill">1</span>
-        </li>
-      </ul>
+      <div id="categoriesDiv"></div>
+
+      <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var categoriesCountUrl = /*[[@{/categories/count}]]*/;
+                /*]]>*/
+
+                        function getCategoriesCount() {
+                          $.ajax({
+                            url: categoriesCountUrl,
+                            type: 'get',
+                            success: function (data)
+                            {
+                              $("#categoriesDiv").empty().append(data);
+                            },
+                            error: function (xhr, status, error)
+                            {
+                              alert("fail");
+                            }
+                          });
+                        }
+
+                getCategoriesCount();
+      </script>
     </div>
+
+    <ul id="categoryList" class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="#" th:href="@{/stories?cat=love}" th:text="#{stories.categories.1}">Love</a>
+        <span class="badge badge-primary badge-pill" th:text="${love}">0</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="#" th:href="@{/stories?cat=teen}" th:text="#{stories.categories.2}">Teen</a>
+        <span class="badge badge-primary badge-pill" th:text="${teen}">0</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="#" th:href="@{/stories?cat=family}" th:text="#{stories.categories.3}">Family</a>
+        <span class="badge badge-primary badge-pill" th:text="${family}">0</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="#" th:href="@{/stories?cat=health}" th:text="#{stories.categories.4}">Health</a>
+        <span class="badge badge-primary badge-pill" th:text="${health}">0</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="#" th:href="@{/stories?cat=education}" th:text="#{stories.categories.5}">Education</a>
+        <span class="badge badge-primary badge-pill" th:text="${education}">0</span>
+      </li>
+    </ul>
   </body>
 </html>

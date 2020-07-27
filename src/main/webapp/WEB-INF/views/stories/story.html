@@ -12,7 +12,7 @@
         <div class="col-12 col-md-9">
           <h2 th:text="${story.title}">Title</h2>
           <div class="text-muted">
-            <span th:text="${#dates.format(story.createdOn, 'dd.MM.yyyy HH:mm')}">Created on</span>
+            <span th:text="${#dates.format(story.createdOn, #messages.msg('format.datetime5'))}">Created on</span>
             <span>&bull;</span>
             <span>Visits</span>
             <span th:text="${#numbers.formatDecimal(story.visits, 1, 'WHITESPACE', 0, 'DEFAULT')}"></span>

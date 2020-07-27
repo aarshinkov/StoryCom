@@ -1,7 +1,6 @@
 package com.aarshinkov.web.storycom.repositories;
 
 import com.aarshinkov.web.storycom.entities.*;
-import java.util.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.*;
 
@@ -11,11 +10,9 @@ import org.springframework.stereotype.*;
  * @since 2.0.0
  */
 @Repository
-public interface StoriesRepository extends JpaRepository<StoryEntity, Long>
+public interface UsersRepository extends JpaRepository<UserEntity, Long>
 {
-  List<StoryEntity> findByOrderByCreatedOnDesc();
+  UserEntity findByUserId(Long userId);
 
-  StoryEntity findByStoryId(Long storyId);
-
-  Long countByCategory(CategoryEntity category);
+  UserEntity findByEmail(String email);
 }

@@ -5,6 +5,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.hibernate.annotations.*;
@@ -25,7 +26,7 @@ public class StoryEntity implements Serializable
   @SequenceGenerator(name = "seq_gen_story", sequenceName = "s_stories", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen_story")
   @Column(name = "story_id")
-  private long storyId;
+  private Long storyId;
 
   @Column(name = "title")
   private String title;
@@ -34,18 +35,25 @@ public class StoryEntity implements Serializable
   private String story;
 
   @Column(name = "rating")
-  private double rating;
+  private Double rating;
 
   @Column(name = "visits")
-  private long visits;
+  private Long visits;
 
   @Column(name = "anonymous")
-  private int anonymous;
+  private Integer anonymous;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+  private CategoryEntity category;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+  private UserEntity user;
 
   @Column(name = "created_on")
   private Timestamp createdOn;
 
   @Column(name = "edited_on")
   private Timestamp editedOn;
-//    private UserEntity user;
 }

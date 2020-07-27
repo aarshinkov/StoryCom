@@ -12,6 +12,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.thymeleaf.extras.springsecurity5.dialect.*;
 
 /**
  * @author Atanas Yordanov Arshinkov
@@ -57,12 +58,13 @@ public class MvcViewConfig implements WebMvcConfigurer
     return layoutDialect;
   }
 
-//    @Bean
-//    public SpringSecurityDialect ssd()
-//    {
-//        SpringSecurityDialect ssd = new SpringSecurityDialect();
-//        return ssd;
-//    }
+  @Bean
+  public SpringSecurityDialect ssd()
+  {
+    SpringSecurityDialect ssd = new SpringSecurityDialect();
+    return ssd;
+  }
+
   @Bean
   public Set<ITemplateResolver> templateResolvers()
   {
@@ -78,7 +80,7 @@ public class MvcViewConfig implements WebMvcConfigurer
   {
     Set<IDialect> additionalDialects = new HashSet<>();
     additionalDialects.add(layoutDialect());
-//        additionalDialects.add(ssd());
+    additionalDialects.add(ssd());
 
     return additionalDialects;
   }

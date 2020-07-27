@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/mainTemplate}">
+  <head>
+    <title th:text="${user.fullName} + ' | StoryCom'">Profile</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div class="row">
+        <div class="col-12">
+          <h1>Profile!</h1>
+          <p th:text="${user.firstName}"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

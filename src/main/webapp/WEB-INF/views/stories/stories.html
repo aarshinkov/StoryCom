@@ -4,40 +4,63 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
   <head>
-    <title th:text="'Stories' + ' | StoryCom'">Stories</title>
+    <title th:text="#{app.title(#{nav.stories})}">Stories</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
       <div class="row">
-        <div class="col-12 col-md-9">
-          <h3>Stories</h3>
+        <div class="col-12 col-lg-9">
+          <div class="d-flex align-items-center">
+            <h3 class="mr-auto mb-0">Stories</h3>
+            <a href="#" th:href="@{/story/create}" sec:authorize="isAuthenticated()"
+               class="btn btn-outline-success btn-md" th:text="#{stories.add}">Add story</a>
+          </div>
           <hr/>
 
-          <div class="row">
-            <div class="col-12 mb-4" th:each="s : ${stories}">
+          <div class="row" th:if="${storiesCount eq 0}">
+            <div class="col-12">
+              <h5>No stories published yet.</h5>
+            </div>
+          </div>
+
+          <div class="row" th:if="${storiesCount ne 0}">
+            <div class="col-12 col-md-6 mb-4" th:each="s : ${stories}">
               <div class="card">
                 <div class="card-body">
-
-                  <h5 class="card-title mb-2">
+                  <h6 class="card-title mb-2">
                     <a href="#" th:href="@{/story/} + ${s.storyId}">
                       <span th:text="${s.title}" >Title</span>
                     </a>
-                  </h5>
-                  <div class="text-muted">
-                    <span th:text="${#dates.format(s.createdOn, 'dd.MM.yyyy HH:mm')}">Time</span>
+                  </h6>
+                  <div class="text-muted" style="font-size: 15px;">
+                    <span th:text="${#dates.format(s.createdOn, #messages.msg('format.datetime5'))}">Time</span>
                     <span>&bull;</span>
                     <span>Visits</span>
                     <span th:text="${#numbers.formatDecimal(s.visits, 1, 'WHITESPACE', 0, 'DEFAULT')}"></span>
                   </div>
-<!--                  <div th:remove="tag" th:if="${s.story.lenth}">-->
-                    <p class="card-text mt-3" th:text="${s.story}">Story</p>
-                  <!--</div>-->
+                  <!--<span class="card-text mt-3" th:utext="${s.story}">Story</span>-->
+                  <span class="card-text mt-3" th:text="#{stories.publishedin}"></span>
+                  <a class="card-text text-primary mt-3" href="#" th:href="@{/stories?cat=} + ${s.category.name}" th:text="#{stories.categories. + ${s.category.categoryId}}"></a>
+                  <span class="card-text mt-3" th:text="#{stories.publishedfrom}"></span>
+
+                  <!-- NO AUTH -->
+                  <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${s.anonymous eq 0}" th:text="#{stories.anonymous}"></i>
+                  <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${s.anonymous ne 0}" th:text="${s.user.fullName}"></i>
+                  <!-- END -->
+
+                  <!-- AUTH -->
+                  <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${s.anonymous eq 0 and session.userId eq s.user.userId}" th:text="#{stories.me}"></i>
+                  <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${s.anonymous eq 0 and session.userId ne s.user.userId}" th:text="#{stories.anonymous}"></i>
+                  <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${s.anonymous ne 0 and session.userId eq s.user.userId}" th:text="#{stories.me}"></i>
+                  <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${s.anonymous ne 0 and session.userId ne s.user.userId}" th:text="${s.user.fullName}"></i>
+                  <!-- END -->
                 </div>
               </div>
             </div>
           </div>
+          <div th:replace="fragments/paging :: #pagination (otherParams=${otherParameters})"></div>
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-lg-3">
           <div th:replace="stories/sideMenu :: #sideMenu"></div>
         </div>
       </div>
