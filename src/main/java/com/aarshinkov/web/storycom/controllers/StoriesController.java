@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import javax.servlet.http.*;
 import javax.validation.*;
+import org.modelmapper.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.validation.*;
@@ -29,15 +30,16 @@ public class StoriesController
   @Autowired
   private SystemService systemService;
 
+  @Autowired
+  private ModelMapper mapper;
+
   @GetMapping(value = "/stories")
   public String getStories(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
-          @RequestParam(value = "limit", defaultValue = "6", required = false) Integer limit,
+          @RequestParam(value = "limit", defaultValue = "8", required = false) Integer limit,
           @RequestParam(value = "cat", defaultValue = "", required = false) String category,
           Model model)
   {
     List<StoryDto> stories = storyService.getStories(page, limit, category);
-
-    System.out.println("stories: " + stories.size());
 
     model.addAttribute("storiesCount", stories.size());
 
@@ -55,7 +57,6 @@ public class StoriesController
     pageWrapper.setLocalTotalElements(new Long(stories.size()));
     pageWrapper.setGlobalTotalElements(globalCount);
 
-    LOG.debug(pageWrapper.toString());
     model.addAttribute("pageWrapper", pageWrapper);
     model.addAttribute("maxPagesPerView", 5);
 
@@ -67,7 +68,11 @@ public class StoriesController
   @GetMapping(value = "/story/{storyId}")
   public String getStory(@PathVariable(value = "storyId") Long storyId, Model model)
   {
-    model.addAttribute("story", storyService.getStoryById(storyId));
+    StoryDto story = storyService.getStoryByStoryId(storyId);
+
+    model.addAttribute("story", story);
+
+    storyService.readStory(story.getStoryId());
 
     return "stories/story";
   }
@@ -99,6 +104,43 @@ public class StoriesController
     return "redirect:/stories";
   }
 
+  @GetMapping(value = "/story/edit/{storyId}")
+  public String prepareEditStory(@PathVariable(value = "storyId") Long storyId, Model model)
+  {
+    StoryDto storyDto = storyService.getStoryByStoryId(storyId);
+
+    StoryEditModel story = new StoryEditModel();
+    mapper.map(storyDto, story);
+
+    model.addAttribute("story", story);
+
+    model.addAttribute("globalMenu", "stories");
+
+    return "stories/edit";
+  }
+
+  @PostMapping(value = "/story/edit")
+  public String editStory(@ModelAttribute("story") @Valid StoryEditModel sem, BindingResult bindingResult,
+          HttpServletRequest request, Model model)
+  {
+    if (bindingResult.hasErrors())
+    {
+      model.addAttribute("globalMenu", "stories");
+      return "stories/create";
+    }
+
+    StoryDto updatedStory = storyService.updateStory(sem);
+
+    return "redirect:/stories";
+  }
+
+  @PostMapping(value = "/story/delete")
+  public String deleteStory(@RequestParam(name = "storyId") Long storyId)
+  {
+    storyService.deleteStory(storyId);
+    return "redirect:/stories";
+  }
+
   @GetMapping(value = "/categories/count")
   public String getCategoriesCount(Model model)
   {
@@ -107,6 +149,7 @@ public class StoriesController
     model.addAttribute("family", storyService.getStoriesCountByCategory(Categories.FAMILY.getValue()));
     model.addAttribute("health", storyService.getStoriesCountByCategory(Categories.HEALTH.getValue()));
     model.addAttribute("education", storyService.getStoriesCountByCategory(Categories.EDUCATION.getValue()));
+    model.addAttribute("sport", storyService.getStoriesCountByCategory(Categories.SPORT.getValue()));
 
     return "stories/sideMenu :: #categoryList";
   }

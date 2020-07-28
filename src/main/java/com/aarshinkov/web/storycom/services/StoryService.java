@@ -28,11 +28,17 @@ public interface StoryService
    * @param storyId the id of the story
    * @return the stored story
    */
-  StoryDto getStoryById(Long storyId);
+  StoryDto getStoryByStoryId(Long storyId);
 
   StoryDto createStory(StoryCreateModel scm, Long userId);
 
+  StoryDto updateStory(StoryEditModel story);
+
+  void deleteStory(Long storyId);
+
+  void readStory(Long storyId);
+
   Long getStoriesCountByCategory(Long categoryId);
-  
+
   Long getStoriesCount();
 }

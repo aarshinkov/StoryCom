@@ -11,11 +11,27 @@
       <div class="row">
         <div class="col-12 col-md-9">
           <h2 th:text="${story.title}">Title</h2>
-          <div class="text-muted">
-            <span th:text="${#dates.format(story.createdOn, #messages.msg('format.datetime5'))}">Created on</span>
-            <span>&bull;</span>
-            <span>Visits</span>
-            <span th:text="${#numbers.formatDecimal(story.visits, 1, 'WHITESPACE', 0, 'DEFAULT')}"></span>
+          <div class="d-flex align-items-center">
+            <div class="text-muted">
+              <small class="far fa-clock" data-toggle="tooltip" data-placement="bottom"
+                     th:title="#{stories.createdon}"></small>
+              <span th:text="${#dates.format(story.createdOn, #messages.msg('format.datetime5'))}">Time</span>
+              <span>&bull;</span>
+              <small class="far fa-eye" data-toggle="tooltip" data-placement="bottom"
+                     th:title="#{stories.visits.count}"></small>
+              <span th:if="${story.visits eq 1}" th:text="#{stories.visits.1}"></span>
+              <span th:if="${story.visits ne 1}" th:text="#{stories.visits(${#numbers.formatDecimal(story.visits, 1, 'WHITESPACE', 0, 'DEFAULT')})}"></span>
+            </div>
+            <div class="ml-auto d-none d-lg-block">
+              <a href="#" class="btn btn-outline-info btn-sm" th:href="@{/story/edit/} + ${story.storyId}" th:text="#{btn.edit}">Edit</a>
+              <a href="#" class="btn btn-outline-danger btn-sm"
+                 data-toggle="modal" data-target="#storyDeleteModal" th:text="#{btn.delete}">Delete</a>
+            </div>
+          </div>
+          <div class="d-block d-lg-none">
+            <a href="#" class="btn btn-outline-info btn-sm ml-0 mt-3" th:href="@{/story/edit/} + ${story.storyId}" th:text="#{btn.edit}">Edit</a>
+            <a href="#" class="btn btn-outline-danger btn-sm mt-3"
+               data-toggle="modal" data-target="#storyDeleteModal" th:text="#{btn.delete}">Delete</a>
           </div>
           <hr/>
 
@@ -24,7 +40,6 @@
               <p th:utext="${story.story}"></p>
             </div>
           </div>
-
           <div class="row">
             <div class="col-12">
               <h4>
@@ -32,7 +47,6 @@
                 <span>(4)</span>
               </h4>
               <hr/>
-
               <div class="row">
                 <div class="col-12 mb-3" th:each="s : ${#numbers.sequence(0, 2)}">
                   <div class="card">
@@ -54,6 +68,33 @@
         </div>
         <div class="col-12 col-md-3">
           <div th:replace="stories/sideMenu :: #sideMenu"></div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="storyDeleteModal" tabindex="-1" role="dialog" aria-labelledby="storyDeleteModalLabel"
+           aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="storyDeleteModalLabel" th:text="#{story.delete.modal.title}">Delete story</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form th:action="@{/story/delete}" method="post">
+              <div class="modal-body">
+                <p th:utext="#{story.delete.modal.message(${story.title})}">Do you really want to delete story?</p>
+              </div>
+              <input type="hidden" th:value="${story.storyId}" name="storyId"/>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger btn-md"
+                        th:text="#{btn.delete}">Delete</button>
+                <button type="button" class="btn btn-outline-dark btn-md"
+                        th:text="#{btn.close}" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

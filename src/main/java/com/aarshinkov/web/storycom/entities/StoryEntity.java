@@ -43,11 +43,11 @@ public class StoryEntity implements Serializable
   @Column(name = "anonymous")
   private Integer anonymous;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id", referencedColumnName = "category_id")
   private CategoryEntity category;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", referencedColumnName = "user_id")
   private UserEntity user;
 

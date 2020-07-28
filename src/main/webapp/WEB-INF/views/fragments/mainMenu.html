@@ -46,15 +46,27 @@
               <li class="nav-item dropdown" th:classappend="${globalMenu eq 'profile'} ? 'active'"
                   sec:authorize="isAuthenticated()">
                 <a class="nav-link dropdown-toggle" id="profileDropdown" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false" th:text="${session.user}">John Doe</a>
+                   aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-user-circle"></i>
+                  <span th:text="${session.user}">John Doe</span>
+                </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-primary"
                      aria-labelledby="profileDropdown">
                   <a class="dropdown-item" th:classappend="${submenu eq 'profile'} ? 'active'"
-                     href="#" th:href="@{/profile}" th:text="#{nav.profile}">Profile</a>
+                     href="#" th:href="@{/profile}">
+                    <i class="fas fa-user-circle"></i>
+                    <span th:text="#{nav.profile}">Profile</span>
+                  </a>
                   <a class="dropdown-item" th:classappend="${submenu eq 'settings'} ? 'active'"
-                     href="#" th:href="@{/settings}" th:text="#{nav.profile.settings}">Settings</a>
+                     href="#" th:href="@{/settings}">
+                    <i class="fas fa-cog"></i>
+                    <span th:text="#{nav.profile.settings}">Settings</span>
+                  </a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item text-danger" onclick="$('#formLogout').submit();" href="#" th:text="#{nav.logout}">Logout</a>
+                  <a class="dropdown-item text-danger" onclick="$('#formLogout').submit();" href="#">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span th:text="#{nav.logout}">Logout</span>
+                  </a>
                   <form sec:authorize="isAuthenticated()" style="visibility: hidden;" id="formLogout" method="post" action="#" th:action="@{/logout}"></form>
                 </div>
               </li>

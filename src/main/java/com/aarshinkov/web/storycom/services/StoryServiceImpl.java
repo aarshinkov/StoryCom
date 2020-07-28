@@ -122,7 +122,7 @@ public class StoryServiceImpl implements StoryService
   }
 
   @Override
-  public StoryDto getStoryById(Long storyId)
+  public StoryDto getStoryByStoryId(Long storyId)
   {
     StoryEntity storedStory = storiesRepository.findByStoryId(storyId);
 
@@ -154,6 +154,43 @@ public class StoryServiceImpl implements StoryService
     mapper.map(savedStory, result);
 
     return result;
+  }
+
+  @Override
+  public StoryDto updateStory(StoryEditModel story)
+  {
+    StoryEntity storedStory = storiesRepository.findByStoryId(story.getStoryId());
+
+    CategoryEntity category = categoriesRepository.findByCategoryId(story.getCategoryId());
+
+    LOG.debug("category: " + category);
+
+    mapper.map(story, storedStory);
+    storedStory.setCategory(category);
+
+    StoryEntity updatedStory = storiesRepository.save(storedStory);
+
+    StoryDto result = new StoryDto();
+    mapper.map(updatedStory, result);
+
+    return result;
+  }
+
+  @Override
+  public void deleteStory(Long storyId)
+  {
+    StoryEntity storedStory = storiesRepository.findByStoryId(storyId);
+
+    storiesRepository.delete(storedStory);
+  }
+
+  @Override
+  public void readStory(Long storyId)
+  {
+    StoryEntity story = storiesRepository.findByStoryId(storyId);
+    story.setVisits(story.getVisits() + 1);
+
+    storiesRepository.save(story);
   }
 
   @Override
