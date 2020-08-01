@@ -1,26 +1,33 @@
 package com.aarshinkov.web.storycom.controllers;
 
+import com.aarshinkov.web.storycom.base.*;
 import com.aarshinkov.web.storycom.dto.*;
 import com.aarshinkov.web.storycom.enums.*;
 import com.aarshinkov.web.storycom.models.stories.*;
+import com.aarshinkov.web.storycom.repositories.*;
 import com.aarshinkov.web.storycom.services.*;
 import com.aarshinkov.web.storycom.utils.*;
+import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import javax.servlet.http.*;
 import javax.validation.*;
 import org.modelmapper.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.crossstore.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import org.springframework.security.access.prepost.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.*;
+import org.springframework.web.servlet.mvc.support.*;
 
 @Controller
-public class StoriesController
+public class StoriesController extends Base
 {
   private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -28,11 +35,34 @@ public class StoriesController
   private StoryService storyService;
 
   @Autowired
+  private StoriesRepository storiesRepository;
+
+  @Autowired
+  private CategoriesRepository categoriesRepository;
+
+  @Autowired
+  private UsersRepository usersRepository;
+
+  @Autowired
   private SystemService systemService;
 
   @Autowired
   private ModelMapper mapper;
 
+//   @PostMapping(value = "/story/edit")
+//  public String editStory(@ModelAttribute("story") @Valid StoryEditModel sem, BindingResult bindingResult,
+//          HttpServletRequest request, Model model)
+//  {
+//    if (bindingResult.hasErrors())
+//    {
+//      model.addAttribute("globalMenu", "stories");
+//      return "stories/create";
+//    }
+//
+//    StoryDto updatedStory = storyService.updateStory(sem);
+//
+//    return "redirect:/";
+//  }
   @GetMapping(value = "/stories")
   public String getStories(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
           @RequestParam(value = "limit", defaultValue = "8", required = false) Integer limit,
@@ -70,9 +100,16 @@ public class StoriesController
   {
     StoryDto story = storyService.getStoryByStoryId(storyId);
 
+    if (story == null)
+    {
+      throw new ResponseStatusException(NOT_FOUND, "Story not found");
+    }
+
     model.addAttribute("story", story);
 
     storyService.readStory(story.getStoryId());
+
+    model.addAttribute("globalMenu", "stories");
 
     return "stories/story";
   }
@@ -89,8 +126,10 @@ public class StoriesController
 
   @PostMapping(value = "/story/create")
   public String createStory(@ModelAttribute("story") @Valid StoryCreateModel scm, BindingResult bindingResult,
-          HttpServletRequest request, Model model)
+          HttpServletRequest request, Model model, RedirectAttributes redirectAttributes)
   {
+    LOG.debug("scm: " + scm);
+
     if (bindingResult.hasErrors())
     {
       model.addAttribute("globalMenu", "stories");
@@ -99,7 +138,15 @@ public class StoriesController
 
     Long userId = (Long) systemService.getSessionAttribute(request, "userId");
 
-    StoryDto createdStory = storyService.createStory(scm, userId);
+    try
+    {
+      StoryDto createdStory = storyService.createStory(scm, userId);
+      redirectAttributes.addFlashAttribute("msgSuccess", getMessage("story.create.success"));
+    }
+    catch (Exception e)
+    {
+      redirectAttributes.addFlashAttribute("msgError", getMessage("story.create.error"));
+    }
 
     return "redirect:/stories";
   }
@@ -113,15 +160,16 @@ public class StoriesController
     mapper.map(storyDto, story);
 
     model.addAttribute("story", story);
+    model.addAttribute("storyId", storyId);
 
     model.addAttribute("globalMenu", "stories");
 
     return "stories/edit";
   }
 
-  @PostMapping(value = "/story/edit")
+  @PostMapping(value = "/story/edit/{storyId}")
   public String editStory(@ModelAttribute("story") @Valid StoryEditModel sem, BindingResult bindingResult,
-          HttpServletRequest request, Model model)
+          @PathVariable(value = "storyId") Long storyId, Model model)
   {
     if (bindingResult.hasErrors())
     {
@@ -129,11 +177,35 @@ public class StoriesController
       return "stories/create";
     }
 
-    StoryDto updatedStory = storyService.updateStory(sem);
+    storyService.updateStory(storyId, sem);
 
-    return "redirect:/stories";
+    return "redirect:/story/" + storyId;
   }
 
+//  @PostMapping(value = "/story/edit/{storyId}")
+//  public String editStory(@ModelAttribute("story") @Valid StoryEditModel sem, BindingResult bindingResult,
+//          @PathVariable(value = "storyId") Long storyId, Model model)
+//  {
+//    if (bindingResult.hasErrors())
+//    {
+//      model.addAttribute("globalMenu", "stories");
+//      return "stories/create";
+//    }
+//    
+//    //    StoryDto updatedStory = storyService.updateStory(sem);
+//
+//    StoryEntity story = storiesRepository.findByStoryId(storyId);
+//
+//    CategoryEntity category = categoriesRepository.findByCategoryId(sem.getCategoryId());
+//
+//    story.setTitle(sem.getTitle());
+//    story.setStory(sem.getStory());
+//    story.setCategory(category);
+//
+//    storiesRepository.save(story);
+//
+//    return "redirect:/story/" + story.getStoryId();
+//  }
   @PostMapping(value = "/story/delete")
   public String deleteStory(@RequestParam(name = "storyId") Long storyId)
   {

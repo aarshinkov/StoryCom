@@ -64,11 +64,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 //            .logoutSuccessUrl("/login")
 //            .permitAll();
 
-    http
+    http.csrf().disable()
             .authorizeRequests()
             .antMatchers("/", "/home").permitAll()
             .antMatchers("/profile").authenticated()
-            //            .antMatchers("/login", "/authentication").permitAll()
+            .antMatchers("/story/create").authenticated()
+//            .antMatchers("/login", "/authentication").permitAll()
             .and()
             .formLogin()
             .loginProcessingUrl("/authentication")

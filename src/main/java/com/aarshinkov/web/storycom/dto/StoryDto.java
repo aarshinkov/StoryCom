@@ -22,7 +22,7 @@ public class StoryDto implements Serializable
   private String story;
   private Double rating;
   private Long visits;
-  private Integer anonymous;
+  private Boolean anonymous;
   private CategoryDto category;
   private UserDto user;
   private Timestamp createdOn;

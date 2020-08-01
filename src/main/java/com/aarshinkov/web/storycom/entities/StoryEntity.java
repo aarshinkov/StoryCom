@@ -1,11 +1,11 @@
 package com.aarshinkov.web.storycom.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.*;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.hibernate.annotations.*;
@@ -41,10 +41,12 @@ public class StoryEntity implements Serializable
   private Long visits;
 
   @Column(name = "anonymous")
-  private Integer anonymous;
+  private Boolean anonymous;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "category_id", nullable = false)
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  @JsonIgnore
   private CategoryEntity category;
 
   @OneToOne(fetch = FetchType.LAZY)

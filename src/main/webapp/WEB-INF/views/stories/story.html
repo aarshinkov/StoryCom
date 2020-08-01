@@ -8,6 +8,10 @@
   </head>
   <body>
     <div layout:fragment="contentDiv">
+      <div th:if="${#httpSession ne null}" th:remove="tag">
+        <div th:replace="fragments/messages :: #notify"/>
+      </div>
+
       <div class="row">
         <div class="col-12 col-md-9">
           <h2 th:text="${story.title}">Title</h2>
@@ -23,15 +27,40 @@
               <span th:if="${story.visits ne 1}" th:text="#{stories.visits(${#numbers.formatDecimal(story.visits, 1, 'WHITESPACE', 0, 'DEFAULT')})}"></span>
             </div>
             <div class="ml-auto d-none d-lg-block">
-              <a href="#" class="btn btn-outline-info btn-sm" th:href="@{/story/edit/} + ${story.storyId}" th:text="#{btn.edit}">Edit</a>
-              <a href="#" class="btn btn-outline-danger btn-sm"
-                 data-toggle="modal" data-target="#storyDeleteModal" th:text="#{btn.delete}">Delete</a>
+              <a href="#" class="btn btn-outline-info btn-md" th:href="@{/story/edit/} + ${story.storyId}">
+                <i class="far fa-edit"></i>
+                <span th:text="#{btn.edit}">Edit</span>
+              </a>
+              <a href="#" class="btn btn-outline-danger btn-md" data-toggle="modal" data-target="#storyDeleteModal">
+                <i class="far fa-trash-alt"></i>
+                <span th:text="#{btn.delete}">Delete</span>
+              </a>
             </div>
           </div>
+
+          <span class="card-text mt-3" th:text="#{stories.publishedin}"></span>
+          <a class="card-text text-primary mt-3" href="#" th:href="@{/stories?cat=} + ${story.category.name}" th:text="#{stories.categories. + ${story.category.categoryId}}"></a>
+          <span class="card-text mt-3" th:text="#{stories.publishedfrom}"></span>
+          <!-- NO AUTH -->
+          <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${story.anonymous}" th:text="#{stories.anonymous}"></i>
+          <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${!story.anonymous}" th:text="${story.user.fullName}"></i>
+          <!-- END -->
+
+          <!-- AUTH -->
+          <i class="card-text mt-3" sec:authorize="isAuthenticated()" data-toggle="tooltip" data-placement="bottom"
+             th:title="${session.user}" th:if="${session.userId eq story.user.userId}" th:text="#{stories.me}"></i>
+          <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${story.anonymous and session.userId ne story.user.userId}" th:text="#{stories.anonymous}"></i>
+          <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${!story.anonymous and session.userId ne story.user.userId}" th:text="${s.user.fullName}"></i>
+          <!-- END -->
           <div class="d-block d-lg-none">
-            <a href="#" class="btn btn-outline-info btn-sm ml-0 mt-3" th:href="@{/story/edit/} + ${story.storyId}" th:text="#{btn.edit}">Edit</a>
-            <a href="#" class="btn btn-outline-danger btn-sm mt-3"
-               data-toggle="modal" data-target="#storyDeleteModal" th:text="#{btn.delete}">Delete</a>
+            <a href="#" class="btn btn-outline-info btn-md ml-0 mt-3" th:href="@{/story/edit/} + ${story.storyId}">
+              <i class="far fa-edit"></i>
+              <span th:text="#{btn.edit}">Edit</span>
+            </a>
+            <a href="#" class="btn btn-outline-danger btn-md mt-3" data-toggle="modal" data-target="#storyDeleteModal">
+              <i class="far fa-trash-alt"></i>
+              <span th:text="#{btn.delete}">Delete</span>
+            </a>
           </div>
           <hr/>
 
@@ -88,10 +117,14 @@
               </div>
               <input type="hidden" th:value="${story.storyId}" name="storyId"/>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-danger btn-md"
-                        th:text="#{btn.delete}">Delete</button>
-                <button type="button" class="btn btn-outline-dark btn-md"
-                        th:text="#{btn.close}" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger btn-md">
+                  <i class="far fa-trash-alt"></i>
+                  <span th:text="#{btn.delete}">Delete</span>
+                </button>
+                <button type="button" class="btn btn-outline-dark btn-md" data-dismiss="modal">
+                  <i class="fas fa-times"></i>
+                  <span th:text="#{btn.close}">Close</span>
+                </button>
               </div>
             </form>
           </div>

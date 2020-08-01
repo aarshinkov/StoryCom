@@ -8,6 +8,9 @@
   </head>
   <body>
     <div layout:fragment="contentDiv">
+      <div th:if="${#httpSession ne null}" th:remove="tag">
+        <div th:replace="fragments/messages :: #notify"/>
+      </div>
       <div class="row">
         <div class="col-12 col-lg-9">
           <div class="d-flex align-items-center">
@@ -18,7 +21,7 @@
             <a href="#" th:href="@{/story/create}" sec:authorize="isAuthenticated()"
                class="btn btn-outline-success btn-md">
               <i class="fas fa-plus"></i>
-              <span th:text="#{stories.add}">Add story</span>
+              <span th:text="#{stories.create}">Add story</span>
             </a>
           </div>
           <hr/>
@@ -56,15 +59,15 @@
                     <span class="card-text mt-3" th:text="#{stories.publishedfrom}"></span>
 
                     <!-- NO AUTH -->
-                    <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${s.anonymous eq 0}" th:text="#{stories.anonymous}"></i>
-                    <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${s.anonymous ne 0}" th:text="${s.user.fullName}"></i>
+                    <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${s.anonymous}" th:text="#{stories.anonymous}"></i>
+                    <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${!s.anonymous}" th:text="${s.user.fullName}"></i>
                     <!-- END -->
 
                     <!-- AUTH -->
                     <i class="card-text mt-3" sec:authorize="isAuthenticated()" data-toggle="tooltip" data-placement="bottom"
                        th:title="${session.user}" th:if="${session.userId eq s.user.userId}" th:text="#{stories.me}"></i>
-                    <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${s.anonymous eq 0 and session.userId ne s.user.userId}" th:text="#{stories.anonymous}"></i>
-                    <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${s.anonymous ne 0 and session.userId ne s.user.userId}" th:text="${s.user.fullName}"></i>
+                    <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${s.anonymous and session.userId ne s.user.userId}" th:text="#{stories.anonymous}"></i>
+                    <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${!s.anonymous and session.userId ne s.user.userId}" th:text="${s.user.fullName}"></i>
                     <!-- END -->
                   </div>
                 </div>

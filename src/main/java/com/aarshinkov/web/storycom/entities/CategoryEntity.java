@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.*;
 
 /**
  *

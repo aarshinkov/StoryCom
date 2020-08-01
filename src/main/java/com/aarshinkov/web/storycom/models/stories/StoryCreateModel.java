@@ -14,7 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder
+//@Builder
 public class StoryCreateModel implements Serializable
 {
   @Size(min = 2, max = 100)
@@ -23,7 +23,14 @@ public class StoryCreateModel implements Serializable
   @NotEmpty
   private String story;
 
+//  @NotNull
+  private Boolean anonymous = false;
+
   @NotNull
   @Min(1)
   private Long categoryId;
+
+  @NotNull
+  @Min(1)
+  private Long userId;
 }

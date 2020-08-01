@@ -20,7 +20,7 @@ import org.springframework.util.*;
  * @since 2.0.0
  */
 @Service
-@Transactional
+//@Transactional
 public class StoryServiceImpl implements StoryService
 {
   private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -77,7 +77,7 @@ public class StoryServiceImpl implements StoryService
         story.setStory(rset.getString("story"));
         story.setRating(rset.getDouble("rating"));
         story.setVisits(rset.getLong("visits"));
-        story.setAnonymous(rset.getInt("anonymous"));
+        story.setAnonymous(rset.getBoolean("anonymous"));
         story.setCreatedOn(rset.getTimestamp("created_on"));
         story.setEditedOn(rset.getTimestamp("edited_on"));
 
@@ -122,9 +122,14 @@ public class StoryServiceImpl implements StoryService
   }
 
   @Override
+  @Transactional
   public StoryDto getStoryByStoryId(Long storyId)
   {
     StoryEntity storedStory = storiesRepository.findByStoryId(storyId);
+    if (storedStory == null)
+    {
+      return null;
+    }
 
     StoryDto story = new StoryDto();
 
@@ -142,6 +147,7 @@ public class StoryServiceImpl implements StoryService
     StoryEntity createStory = new StoryEntity();
     createStory.setTitle(scm.getTitle());
     createStory.setStory(scm.getStory());
+    createStory.setAnonymous(scm.getAnonymous());
 //    mapper.map(scm, createStory);
 
     createStory.setCategory(category);
@@ -157,20 +163,21 @@ public class StoryServiceImpl implements StoryService
   }
 
   @Override
-  public StoryDto updateStory(StoryEditModel story)
+  @Transactional
+  public StoryDto updateStory(Long storyId, StoryEditModel sem)
   {
-    StoryEntity storedStory = storiesRepository.findByStoryId(story.getStoryId());
+    StoryEntity story = storiesRepository.findByStoryId(storyId);
 
-    CategoryEntity category = categoriesRepository.findByCategoryId(story.getCategoryId());
+    CategoryEntity category = categoriesRepository.findByCategoryId(sem.getCategoryId());
 
-    LOG.debug("category: " + category);
-
-    mapper.map(story, storedStory);
-    storedStory.setCategory(category);
-
-    StoryEntity updatedStory = storiesRepository.save(storedStory);
+    story.setTitle(sem.getTitle());
+    story.setStory(sem.getStory());
+    story.setAnonymous(sem.getAnonymous());
+    story.setCategory(category);
+    StoryEntity updatedStory = storiesRepository.save(story);
 
     StoryDto result = new StoryDto();
+
     mapper.map(updatedStory, result);
 
     return result;

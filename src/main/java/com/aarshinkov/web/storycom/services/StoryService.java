@@ -32,7 +32,7 @@ public interface StoryService
 
   StoryDto createStory(StoryCreateModel scm, Long userId);
 
-  StoryDto updateStory(StoryEditModel story);
+  StoryDto updateStory(Long storyId, StoryEditModel sem);
 
   void deleteStory(Long storyId);
 

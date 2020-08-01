@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.boot.web.servlet.error.*;
+import org.springframework.security.web.savedrequest.*;
 
 @Controller
-public class ErrorDefaultController implements org.springframework.boot.web.servlet.error.ErrorController
+public class ErrorDefaultController implements ErrorController
 {
+  private final RequestCache requestCache = new HttpSessionRequestCache();
+  
   @GetMapping(value = "/error")
   public String handleError(HttpServletRequest request)
   {
@@ -21,11 +25,25 @@ public class ErrorDefaultController implements org.springframework.boot.web.serv
 
       if (statusCode == HttpStatus.NOT_FOUND.value())
       {
-        return "redirect:/404";
+        return "errors/404";
+//        return "redirect:/404";
+      }
+      if (statusCode == HttpStatus.FORBIDDEN.value())
+      {
+        
+        return "errors/403";
+//        return "redirect:/403";
       }
     }
 
-    return "redirect:/500";
+    return "errors/500";
+//    return "redirect:/500";
+  }
+
+  @GetMapping(value = "/403")
+  public String error403()
+  {
+    return "errors/403";
   }
 
   @GetMapping(value = "/404")

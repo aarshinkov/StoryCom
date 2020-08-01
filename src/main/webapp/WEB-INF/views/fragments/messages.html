@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div id="notify">
+      <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var successMsg = /*[[${msgSuccess ne null ? msgSuccess : session.msgSuccess}]]*/;
+                var infoMsg = /*[[${msgInfo ne null ? msgInfo : session.msgInfo}]]*/;
+                var errorMsg = /*[[${msgError ne null ? msgError : session.msgError}]]*/;
+        /*]]>*/
+
+//        [[${#httpSession.removeAttribute('msgSuccess')}]];
+//        [[${#httpSession.removeAttribute('msgInfo')}]];
+//        [[${#httpSession.removeAttribute('msgError')}]];
+
+        if (successMsg !== null)
+        {
+          notifySuccess();
+        }
+
+        if (infoMsg !== null) {
+          notifyInfo();
+        }
+
+        if (errorMsg !== null)
+        {
+          notifyError();
+        }
+
+        function notifySuccess()
+        {
+          $.notify(successMsg, {
+            position: "top left",
+            style: 'bootstrap',
+            className: 'success'
+          });
+        }
+
+        function notifyInfo()
+        {
+          $.notify(infoMsg, {
+            position: "top left",
+            style: 'bootstrap',
+            className: 'info',
+          });
+        }
+
+        function notifyError()
+        {
+          $.notify(errorMsg, {
+            position: "top left",
+            style: 'bootstrap',
+            className: 'error',
+          });
+        }
+      </script>
+    </div>
+  </body>
+</html>

@@ -14,17 +14,17 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder
+//@Builder
 public class StoryEditModel implements Serializable
 {
-  @NotNull
-  private Long storyId;
-
   @Size(min = 2, max = 100)
   private String title;
 
   @NotEmpty
   private String story;
+
+//  @NotNull
+  private Boolean anonymous = false;
 
   @NotNull
   @Min(1)
