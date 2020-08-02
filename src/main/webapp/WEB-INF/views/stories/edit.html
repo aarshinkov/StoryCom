@@ -13,8 +13,8 @@
           <form th:action="@{/story/edit/} + ${storyId}" method="post" th:object="${story}">
             <h2 th:utext="#{story.edit.header(@{/story/} + ${storyId}, ${story.title})}">Edit story</h2>
             <div class="form-group ml-auto mb-0">
-              <input id="isAnonymousInput" type="checkbox" name="anonymous" checked="checked"/>
-              <label for="isAnonymousInput" class="mb-0" th:text="#{story.create.form.anonymous}">Anonymous</label>
+              <input id="isAnonymousInput" type="checkbox" th:field="*{anonymous}"/>
+              <label for="isAnonymousInput" class="mb-0 h6" th:text="#{story.create.form.anonymous}">Anonymous</label>
             </div>
             <hr/>
 

@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
   <head>
-    <title th:text="${story.title} + ' | StoryCom'">Stories</title>
+    <title th:text="#{app.title(${story.title})}">Title</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
@@ -25,8 +25,13 @@
                      th:title="#{stories.visits.count}"></small>
               <span th:if="${story.visits eq 1}" th:text="#{stories.visits.1}"></span>
               <span th:if="${story.visits ne 1}" th:text="#{stories.visits(${#numbers.formatDecimal(story.visits, 1, 'WHITESPACE', 0, 'DEFAULT')})}"></span>
+              <div th:if="${story.editedOn ne null}" th:remove="tag">
+                <span>&bull;</span>
+                <i class="far fa-edit" data-toggle="tooltip" data-placement="bottom"
+                   th:title="#{stories.editedon(${#dates.format(story.editedOn, #messages.msg('format.datetime5'))})}"></i>
+              </div>
             </div>
-            <div class="ml-auto d-none d-lg-block">
+            <div class="ml-auto d-none d-lg-block" sec:authorize="isAuthenticated()" th:if="${session.userId eq story.user.userId}">
               <a href="#" class="btn btn-outline-info btn-md" th:href="@{/story/edit/} + ${story.storyId}">
                 <i class="far fa-edit"></i>
                 <span th:text="#{btn.edit}">Edit</span>
@@ -41,18 +46,11 @@
           <span class="card-text mt-3" th:text="#{stories.publishedin}"></span>
           <a class="card-text text-primary mt-3" href="#" th:href="@{/stories?cat=} + ${story.category.name}" th:text="#{stories.categories. + ${story.category.categoryId}}"></a>
           <span class="card-text mt-3" th:text="#{stories.publishedfrom}"></span>
-          <!-- NO AUTH -->
-          <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${story.anonymous}" th:text="#{stories.anonymous}"></i>
-          <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${!story.anonymous}" th:text="${story.user.fullName}"></i>
-          <!-- END -->
 
-          <!-- AUTH -->
-          <i class="card-text mt-3" sec:authorize="isAuthenticated()" data-toggle="tooltip" data-placement="bottom"
-             th:title="${session.user}" th:if="${session.userId eq story.user.userId}" th:text="#{stories.me}"></i>
-          <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${story.anonymous and session.userId ne story.user.userId}" th:text="#{stories.anonymous}"></i>
-          <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${!story.anonymous and session.userId ne story.user.userId}" th:text="${s.user.fullName}"></i>
-          <!-- END -->
-          <div class="d-block d-lg-none">
+          <i class="card-text mt-3" th:if="${story.anonymous}" th:text="#{stories.anonymous}"></i>
+          <i class="card-text mt-3" th:if="${!story.anonymous}" th:text="${story.user.fullName}"></i>
+
+          <div class="d-block d-lg-none" sec:authorize="isAuthenticated()">
             <a href="#" class="btn btn-outline-info btn-md ml-0 mt-3" th:href="@{/story/edit/} + ${story.storyId}">
               <i class="far fa-edit"></i>
               <span th:text="#{btn.edit}">Edit</span>

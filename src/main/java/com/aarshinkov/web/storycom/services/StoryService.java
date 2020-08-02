@@ -34,7 +34,7 @@ public interface StoryService
 
   StoryDto updateStory(Long storyId, StoryEditModel sem);
 
-  void deleteStory(Long storyId);
+  StoryDto deleteStory(Long storyId);
 
   void readStory(Long storyId);
 

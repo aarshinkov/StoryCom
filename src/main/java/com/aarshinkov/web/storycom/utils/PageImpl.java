@@ -20,9 +20,8 @@ public class PageImpl extends Page
     globalTotalElements = getGlobalTotalElements();
     maxElementsPerPage = getMaxElementsPerPage();
 
-    LOG.debug("gte: " + globalTotalElements);
-    LOG.debug("mepp: " + maxElementsPerPage);
-
+//    LOG.debug("gte: " + globalTotalElements);
+//    LOG.debug("mepp: " + maxElementsPerPage);
     if (globalTotalElements % maxElementsPerPage != 0)
     {
       return (globalTotalElements / maxElementsPerPage) + 1;

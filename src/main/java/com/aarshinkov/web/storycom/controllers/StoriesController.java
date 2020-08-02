@@ -152,6 +152,7 @@ public class StoriesController extends Base
   }
 
   @GetMapping(value = "/story/edit/{storyId}")
+//  @PreAuthorize("#username == authentication.principal.username")
   public String prepareEditStory(@PathVariable(value = "storyId") Long storyId, Model model)
   {
     StoryDto storyDto = storyService.getStoryByStoryId(storyId);
@@ -207,9 +208,17 @@ public class StoriesController extends Base
 //    return "redirect:/story/" + story.getStoryId();
 //  }
   @PostMapping(value = "/story/delete")
-  public String deleteStory(@RequestParam(name = "storyId") Long storyId)
+  public String deleteStory(@RequestParam(name = "storyId") Long storyId, RedirectAttributes redirectAttributes)
   {
-    storyService.deleteStory(storyId);
+    try
+    {
+      StoryDto deletedStory = storyService.deleteStory(storyId);
+      redirectAttributes.addFlashAttribute("msgSuccess", getMessage("story.delete.success"));
+    }
+    catch (Exception e)
+    {
+      redirectAttributes.addFlashAttribute("msgError", getMessage("story.delete.error"));
+    }
     return "redirect:/stories";
   }
 

@@ -4,24 +4,69 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
   <head>
-    <title>Login</title>
+    <title th:text="#{app.title(#{signup.title})}">Signup</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
+      <div th:if="${#httpSession ne null}" th:remove="tag">
+        <div th:replace="fragments/messages :: #notify"/>
+      </div>
+
       <div class="row">
-        <div class="col-12">
-          <h1>Signup</h1>
-          
-          <form th:action="@{/signup}" method="post">
-            <div class="form-group">
-              <label>Email</label>
-              <input type="text" class="form-control" name="email"/>
+        <div class="col-12 col-md-9 col-lg-7 m-auto">
+          <h2 th:text="#{signup.header}">Signup</h2>
+          <hr/>
+
+          <form th:action="@{/signup}" method="post" th:object="${signup}">
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label th:text="#{signup.form.firstName}">First name</label>
+                  <input type="text" class="form-control"th:field="*{firstName}"
+                         th:placeholder="#{signup.form.place.firstName}"
+                         th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"/>
+                  <span class="invalid-feedback" th:errors="*{firstName}">Error</span>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label th:text="#{signup.form.lastName}">Last name</label>
+                  <input type="text" class="form-control" th:field="*{lastName}"
+                         th:placeholder="#{signup.form.place.lastName}"
+                         th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"/>
+                  <span class="invalid-feedback" th:errors="*{lastName}">Error</span>
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label>Password</label>
-              <input type="password" class="form-control" name="password"/>
+              <label th:text="#{signup.form.email}">Email</label>
+              <input type="email" class="form-control" th:field="*{email}"
+                     th:placeholder="#{signup.form.place.email}"
+                     th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"/>
+              <span class="invalid-feedback" th:errors="*{email}">Error</span>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label th:text="#{signup.form.password}">Password</label>
+                  <input type="password" class="form-control" th:field="*{password}"
+                         th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"/>
+                  <span class="invalid-feedback" th:errors="*{password}">Error</span>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label th:text="#{signup.form.confirmPassword}">Confirm password</label>
+                  <input type="password" class="form-control" th:field="*{confirmPassword}"
+                         th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"/>
+                  <span class="invalid-feedback" th:errors="*{confirmPassword}">Error</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success ml-0">
+              <i class="fas fa-user-plus"></i>
+              <span th:text="#{btn.signup}">Signup</span>
+            </button>
           </form>
         </div>
       </div>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <body>
+    <footer id="footer" class="page-footer font-small blue-gradient mt-5">
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">
+        <span>&copy;</span>
+        <span th:text="${#dates.year(#dates.createNow())}"></span>
+        <span th:text="#{app.name}">StoryCom</span>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+  </body>
+</html>

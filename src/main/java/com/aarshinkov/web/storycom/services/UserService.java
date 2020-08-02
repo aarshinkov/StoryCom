@@ -1,5 +1,7 @@
 package com.aarshinkov.web.storycom.services;
 
+import com.aarshinkov.web.storycom.dto.*;
+import com.aarshinkov.web.storycom.models.auth.*;
 import org.springframework.security.core.userdetails.*;
 
 /**
@@ -9,5 +11,5 @@ import org.springframework.security.core.userdetails.*;
  */
 public interface UserService extends UserDetailsService
 {
-  
+  UserDto createUser(SignupModel signup);
 }

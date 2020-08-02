@@ -1,13 +1,19 @@
 package com.aarshinkov.web.storycom.services;
 
+import com.aarshinkov.web.storycom.repositories.RolesRepository;
+import com.aarshinkov.web.storycom.dto.*;
 import com.aarshinkov.web.storycom.entities.*;
+import com.aarshinkov.web.storycom.enums.*;
+import com.aarshinkov.web.storycom.models.auth.*;
 import com.aarshinkov.web.storycom.repositories.*;
 import java.util.*;
+import org.modelmapper.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.authority.*;
 import org.springframework.security.core.userdetails.*;
+import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -21,7 +27,42 @@ public class UserServiceImpl implements UserService
   private final Logger LOG = LoggerFactory.getLogger(getClass());
 
   @Autowired
+  private PasswordEncoder passwordEncoder;
+
+  @Autowired
   private UsersRepository usersRepository;
+
+  @Autowired
+  private RolesRepository rolesRepository;
+
+  @Autowired
+  private ModelMapper mapper;
+
+  @Override
+  public UserDto createUser(SignupModel signup)
+  {
+    UserEntity user = new UserEntity();
+
+    mapper.map(signup, user);
+
+    String encodedPassword = passwordEncoder.encode(signup.getPassword());
+
+    user.setPassword(encodedPassword);
+
+    List<RoleEntity> roles = new ArrayList<>();
+
+    roles.add(rolesRepository.findByRolename(Roles.USER.getValue()));
+
+    user.setRoles(roles);
+
+    UserEntity storedUser = usersRepository.save(user);
+
+    UserDto result = new UserDto();
+
+    mapper.map(storedUser, result);
+
+    return result;
+  }
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException

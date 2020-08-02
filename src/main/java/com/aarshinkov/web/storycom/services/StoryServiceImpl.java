@@ -174,6 +174,7 @@ public class StoryServiceImpl implements StoryService
     story.setStory(sem.getStory());
     story.setAnonymous(sem.getAnonymous());
     story.setCategory(category);
+    story.setEditedOn(new Timestamp(System.currentTimeMillis()));
     StoryEntity updatedStory = storiesRepository.save(story);
 
     StoryDto result = new StoryDto();
@@ -184,11 +185,16 @@ public class StoryServiceImpl implements StoryService
   }
 
   @Override
-  public void deleteStory(Long storyId)
+  public StoryDto deleteStory(Long storyId)
   {
     StoryEntity storedStory = storiesRepository.findByStoryId(storyId);
 
     storiesRepository.delete(storedStory);
+
+    StoryDto result = new StoryDto();
+    mapper.map(storedStory, result);
+
+    return result;
   }
 
   @Override

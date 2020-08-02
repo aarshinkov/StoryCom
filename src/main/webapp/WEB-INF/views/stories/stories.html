@@ -14,10 +14,10 @@
       <div class="row">
         <div class="col-12 col-lg-9">
           <div class="d-flex align-items-center">
-            <h3 class="mr-auto mb-0">
+            <h2 class="mr-auto mb-0">
               <span th:text="#{stories.header}">Stories</span>
               <span th:text="'(' + ${#numbers.formatDecimal(pageWrapper.globalTotalElements, 1, 'WHITESPACE', 0, 'DEFAULT')} + ')'"></span>
-            </h3>
+            </h2>
             <a href="#" th:href="@{/story/create}" sec:authorize="isAuthenticated()"
                class="btn btn-outline-success btn-md">
               <i class="fas fa-plus"></i>
@@ -35,7 +35,7 @@
           <div th:if="${storiesCount ne 0}" th:remove="tag">
             <div class="row">
               <div class="col-12 col-md-6 mb-4" th:each="s, iter : ${stories}">
-                <div class="card">
+                <div class="card shadow" th:classappend="${#authorization.expression('isAuthenticated()') and session.userId eq s.user.userId} ? 'border border-success'">
                   <div class="card-body">
                     <h6 class="card-title mb-2">
                       <span th:text="${pageWrapper.startPage} + ${iter.index} + '. '"></span>
@@ -52,23 +52,18 @@
                              th:title="#{stories.visits.count}"></small>
                       <span th:if="${s.visits eq 1}" th:text="#{stories.visits.1}"></span>
                       <span th:if="${s.visits ne 1}" th:text="#{stories.visits(${#numbers.formatDecimal(s.visits, 1, 'WHITESPACE', 0, 'DEFAULT')})}"></span>
+                      <div th:if="${s.editedOn ne null}" th:remove="tag">
+                        <span>&bull;</span>
+                        <i class="far fa-edit" data-toggle="tooltip" data-placement="bottom" th:title="#{stories.editedon(${#dates.format(s.editedOn, #messages.msg('format.datetime5'))})}"></i>
+                      </div>
                     </div>
                     <!--<span class="card-text mt-3" th:utext="${s.story}">Story</span>-->
                     <span class="card-text mt-3" th:text="#{stories.publishedin}"></span>
                     <a class="card-text text-primary mt-3" href="#" th:href="@{/stories?cat=} + ${s.category.name}" th:text="#{stories.categories. + ${s.category.categoryId}}"></a>
                     <span class="card-text mt-3" th:text="#{stories.publishedfrom}"></span>
 
-                    <!-- NO AUTH -->
-                    <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${s.anonymous}" th:text="#{stories.anonymous}"></i>
-                    <i class="card-text mt-3" sec:authorize="!isAuthenticated()" th:if="${!s.anonymous}" th:text="${s.user.fullName}"></i>
-                    <!-- END -->
-
-                    <!-- AUTH -->
-                    <i class="card-text mt-3" sec:authorize="isAuthenticated()" data-toggle="tooltip" data-placement="bottom"
-                       th:title="${session.user}" th:if="${session.userId eq s.user.userId}" th:text="#{stories.me}"></i>
-                    <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${s.anonymous and session.userId ne s.user.userId}" th:text="#{stories.anonymous}"></i>
-                    <i class="card-text mt-3" sec:authorize="isAuthenticated()" th:if="${!s.anonymous and session.userId ne s.user.userId}" th:text="${s.user.fullName}"></i>
-                    <!-- END -->
+                    <i class="card-text mt-3" th:if="${s.anonymous}" th:text="#{stories.anonymous}"></i>
+                    <i class="card-text mt-3" th:if="${!s.anonymous}" th:text="${s.user.fullName}"></i>
                   </div>
                 </div>
               </div>
