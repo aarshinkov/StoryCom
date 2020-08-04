@@ -1,8 +1,7 @@
-package com.aarshinkov.web.storycom.dto;
+package com.aarshinkov.web.storycom.models.users;
 
 import java.io.*;
-import java.sql.*;
-import java.util.*;
+import javax.validation.constraints.*;
 import lombok.*;
 
 /**
@@ -15,17 +14,22 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder
-public class UserDto implements Serializable
+public class UserEditModel implements Serializable
 {
   private Long userId;
-  private String email;
-  private String password;
+  
+  @NotEmpty
+  @Size(min = 2, max = 100)
   private String firstName;
+  
+  @NotEmpty
+  @Size(min = 2, max = 100)
   private String lastName;
-  private Timestamp createdOn;
-  private Timestamp editedOn;
-  private List<RoleDto> roles;
+  
+  @NotEmpty
+  @Email
+  @Size(max = 200)
+  private String email;
 
   public String getFullName()
   {

@@ -1,13 +1,12 @@
 package com.aarshinkov.web.storycom.controllers;
 
 import com.aarshinkov.web.storycom.base.*;
+import com.aarshinkov.web.storycom.collections.*;
 import com.aarshinkov.web.storycom.dto.*;
 import com.aarshinkov.web.storycom.enums.*;
 import com.aarshinkov.web.storycom.models.stories.*;
 import com.aarshinkov.web.storycom.repositories.*;
 import com.aarshinkov.web.storycom.services.*;
-import com.aarshinkov.web.storycom.utils.*;
-import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +17,8 @@ import javax.validation.*;
 import org.modelmapper.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.data.crossstore.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-import org.springframework.security.access.prepost.*;
+import org.springframework.util.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.*;
@@ -65,30 +63,36 @@ public class StoriesController extends Base
 //  }
   @GetMapping(value = "/stories")
   public String getStories(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
-          @RequestParam(value = "limit", defaultValue = "8", required = false) Integer limit,
+          @RequestParam(value = "limit", defaultValue = "5", required = false) Integer limit,
           @RequestParam(value = "cat", defaultValue = "", required = false) String category,
           Model model)
   {
-    List<StoryDto> stories = storyService.getStories(page, limit, category);
+    ObjCollection<StoryDto> stories = storyService.getStories(page, limit, category, null);
 
-    model.addAttribute("storiesCount", stories.size());
+    model.addAttribute("storiesCount", stories.getPage().getLocalTotalElements());
 
-    model.addAttribute("stories", stories);
+    model.addAttribute("stories", stories.getCollection());
 
-    int start = (page - 1) * limit + 1;
-    Long globalCount = storyService.getStoriesCount();
-    int end = start + stories.size() - 1;
+    String otherParams = "";
 
-    Page pageWrapper = new PageImpl();
-    pageWrapper.setCurrentPage(page);
-    pageWrapper.setMaxElementsPerPage(limit);
-    pageWrapper.setStartPage(start);
-    pageWrapper.setEndPage(end);
-    pageWrapper.setLocalTotalElements(new Long(stories.size()));
-    pageWrapper.setGlobalTotalElements(globalCount);
+    if (limit != null && limit > 0)
+    {
+      otherParams = "&limit=" + limit;
+    }
 
-    model.addAttribute("pageWrapper", pageWrapper);
+    if (!StringUtils.isEmpty(category))
+    {
+      otherParams += "&cat=" + category;
+    }
+
+    LOG.debug("otherParams: " + otherParams);
+
+    model.addAttribute("otherParameters", otherParams);
+
+    model.addAttribute("pageWrapper", stories.getPage());
     model.addAttribute("maxPagesPerView", 5);
+
+    model.addAttribute("cat", category);
 
     model.addAttribute("globalMenu", "stories");
 
@@ -170,7 +174,7 @@ public class StoriesController extends Base
 
   @PostMapping(value = "/story/edit/{storyId}")
   public String editStory(@ModelAttribute("story") @Valid StoryEditModel sem, BindingResult bindingResult,
-          @PathVariable(value = "storyId") Long storyId, Model model)
+          @PathVariable(value = "storyId") Long storyId, RedirectAttributes redirectAttributes, Model model)
   {
     if (bindingResult.hasErrors())
     {
@@ -178,7 +182,15 @@ public class StoriesController extends Base
       return "stories/create";
     }
 
-    storyService.updateStory(storyId, sem);
+    try
+    {
+      storyService.updateStory(storyId, sem);
+      redirectAttributes.addFlashAttribute("msgSuccess", getMessage("story.edit.success"));
+    }
+    catch (Exception e)
+    {
+      redirectAttributes.addFlashAttribute("msgError", getMessage("story.edit.error"));
+    }
 
     return "redirect:/story/" + storyId;
   }
@@ -217,20 +229,25 @@ public class StoriesController extends Base
     }
     catch (Exception e)
     {
+      LOG.debug("Error deleting story", e);
       redirectAttributes.addFlashAttribute("msgError", getMessage("story.delete.error"));
     }
     return "redirect:/stories";
   }
 
   @GetMapping(value = "/categories/count")
-  public String getCategoriesCount(Model model)
+  public String getCategoriesCount(@RequestParam(name = "currentCat") String currentCategory, Model model)
   {
+    model.addAttribute("globalStoriesCount", storyService.getStoriesCount());
+
     model.addAttribute("love", storyService.getStoriesCountByCategory(Categories.LOVE.getValue()));
     model.addAttribute("teen", storyService.getStoriesCountByCategory(Categories.TEEN.getValue()));
     model.addAttribute("family", storyService.getStoriesCountByCategory(Categories.FAMILY.getValue()));
     model.addAttribute("health", storyService.getStoriesCountByCategory(Categories.HEALTH.getValue()));
     model.addAttribute("education", storyService.getStoriesCountByCategory(Categories.EDUCATION.getValue()));
     model.addAttribute("sport", storyService.getStoriesCountByCategory(Categories.SPORT.getValue()));
+
+    model.addAttribute("currentCategory", currentCategory);
 
     return "stories/sideMenu :: #categoryList";
   }

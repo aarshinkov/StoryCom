@@ -1,5 +1,6 @@
 package com.aarshinkov.web.storycom.services;
 
+import com.aarshinkov.web.storycom.dto.*;
 import javax.servlet.http.*;
 
 /**
@@ -10,4 +11,6 @@ import javax.servlet.http.*;
 public interface SystemService
 {
   Object getSessionAttribute(HttpServletRequest request, String attributeName);
+
+  void changeLoggerUserInfo(HttpServletRequest request, UserDto user);
 }

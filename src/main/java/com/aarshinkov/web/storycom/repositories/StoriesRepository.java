@@ -18,4 +18,6 @@ public interface StoriesRepository extends JpaRepository<StoryEntity, Long>
   StoryEntity findByStoryId(Long storyId);
 
   Long countByCategory(CategoryEntity category);
+
+  Long countByUser(UserEntity user);
 }

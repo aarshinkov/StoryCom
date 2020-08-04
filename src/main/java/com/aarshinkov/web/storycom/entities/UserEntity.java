@@ -45,6 +45,9 @@ public class UserEntity implements UserDetails, Serializable
 
   @Column(name = "created_on")
   private Timestamp createdOn;
+  
+  @Column(name = "edited_on")
+  private Timestamp editedOn;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rolename"))

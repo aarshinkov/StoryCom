@@ -4,14 +4,77 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{templates/mainTemplate}">
   <head>
-    <title th:text="${user.fullName} + ' | StoryCom'">Profile</title>
+    <title th:text="#{app.title(${user.fullName})}">Profile</title>
   </head>
   <body>
     <div layout:fragment="contentDiv">
+      <div th:if="${#httpSession ne null}" th:remove="tag">
+        <div th:replace="fragments/messages :: #notify"/>
+      </div>
+
       <div class="row">
-        <div class="col-12">
-          <h1>Profile!</h1>
-          <p th:text="${user.firstName}"></p>
+        <div class="col-12 col-md-3">
+          <div th:replace="profile/sideMenu :: #profileSideMenu"></div>
+        </div>
+        <div class="col-12 col-md-9">
+          <h3 th:text="#{profile.header}">Profile</h3>
+          <hr/>
+
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <p class="font-weight-bold" th:text="#{profile.firstname}">First name</p>
+            </div>
+            <div class="col-12 col-md-9">
+              <p th:text="${user.firstName}"></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <p class="font-weight-bold" th:text="#{profile.lastname}">Last name</p>
+            </div>
+            <div class="col-12 col-md-9">
+              <p th:text="${user.lastName}"></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <p class="font-weight-bold" th:text="#{profile.email}">Email</p>
+            </div>
+            <div class="col-12 col-md-9">
+              <p th:text="${user.email}"></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <p class="font-weight-bold" th:text="#{profile.createdon}">Created on</p>
+            </div>
+            <div class="col-12 col-md-9">
+              <p th:text="${#dates.format(user.createdOn, #messages.msg('format.datetime5'))}"></p>
+            </div>
+          </div>
+          <div class="row" th:if="${user.editedOn ne null}">
+            <div class="col-12 col-md-3">
+              <p class="font-weight-bold" th:text="#{profile.editedon}">Edited on</p>
+            </div>
+            <div class="col-12 col-md-9">
+              <p th:text="${#dates.format(user.editedOn, #messages.msg('format.datetime5'))}"></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <p class="font-weight-bold" th:text="#{profile.roles}">Roles</p>
+            </div>
+            <div class="col-12 col-md-9">
+              <span th:each="r : ${user.roles}">
+                <span class="badge badge-soft badge-danger" th:text="#{users.role. + ${r.rolename}}" th:if="${r.rolename eq 'ADMIN'}">ADMIN</span>
+                <span class="badge badge-soft badge-success" th:text="#{users.role. + ${r.rolename}}"  th:if="${r.rolename eq 'USER'}">USER</span>
+              </span>
+            </div>
+          </div>
+          <a href="#" th:href="@{/profile/edit}" class="btn btn-primary btn-md ml-0">
+            <i class="fas fa-edit"></i>
+            <span th:text="#{btn.edit}">Edit</span>
+          </a>
         </div>
       </div>
     </div>

@@ -1,11 +1,13 @@
 package com.aarshinkov.web.storycom.services;
 
+import com.aarshinkov.web.storycom.collections.*;
+import com.aarshinkov.web.storycom.collections.ObjCollection;
 import com.aarshinkov.web.storycom.dto.*;
 import com.aarshinkov.web.storycom.entities.*;
 import com.aarshinkov.web.storycom.models.stories.*;
 import com.aarshinkov.web.storycom.repositories.*;
+import com.aarshinkov.web.storycom.utils.*;
 import java.sql.*;
-import java.util.*;
 import org.modelmapper.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
@@ -41,33 +43,44 @@ public class StoryServiceImpl implements StoryService
   private JdbcTemplate jdbcTemplate;
 
   @Override
-  public List<StoryDto> getStories(Integer page, Integer limit, String category)
+  public ObjCollection<StoryDto> getStories(Integer page, Integer limit, String category, Long userId)
   {
     try (Connection conn = jdbcTemplate.getDataSource().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{? = call get_stories(?, ?, ?)}"))
+            CallableStatement cstmt = conn.prepareCall("{? = call get_stories(?, ?, ?, ?, ?)}"))
     {
       // We must be inside a transaction for cursors to work.
       conn.setAutoCommit(false);
 
-      cstmt.registerOutParameter(1, Types.REF_CURSOR);
-      cstmt.setInt(2, page);
-      cstmt.setInt(3, limit);
+      cstmt.setInt(1, page);
+      cstmt.setInt(2, limit);
 
       if (StringUtils.isEmpty(category))
       {
-////        cstmt.setNull(4, Types.VARCHAR);
-        cstmt.setString(4, null);
+        cstmt.setString(3, null);
       }
       else
       {
-        cstmt.setString(4, category);
+        cstmt.setString(3, category);
       }
+
+      if (userId == null)
+      {
+        cstmt.setNull(4, Types.BIGINT);
+      }
+      else
+      {
+        cstmt.setLong(4, userId);
+      }
+
+      cstmt.registerOutParameter(5, Types.BIGINT);
+      cstmt.registerOutParameter(6, Types.REF_CURSOR);
 
       cstmt.execute();
 
-      ResultSet rset = (ResultSet) cstmt.getObject(1);
+      Long globalCount = (Long) cstmt.getLong(5);
+      ResultSet rset = (ResultSet) cstmt.getObject(6);
 
-      List<StoryDto> stories = new ArrayList<>();
+      ObjCollection<StoryDto> collection = new StoriesCollection();
 
       while (rset.next())
       {
@@ -93,12 +106,27 @@ public class StoryServiceImpl implements StoryService
         story.setCategory(categoryDto);
         story.setUser(userDto);
 
-        stories.add(story);
+        collection.getCollection().add(story);
       }
+
+      long collectionCount = collection.getCollection().size();
+
+      int start = (page - 1) * limit + 1;
+      int end = start + collection.getCollection().size() - 1;
+
+      Page pageWrapper = new PageImpl();
+      pageWrapper.setCurrentPage(page);
+      pageWrapper.setMaxElementsPerPage(limit);
+      pageWrapper.setStartPage(start);
+      pageWrapper.setEndPage(end);
+      pageWrapper.setLocalTotalElements(collectionCount);
+      pageWrapper.setGlobalTotalElements(globalCount);
+
+      collection.setPage(pageWrapper);
 
       conn.commit();
 
-      return stories;
+      return collection;
     }
     catch (Exception e)
     {
@@ -106,19 +134,6 @@ public class StoryServiceImpl implements StoryService
     }
 
     return null;
-
-//    List<StoryEntity> storedStories = storiesRepository.findByOrderByCreatedOnDesc();
-//
-//    List<StoryDto> result = new ArrayList<>();
-//
-//    for (StoryEntity storedStory : storedStories)
-//    {
-//      StoryDto story = new StoryDto();
-//      mapper.map(storedStory, story);
-//      result.add(story);
-//    }
-//
-//    return result;
   }
 
   @Override
@@ -185,6 +200,7 @@ public class StoryServiceImpl implements StoryService
   }
 
   @Override
+  @Transactional
   public StoryDto deleteStory(Long storyId)
   {
     StoryEntity storedStory = storiesRepository.findByStoryId(storyId);
@@ -217,5 +233,13 @@ public class StoryServiceImpl implements StoryService
   public Long getStoriesCount()
   {
     return storiesRepository.count();
+  }
+
+  @Override
+  public Long getStoriesCountByUser(Long userId)
+  {
+    UserEntity user = usersRepository.findByUserId(userId);
+
+    return storiesRepository.countByUser(user);
   }
 }

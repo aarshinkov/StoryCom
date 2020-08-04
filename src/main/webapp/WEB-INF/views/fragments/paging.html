@@ -26,7 +26,7 @@
                     th:each="i : ${#numbers.sequence(1, maxPagesPerView, 1)}">
                   <a class="page-link" th:href="'?page=' + ${i} + ${otherParams ne null ? otherParams : ''}" href="#" th:text="${i}">1</a>
                 </li>
-                <li class="page-item three pl-4" th:if="${pageWrapper.currentPage le pageWrapper.totalPages - 3}">
+                <li class="page-item three" th:if="${pageWrapper.currentPage le pageWrapper.totalPages - 3}">
                   <a class="page-link" th:href="'?page=' + ${pageWrapper.totalPages} + ${otherParams ne null ? otherParams : ''}" href="#">
                     <i class="fas fa-angle-double-right"></i>
                   </a>
@@ -39,14 +39,14 @@
                     th:each="i : ${#numbers.sequence(pageWrapper.currentPage - 1, pageWrapper.currentPage + 3, 1)}">
                   <a class="page-link" th:href="'?page=' + ${i} + ${otherParams ne null ? otherParams : ''}" href="#" th:text="${i}">1</a>
                 </li>
-                <li class="page-item five pl-4" th:if="${pageWrapper.currentPage le pageWrapper.totalPages - 3}">
+                <li class="page-item five" th:if="${pageWrapper.currentPage le pageWrapper.totalPages - 3}">
                   <a class="page-link" th:href="'?page=' + ${pageWrapper.totalPages} + ${otherParams ne null ? otherParams : ''}" href="#">
                     <i class="fas fa-angle-double-right"></i>
                   </a>
                 </li>
               </div>
               <div th:remove="tag" th:if="${pageWrapper.totalPages gt maxPagesPerView and pageWrapper.currentPage gt 2}">
-                <li class="page-item six pr-4" th:if="${pageWrapper.currentPage gt 3}">
+                <li class="page-item six" th:if="${pageWrapper.currentPage gt 3}">
                   <a class="page-link" th:href="'?page=1' + ${otherParams ne null ? otherParams : ''}" href="#">
                     <i class="fas fa-angle-double-left"></i>
                   </a>
@@ -65,7 +65,7 @@
                     <a class="page-link" th:href="'?page=' + ${i} + ${otherParams ne null ? otherParams : ''}" href="#" th:text="${i}">1</a>
                   </li>
                 </div>
-                <li class="page-item pl-4 ten" th:if="${pageWrapper.currentPage le pageWrapper.totalPages - 3}">
+                <li class="page-item ten" th:if="${pageWrapper.currentPage le pageWrapper.totalPages - 3}">
                   <a class="page-link" th:href="'?page=' + ${pageWrapper.totalPages} + ${otherParams ne null ? otherParams : ''}" href="#">
                     <i class="fas fa-angle-double-right"></i>
                   </a>

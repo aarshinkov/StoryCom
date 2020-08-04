@@ -23,14 +23,23 @@
             <!-- Links -->
             <ul class="navbar-nav">
               <li class="nav-item" th:classappend="${globalMenu eq 'home'} ? 'active'">
-                <a class="nav-link" th:href="@{/}" href="#" th:text="#{nav.home}">Home</a>
+                <a class="nav-link" th:href="@{/}" href="#">
+                  <i class="fas fa-home"></i>
+                  <span th:text="#{nav.home}">Home</span>
+                </a>
               </li>
               <li class="nav-item" th:classappend="${globalMenu eq 'stories'} ? 'active'">
-                <a class="nav-link" th:href="@{/stories}" href="#" th:text="#{nav.stories}">Stories</a>
+                <a class="nav-link" th:href="@{/stories}" href="#">
+                  <i class="far fa-file-alt"></i>
+                  <span th:text="#{nav.stories}">Stories</span>
+                </a>
               </li>
               <li class="nav-item" sec:authorize="hasRole('ADMIN')"
                   th:classappend="${globalMenu eq 'users'} ? 'active'">
-                <a class="nav-link" th:href="@{/users}" href="#" th:text="#{nav.users}">Users</a>
+                <a class="nav-link" th:href="@{/users}" href="#">
+                  <i class="fas fa-users"></i>
+                  <span th:text="#{nav.users}">Users</span>
+                </a>
               </li>
             </ul>
             <!-- Links -->
@@ -74,6 +83,11 @@
                      href="#" th:href="@{/profile}">
                     <i class="fas fa-user-circle"></i>
                     <span th:text="#{nav.profile}">Profile</span>
+                  </a>
+                  <a class="dropdown-item" th:classappend="${submenu eq 'mystories'} ? 'active'"
+                     href="#" th:href="@{/stories/my}">
+                    <i class="far fa-file-alt"></i>
+                    <span th:text="#{nav.profile.stories}">My stories</span>
                   </a>
                   <a class="dropdown-item" th:classappend="${submenu eq 'settings'} ? 'active'"
                      href="#" th:href="@{/settings}">
