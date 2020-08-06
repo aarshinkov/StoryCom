@@ -124,24 +124,6 @@ public class ProfileController extends Base
     model.addAttribute("pageWrapper", stories.getPage());
     model.addAttribute("maxPagesPerView", 5);
 
-//    List<StoryDto> stories = storyService.getStories(page, limit, null, userId);
-//
-//    model.addAttribute("storiesCount", stories.size());
-//
-//    model.addAttribute("stories", stories);
-//
-//    int start = (page - 1) * limit + 1;
-//    Long globalCount = storyService.getStoriesCountByUser(userId);
-//    int end = start + stories.size() - 1;
-//
-//    Page pageWrapper = new PageImpl();
-//    pageWrapper.setCurrentPage(page);
-//    pageWrapper.setMaxElementsPerPage(limit);
-//    pageWrapper.setStartPage(start);
-//    pageWrapper.setEndPage(end);
-//    pageWrapper.setLocalTotalElements(new Long(stories.size()));
-//    pageWrapper.setGlobalTotalElements(globalCount);
-//
     model.addAttribute("globalMenu", "stories");
 
     return "profile/stories";

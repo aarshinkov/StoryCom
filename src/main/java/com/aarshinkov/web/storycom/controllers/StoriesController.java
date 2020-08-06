@@ -19,6 +19,7 @@ import org.modelmapper.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import org.springframework.security.access.prepost.*;
 import org.springframework.util.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
@@ -48,24 +49,10 @@ public class StoriesController extends Base
   @Autowired
   private ModelMapper mapper;
 
-//   @PostMapping(value = "/story/edit")
-//  public String editStory(@ModelAttribute("story") @Valid StoryEditModel sem, BindingResult bindingResult,
-//          HttpServletRequest request, Model model)
-//  {
-//    if (bindingResult.hasErrors())
-//    {
-//      model.addAttribute("globalMenu", "stories");
-//      return "stories/create";
-//    }
-//
-//    StoryDto updatedStory = storyService.updateStory(sem);
-//
-//    return "redirect:/";
-//  }
   @GetMapping(value = "/stories")
-  public String getStories(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
-          @RequestParam(value = "limit", defaultValue = "5", required = false) Integer limit,
-          @RequestParam(value = "cat", defaultValue = "", required = false) String category,
+  public String getStories(@RequestParam(name = "page", defaultValue = "1", required = false) Integer page,
+          @RequestParam(name = "limit", defaultValue = "5", required = false) Integer limit,
+          @RequestParam(name = "cat", defaultValue = "", required = false) String category,
           Model model)
   {
     ObjCollection<StoryDto> stories = storyService.getStories(page, limit, category, null);
@@ -160,8 +147,8 @@ public class StoriesController extends Base
   }
 
   @GetMapping(value = "/story/edit/{storyId}")
-//  @PreAuthorize("#username == authentication.principal.username")
-  public String prepareEditStory(@PathVariable(value = "storyId") Long storyId, Model model)
+  @PreAuthorize("@expressions.isUserOwner(#storyId, #request)")
+  public String prepareEditStory(@PathVariable(value = "storyId") Long storyId, HttpServletRequest request, Model model)
   {
     StoryDto storyDto = storyService.getStoryByStoryId(storyId);
 
@@ -177,8 +164,10 @@ public class StoriesController extends Base
   }
 
   @PostMapping(value = "/story/edit/{storyId}")
+  @PreAuthorize("@expressions.isUserOwner(#storyId, #request)")
   public String editStory(@ModelAttribute("story") @Valid StoryEditModel sem, BindingResult bindingResult,
-          @PathVariable(value = "storyId") Long storyId, RedirectAttributes redirectAttributes, Model model)
+          @PathVariable(value = "storyId") Long storyId, RedirectAttributes redirectAttributes,
+          HttpServletRequest request, Model model)
   {
     if (bindingResult.hasErrors())
     {
@@ -199,32 +188,10 @@ public class StoriesController extends Base
     return "redirect:/story/" + storyId;
   }
 
-//  @PostMapping(value = "/story/edit/{storyId}")
-//  public String editStory(@ModelAttribute("story") @Valid StoryEditModel sem, BindingResult bindingResult,
-//          @PathVariable(value = "storyId") Long storyId, Model model)
-//  {
-//    if (bindingResult.hasErrors())
-//    {
-//      model.addAttribute("globalMenu", "stories");
-//      return "stories/create";
-//    }
-//    
-//    //    StoryDto updatedStory = storyService.updateStory(sem);
-//
-//    StoryEntity story = storiesRepository.findByStoryId(storyId);
-//
-//    CategoryEntity category = categoriesRepository.findByCategoryId(sem.getCategoryId());
-//
-//    story.setTitle(sem.getTitle());
-//    story.setStory(sem.getStory());
-//    story.setCategory(category);
-//
-//    storiesRepository.save(story);
-//
-//    return "redirect:/story/" + story.getStoryId();
-//  }
   @PostMapping(value = "/story/delete")
-  public String deleteStory(@RequestParam(name = "storyId") Long storyId, RedirectAttributes redirectAttributes)
+  @PreAuthorize("@expressions.isUserOwner(#storyId, #request)")
+  public String deleteStory(@RequestParam(name = "storyId") Long storyId, HttpServletRequest request,
+          RedirectAttributes redirectAttributes)
   {
     try
     {
@@ -268,10 +235,9 @@ public class StoriesController extends Base
   @GetMapping(value = "/story/comments")
   public String getComments(@RequestParam(name = "storyId") Long storyId,
           @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+          @RequestParam(name = "limit", required = false, defaultValue = "4") Integer limit,
           Model model)
   {
-    //TODO MAY BE CHANGED
-    Integer limit = 4;
     List<CommentDto> comments = storyService.getStoryComments(storyId, page, limit);
     Long totalCommentsCount = storyService.getStoryCommentsCount(storyId);
 
@@ -306,10 +272,6 @@ public class StoriesController extends Base
 
       return "stories/story";
     }
-
-    LOG.debug("comment: " + ccm.getComment());
-    LOG.debug("storyId: " + ccm.getStoryId());
-    LOG.debug("userId: " + ccm.getUserId());
 
     try
     {

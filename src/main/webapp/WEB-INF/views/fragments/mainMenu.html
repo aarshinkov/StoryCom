@@ -7,7 +7,7 @@
       <!--Navbar-->
       <nav class="navbar navbar-expand-lg navbar-dark blue-gradient mb-4">
 
-        <div class="container">
+        <div th:classappend="${isFull} ? 'container-fluid' : 'container'">
           <!-- Navbar brand -->
           <a class="navbar-brand" th:href="@{/}" href="#">
             <span th:text="#{app.name}">StoryCom</span>

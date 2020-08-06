@@ -31,9 +31,9 @@
   </head>
   <body style="height: 100%; display: flex; flex-direction: column;">
 
-    <div th:insert="fragments/mainMenu :: #mainMenu" th:remove="tag"></div>
+    <div th:insert="fragments/mainMenu :: #mainMenu" th:remove="tag" th:with="isFull=true"></div>
 
-    <div class="container" style="flex: 1 0 auto; min-height: auto;">
+    <div class="container-fluid" style="flex: 1 0 auto; min-height: auto;">
       <div layout:fragment="contentDiv" th:remove="tag">
         CONTENT OF THE CHOSEN PAGE.
       </div>

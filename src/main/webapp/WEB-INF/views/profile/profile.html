@@ -28,7 +28,7 @@
               <p th:text="${user.firstName}"></p>
             </div>
           </div>
-          <div class="row">
+          <div class="row" th:if="${user.lastName ne null}">
             <div class="col-12 col-md-3">
               <p class="font-weight-bold" th:text="#{profile.lastname}">Last name</p>
             </div>

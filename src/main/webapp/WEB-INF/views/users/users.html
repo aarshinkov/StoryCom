@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/fullTemplate}">
+  <head>
+    <title th:text="#{app.title(#{users.title})}">Users</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+      <div th:if="${#httpSession ne null}" th:remove="tag">
+        <div th:replace="fragments/messages :: #notify"/>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <h2 th:text="#{users.header}">Users</h2>
+          <hr/>
+
+          <div class="row">
+            <div class="col-12">
+              <h5 th:text="#{users.globalCount(${#numbers.formatDecimal(pageWrapper.globalTotalElements, 1, 'WHITESPACE', 0, 'DEFAULT')})}"></h5>
+            </div>
+          </div>
+          <div class="row" th:if="${pageWrapper.globalTotalElements ne 0}">
+            <div class="col-12 table-responsive text-nowrap">
+              <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" th:text="#{users.firstname}">First name</th>
+                    <th scope="col" th:text="#{users.lastname}">Last name</th>
+                    <th scope="col" th:text="#{users.email}">Email</th>
+                    <th scope="col" th:text="#{users.createdon}">Created on</th>
+                    <th scope="col" th:text="#{users.editedon}">Edited on</th>
+                    <th scope="col" th:text="#{users.roles}">Roles</th>
+                    <th scope="col" th:text="#{users.roles}">Roles</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="u : ${users}">
+                    <th scope="row" th:text="${#numbers.formatDecimal(u.userId, 1, 'WHITESPACE', 0, 'DEFAULT')}">1</th>
+                    <td th:text="${u.firstName}">John</td>
+                    <td th:text="${u.lastName}">Doe</td>
+                    <td th:text="${u.email}">Email</td>
+                    <td th:text="${#dates.format(u.createdOn, #messages.msg('format.datetime9'))}">Created on</td>
+                    <td th:text="${#dates.format(u.editedOn, #messages.msg('format.datetime9'))}">Edited on</td>
+                    <td>
+                      <div th:each="r : ${u.roles}" th:remove="tag">
+                        <span class="badge badge-soft badge-danger" th:text="#{users.role. + ${r.rolename}}" th:if="${r.rolename eq 'ADMIN'}">ADMIN</span>
+                        <span class="badge badge-soft badge-success" th:text="#{users.role. + ${r.rolename}}"  th:if="${r.rolename eq 'USER'}">USER</span>
+                      </div>
+                    </td>
+                    <td>
+                      <a href="#" th:if="${session.userId ne u.userId}" class="btn btn-danger btn-sm ml-auto" data-toggle="modal" data-target="#userDeleteModal"
+                         th:data-user-id="${u.userId}" th:data-name="${u.fullName}">
+                        <i class="fas fa-trash-alt"></i>
+                        <span class="d-none d-xl-inline" th:text="#{btn.delete}">Delete</span>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div  th:replace="fragments/paging :: #pagination (otherParams=${otherParameters})"></div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="userDeleteModal" tabindex="-1" role="dialog" aria-labelledby="userDeleteModalLabel"
+           aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="userDeleteModalLabel" th:text="#{user.delete.modal.title}">Delete user</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form th:action="@{/user/delete}" method="post">
+              <div class="modal-body">
+                <p>
+                  <span th:text="#{user.delete.modal.message}">Do you really want to delete story?</span>
+                  <span id="userName" class="font-weight-bold"></span>
+                  <span>?</span>
+                </p>
+              </div>
+              <input id="userIdInput" type="hidden" name="userId"/>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger btn-md">
+                  <i class="far fa-trash-alt"></i>
+                  <span th:text="#{btn.delete}">Delete</span>
+                </button>
+                <button type="button" class="btn btn-outline-dark btn-md" data-dismiss="modal">
+                  <i class="fas fa-times"></i>
+                  <span th:text="#{btn.close}">Close</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <script type="text/javascript" th:inline="javascript">
+        $('#userDeleteModal').on('show.bs.modal', function (e) {
+
+          var userId = $(e.relatedTarget).data('user-id');
+          var name = $(e.relatedTarget).data('name');
+
+          $('#userName').html(name);
+          $('#userIdInput').val(userId);
+        });
+      </script>
+    </div>
+  </body>
+</html>

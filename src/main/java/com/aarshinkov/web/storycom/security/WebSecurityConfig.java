@@ -3,6 +3,7 @@ package com.aarshinkov.web.storycom.security;
 import com.aarshinkov.web.storycom.services.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
+import org.springframework.http.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.builders.*;
 import org.springframework.security.config.annotation.method.configuration.*;
@@ -67,11 +68,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     http.csrf().disable()
             .authorizeRequests()
             .antMatchers("/", "/home").permitAll()
-            .antMatchers("/profile").authenticated()
+            .antMatchers("/profile/**", "/stories/my", "/settings", "/changePassword").authenticated()
             .antMatchers("/story/create").authenticated()
             .antMatchers("/story/edit/**").authenticated()
             .antMatchers("/story/delete").authenticated()
-//            .antMatchers("/login", "/authentication").permitAll()
+            .antMatchers("/story/comment/create").authenticated()
+            .antMatchers("/login", "/authentication").anonymous()
+            .antMatchers("/signup").anonymous()
+            .antMatchers("/users/**").hasRole("ADMIN")
             .and()
             .formLogin()
             .loginProcessingUrl("/authentication")

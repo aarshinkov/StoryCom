@@ -20,7 +20,7 @@
           <div class="d-flex align-items-center">
             <h2 class="mr-auto mb-0">
               <span th:text="#{profile.stories.header}">My stories</span>
-              <span th:text="'(' + ${#numbers.formatDecimal(pageWrapper.globalTotalElements, 1, 'WHITESPACE', 0, 'DEFAULT')} + ')'"></span>
+              <span th:if="${storiesCount ne 0}" th:text="'(' + ${#numbers.formatDecimal(pageWrapper.globalTotalElements, 1, 'WHITESPACE', 0, 'DEFAULT')} + ')'"></span>
             </h2>
             <a href="#" th:href="@{/story/create}" sec:authorize="isAuthenticated()"
                class="btn btn-outline-success btn-md mr-0">
@@ -30,6 +30,11 @@
           </div>
           <hr/>
 
+          <div class="row" th:if="${storiesCount eq 0}">
+            <div class="col-12">
+              <h5 th:text="#{stories.nostories}">No stories published yet.</h5>
+            </div>
+          </div>
           <div th:if="${storiesCount ne 0}" th:remove="tag">
             <div class="row">
               <div class="col-12 mb-4" th:each="s, iter : ${stories}">

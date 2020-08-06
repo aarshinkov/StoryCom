@@ -22,8 +22,8 @@ public class UserEditModel implements Serializable
   @Size(min = 2, max = 100)
   private String firstName;
   
-  @NotEmpty
-  @Size(min = 2, max = 100)
+//  @NotEmpty
+//  @Size(min = 2, max = 100)
   private String lastName;
   
   @NotEmpty
