@@ -8,6 +8,7 @@ import com.aarshinkov.web.storycom.models.stories.*;
 import com.aarshinkov.web.storycom.repositories.*;
 import com.aarshinkov.web.storycom.utils.*;
 import java.sql.*;
+import java.util.*;
 import org.modelmapper.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
@@ -34,7 +35,13 @@ public class StoryServiceImpl implements StoryService
   private UsersRepository usersRepository;
 
   @Autowired
+  private UserService userService;
+
+  @Autowired
   private CategoriesRepository categoriesRepository;
+
+  @Autowired
+  private CommentsRepository commentsRepository;
 
   @Autowired
   private ModelMapper mapper;
@@ -241,5 +248,82 @@ public class StoryServiceImpl implements StoryService
     UserEntity user = usersRepository.findByUserId(userId);
 
     return storiesRepository.countByUser(user);
+  }
+
+  @Override
+  public List<CommentDto> getStoryComments(Long storyId, Integer page, Integer limit)
+  {
+
+    try (Connection conn = jdbcTemplate.getDataSource().getConnection();
+            CallableStatement cstmt = conn.prepareCall("{? = call get_comments(?, ?, ?)}"))
+    {
+      // We must be inside a transaction for cursors to work.
+      conn.setAutoCommit(false);
+
+      cstmt.setLong(1, storyId);
+      cstmt.setInt(2, page);
+      cstmt.setInt(3, limit);
+
+      cstmt.registerOutParameter(4, Types.REF_CURSOR);
+      cstmt.execute();
+
+      List<CommentDto> storyComments = new ArrayList<>();
+
+      ResultSet rset = (ResultSet) cstmt.getObject(4);
+
+      while (rset.next())
+      {
+        CommentDto comment = new CommentDto();
+        comment.setCommentId(rset.getLong("comment_id"));
+        comment.setContent(rset.getString("content"));
+
+        UserDto user = new UserDto();
+        user.setUserId(rset.getLong("user_id"));
+        user.setFirstName(rset.getString("first_name"));
+        user.setLastName(rset.getString("last_name"));
+        comment.setUser(user);
+
+        comment.setCreatedOn(rset.getTimestamp("created_on"));
+        comment.setEditedOn(rset.getTimestamp("edited_on"));
+
+        storyComments.add(comment);
+      }
+
+      return storyComments;
+    }
+    catch (Exception e)
+    {
+      LOG.error("Error getting story's comments", e);
+//      throw new BssException(100, "Sight reviews error", "Error getting sight reviews", HttpStatus.CONFLICT);
+    }
+
+    return null;
+  }
+
+  @Override
+  @Transactional
+  public CommentDto createComment(CommentCreateModel ccm)
+  {
+    CommentEntity comment = new CommentEntity();
+    comment.setContent(ccm.getComment());
+
+    StoryEntity story = storiesRepository.findByStoryId(ccm.getStoryId());
+    UserEntity user = usersRepository.findByUserId(ccm.getUserId());
+
+    comment.setStory(story);
+    comment.setUser(user);
+
+    CommentEntity createdComment = commentsRepository.save(comment);
+
+    CommentDto result = new CommentDto();
+    mapper.map(createdComment, result);
+
+    return result;
+  }
+
+  @Override
+  public Long getStoryCommentsCount(Long storyId)
+  {
+    return commentsRepository.countByStoryStoryId(storyId);
   }
 }

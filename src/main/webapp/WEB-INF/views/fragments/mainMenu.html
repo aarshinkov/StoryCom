@@ -9,7 +9,10 @@
 
         <div class="container">
           <!-- Navbar brand -->
-          <a class="navbar-brand" th:href="@{/}" href="#" th:text="#{app.name}">StoryCom</a>
+          <a class="navbar-brand" th:href="@{/}" href="#">
+            <span th:text="#{app.name}">StoryCom</span>
+            <sup th:with="lang=#{lang.curr}" th:text="${#strings.toUpperCase(lang)}">Lang</sup>
+          </a>
 
           <!-- Collapse button -->
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -51,25 +54,6 @@
               <li class="nav-item" th:classappend="${globalMenu eq 'signup'} ? 'active'" sec:authorize="!isAuthenticated()">
                 <a class="nav-link" th:href="@{/signup}" href="#" th:text="#{nav.signup}">Signup</a>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="langDropdown" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                  <!--<i class="fas fa-user-circle"></i>-->
-                  <i class="flag-icon" th:classappend="'flag-icon-' + #{flag.curr}"></i>
-                  <!--<span th:text="#{nav.lang. + #{lang.curr}}">Language</span>-->
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="langDropdown"
-                     th:with="request=${#httpServletRequest.requestURI},parameters=${#httpServletRequest.queryString}">
-                  <a class="dropdown-item" th:href="${request} + (${parameters ne null} ? ('?' + ${parameters} + '&lang=en') : '?lang=en')">
-                    <i class="flag-icon flag-icon-gb"></i>
-                    <span th:text="#{nav.lang.en}">English</span>
-                  </a>
-                  <a class="dropdown-item" th:href="${request} + (${parameters ne null} ? ('?' + ${parameters} + '&lang=bg') : '?lang=bg')">
-                    <i class="flag-icon flag-icon-bg"></i>
-                    <span th:text="#{nav.lang.bg}">Bulgarian</span>
-                  </a>
-                </div>
-              </li>
               <!-- Dropdown -->
               <li class="nav-item dropdown" th:classappend="${globalMenu eq 'profile'} ? 'active'"
                   sec:authorize="isAuthenticated()">
@@ -101,6 +85,28 @@
                     <span th:text="#{nav.logout}">Logout</span>
                   </a>
                   <form sec:authorize="isAuthenticated()" style="visibility: hidden;" id="formLogout" method="post" action="#" th:action="@{/logout}"></form>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="langDropdown" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                  <i class="flag-icon" th:classappend="'flag-icon-' + #{flag.curr}"></i>
+                  <!--<span th:text="#{nav.lang. + #{lang.curr}}">Language</span>-->
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="langDropdown"
+                     th:with="request=${#httpServletRequest.requestURI}, parameters=${#httpServletRequest.queryString}">
+                  <a class="dropdown-item" th:href="'?lang=en'">
+                    <i class="flag-icon flag-icon-gb"></i>
+                    <span th:text="#{nav.lang.en}">English</span>
+                  </a>
+                  <a class="dropdown-item" th:href="'?lang=bg'">
+                    <i class="flag-icon flag-icon-bg"></i>
+                    <span th:text="#{nav.lang.bg}">Bulgarian</span>
+                  </a>
+                  <!--<a class="dropdown-item" th:href="${request} + (${parameters ne null} ? ('?' + ${parameters} + '&lang=bg') : '?lang=bg')">
+                        <i class="flag-icon flag-icon-bg"></i>
+                        <span th:text="#{nav.lang.bg}">Bulgarian</span>
+                      </a>-->
                 </div>
               </li>
             </ul>

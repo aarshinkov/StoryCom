@@ -3,6 +3,7 @@ package com.aarshinkov.web.storycom.services;
 import com.aarshinkov.web.storycom.collections.*;
 import com.aarshinkov.web.storycom.dto.*;
 import com.aarshinkov.web.storycom.models.stories.*;
+import java.util.*;
 
 /**
  *
@@ -34,4 +35,10 @@ public interface StoryService
   Long getStoriesCount();
 
   Long getStoriesCountByUser(Long userId);
+
+  List<CommentDto> getStoryComments(Long storyId, Integer page, Integer limit);
+
+  CommentDto createComment(CommentCreateModel ccm);
+
+  Long getStoryCommentsCount(Long storyId);
 }

@@ -9,7 +9,7 @@
       <div class="footer-copyright text-center py-3">
         <span>&copy;</span>
         <span th:text="${#dates.year(#dates.createNow())}"></span>
-        <span th:text="#{app.name}">StoryCom</span>
+        <a href="#" th:href="@{/}" th:text="#{app.name}">StoryCom</a>
       </div>
       <!-- Copyright -->
 

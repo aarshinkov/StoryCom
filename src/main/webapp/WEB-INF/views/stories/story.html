@@ -69,32 +69,44 @@
           </div>
           <div class="row">
             <div class="col-12">
-              <h4>
-                <span>Comments</span>
-                <span>(4)</span>
-              </h4>
-              <hr/>
-              <div class="row">
-                <div class="col-12 mb-3" th:each="s : ${#numbers.sequence(0, 2)}">
-                  <div class="card">
-                    <div class="card-body">
-
-                      <h5 class="card-title mb-2">
-                        <a href="#">
-                          <span >John Doe</span>
-                        </a>
-                      </h5>
-                      <hr/>
-                      <p class="card-text mt-3">Comment</p>
-                    </div>
+              <div th:remove="tag" th:if="${storyCommentsCount eq 0}">
+                <h4 th:utext="#{story.comments.header}">Comments</h4>
+                <hr/>
+              </div>
+              <div th:remove="tag" th:if="${storyCommentsCount ne 0}">
+                <h4 th:utext="#{story.comments.header.count(${storyCommentsCount})}">Comments</h4>
+                <hr/>
+              </div>
+              <form th:action="@{/story/comment/create}" method="post" th:object="${comment}" sec:authorize="isAuthenticated()">
+                <div class="form-group md-form">
+                  <textarea class="form-control md-textarea" id="commentInput" maxlength="200" onfocus="showCommentsControls(this)"
+                            th:placeholder="#{story.comments.placeholder}" th:field="*{comment}" style="min-height: 40px;"
+                            th:classappend="${#fields.hasErrors('comment')} ? 'is-invalid'"></textarea>
+                  <span class="invalid-feedback" th:errors="*{comment}">Error</span>
+                </div>
+                <input type="hidden" name="userId" th:value="${session.userId}"/>
+                <input type="hidden" name="storyId" th:value="${story.storyId}"/>
+                <div class="d-flex justify-content-center">
+                  <span id="commentInputCount" class="d-none">0/200</span>
+                  <div id="buttonsGroup" class="ml-auto d-none">
+                    <a onclick="resetCommentInput()" class="btn btn-outline-dark btn-md">
+                      <i class="fas fa-times"></i>
+                      <span th:text="#{btn.cancel}">Back</span>
+                    </a>
+                    <button id="commentPostButton" type="submit" class="btn btn-primary btn-md mr-0" disabled="disabled">
+                      <i class="fas fa-save"></i>
+                      <span th:text="#{btn.save}">Save</span>
+                    </button>
                   </div>
                 </div>
-              </div>
+              </form>
+              <h5 class="text-muted" th:if="${storyCommentsCount eq 0}" th:text="#{story.comments.nocomments}">No comments for this story</h5>
+              <div id="commentsWrapper" th:if="${storyCommentsCount ne 0}"></div>
             </div>
           </div>
         </div>
         <div class="col-12 col-md-3">
-          <div th:replace="stories/sideMenu :: #sideMenu"></div>
+          <div th:replace="stories/fragments :: #sideMenu"></div>
         </div>
       </div>
 
@@ -128,6 +140,69 @@
           </div>
         </div>
       </div>
+
+      <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var commentsUrl = /*[[@{/story/comments/}]]*/;
+                var storyId = /*[[${story.storyId}]]*/;
+
+        var maxCommentLength = 200;
+        var page = 0;
+        /*]]>*/
+
+        $(document).ready(function () {
+
+          $('#commentInput').keyup(function () {
+            var commentInput = $('#commentInput').val();
+//            commentInput = $.trim(commentInput);
+
+            if (commentInput.length === 0) {
+              $('#commentPostButton').prop('disabled', true);
+              $('#commentInputCount').html(commentInput.length + '/' + maxCommentLength);
+            } else if (commentInput.length <= maxCommentLength) {
+              $('#commentPostButton').prop('disabled', false);
+              $('#commentInputCount').html(commentInput.length + '/' + maxCommentLength);
+            }
+          });
+        });
+
+        function resetCommentInput() {
+          $('#commentInputCount').addClass("d-none");
+          $('#buttonsGroup').addClass("d-none");
+          $('#buttonsGroup').removeClass("mb-4");
+          $('#commentInputCount').html("0/" + maxCommentLength);
+          $('#commentInput').val("");
+        }
+
+        function showCommentsControls(input) {
+          $('#commentInputCount').removeClass("d-none");
+          $('#buttonsGroup').removeClass("d-none");
+          $('#buttonsGroup').addClass("mb-4");
+        }
+
+        function getComments() {
+          page++;
+          $.ajax({
+            url: commentsUrl,
+            type: 'get',
+            data: {
+              storyId: storyId,
+              page: page
+            },
+            success: function (data)
+            {
+              $("#commentsWrapper").empty().append(data);
+            },
+            error: function (xhr, status, error)
+            {
+              alert("fail");
+            }
+          });
+          return false;
+        }
+
+        getComments();
+      </script>
     </div>
   </body>
 </html>

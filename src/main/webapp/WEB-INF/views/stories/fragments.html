@@ -8,23 +8,19 @@
 
       <div id="categoriesDiv"></div>
 
-      <div class="d-flex justify-content-end" th:if="${cat ne ''}">
-        <a th:href="@{/stories}" href="#" class="btn btn-outline-dark btn-sm" th:text="#{btn.clear}">Clear</a>
-      </div>
-
-      <form th:action="@{/stories}" method="get">
-        <div class="form-group">
-          <label>Items per page</label>
-          <select class="form-control form-control-sm" name="limit">
-            <option value="2">2</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="8">8</option>
-          </select>
-          <button type="submit" class="btn btn-outline-dark btn-sm ml-0">Apply</button>
-        </div>
-      </form>
+      <!--      <form th:action="@{/stories}" method="get">
+              <div class="form-group">
+                <label>Items per page</label>
+                <select class="form-control form-control-sm" name="limit">
+                  <option value="2">2</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="8">8</option>
+                </select>
+                <button type="submit" class="btn btn-outline-dark btn-sm ml-0">Apply</button>
+              </div>
+            </form>-->
 
       <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
@@ -98,6 +94,36 @@
           <span class="badge badge-pill" th:text="${sport}" th:classappend="${currentCategory eq 'sport'} ? 'badge-success' : 'badge-primary'">0</span>
         </li>
       </ul>
+
+      <div class="d-flex justify-content-end" th:if="${isEmpty eq 1}">
+        <a th:href="@{/stories}" href="#" class="btn btn-outline-dark btn-sm" th:text="#{btn.clear}">Clear</a>
+      </div>
+    </div>
+
+    <div id="commentDiv" th:remove="tag">
+      <div th:each="c : ${comments}" th:unless="${#lists.isEmpty(comments)}" th:with="isAuthor=${c.user.userId eq story.user.userId}">
+
+        <h6 class="d-inline fas fa-feather-alt" data-toggle="tooltip" data-placement="bottom"
+            th:title="#{story.author}" th:if="${isAuthor and !story.anonymous}"></h6>
+        <h6 class="d-inline fas fa-user-circle" sec:authorize="isAuthenticated()" data-toggle="tooltip"
+            data-placement="bottom" th:title="#{story.me}" th:if="${session.userId eq c.user.userId}"></h6>
+
+        <h6 class="font-weight-bold d-inline" th:text="${c.user.fullName}">John Doe</h6>
+        <span>&bull;</span>
+        <h6 class="d-inline text-muted" style="font-size: 14px;" th:utext="${#dates.format(c.createdOn, #messages.msg('format.datetime5'))}">Visited on 25.05.2020</h6>
+        <div class="mt-2 mb-3 text-muted" th:utext="${c.content}">Comment text here</div>
+      </div>
+      <div th:if="${hasMore}">
+        <a class="text-primary font-weight-bold" onclick="getComments()">
+          <i class="fas fa-caret-down"></i>
+          <span th:text="#{story.comments.showmore}">Show more</span>
+        </a>
+      </div>
+      <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+      </script>
     </div>
   </body>
 </html>

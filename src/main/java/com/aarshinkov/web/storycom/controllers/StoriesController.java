@@ -7,6 +7,7 @@ import com.aarshinkov.web.storycom.enums.*;
 import com.aarshinkov.web.storycom.models.stories.*;
 import com.aarshinkov.web.storycom.repositories.*;
 import com.aarshinkov.web.storycom.services.*;
+import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,8 +86,6 @@ public class StoriesController extends Base
       otherParams += "&cat=" + category;
     }
 
-    LOG.debug("otherParams: " + otherParams);
-
     model.addAttribute("otherParameters", otherParams);
 
     model.addAttribute("pageWrapper", stories.getPage());
@@ -109,7 +108,12 @@ public class StoriesController extends Base
       throw new ResponseStatusException(NOT_FOUND, "Story not found");
     }
 
+    Long totalCommentsCount = storyService.getStoryCommentsCount(storyId);
+
     model.addAttribute("story", story);
+    model.addAttribute("storyCommentsCount", totalCommentsCount);
+
+    model.addAttribute("comment", new CommentCreateModel());
 
     storyService.readStory(story.getStoryId());
 
@@ -238,6 +242,15 @@ public class StoriesController extends Base
   @GetMapping(value = "/categories/count")
   public String getCategoriesCount(@RequestParam(name = "currentCat") String currentCategory, Model model)
   {
+    if (StringUtils.isEmpty(currentCategory))
+    {
+      model.addAttribute("isEmpty", 0);
+    }
+    else
+    {
+      model.addAttribute("isEmpty", 1);
+    }
+
     model.addAttribute("globalStoriesCount", storyService.getStoriesCount());
 
     model.addAttribute("love", storyService.getStoriesCountByCategory(Categories.LOVE.getValue()));
@@ -249,6 +262,66 @@ public class StoriesController extends Base
 
     model.addAttribute("currentCategory", currentCategory);
 
-    return "stories/sideMenu :: #categoryList";
+    return "stories/fragments :: #categoryList";
+  }
+
+  @GetMapping(value = "/story/comments")
+  public String getComments(@RequestParam(name = "storyId") Long storyId,
+          @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+          Model model)
+  {
+    //TODO MAY BE CHANGED
+    Integer limit = 4;
+    List<CommentDto> comments = storyService.getStoryComments(storyId, page, limit);
+    Long totalCommentsCount = storyService.getStoryCommentsCount(storyId);
+
+    StoryDto story = storyService.getStoryByStoryId(storyId);
+
+    boolean hasMore = totalCommentsCount > comments.size();
+
+    model.addAttribute("hasMore", hasMore);
+    model.addAttribute("story", story);
+
+    model.addAttribute("commentsCount", comments.size());
+    model.addAttribute("totalCommentsCount", totalCommentsCount);
+    model.addAttribute("comments", comments);
+
+    return "stories/fragments :: #commentDiv";
+  }
+
+  @PostMapping(value = "/story/comment/create")
+  public String createComment(@ModelAttribute("comment") @Valid CommentCreateModel ccm, BindingResult bindingResult,
+          RedirectAttributes redirectAttributes, Model model)
+  {
+    if (bindingResult.hasErrors())
+    {
+      StoryDto story = storyService.getStoryByStoryId(ccm.getStoryId());
+
+      Long totalCommentsCount = storyService.getStoryCommentsCount(ccm.getStoryId());
+
+      model.addAttribute("story", story);
+      model.addAttribute("storyCommentsCount", totalCommentsCount);
+
+      model.addAttribute("globalMenu", "stories");
+
+      return "stories/story";
+    }
+
+    LOG.debug("comment: " + ccm.getComment());
+    LOG.debug("storyId: " + ccm.getStoryId());
+    LOG.debug("userId: " + ccm.getUserId());
+
+    try
+    {
+      CommentDto createdComment = storyService.createComment(ccm);
+      redirectAttributes.addFlashAttribute("msgSuccess", getMessage("story.comments.create.success"));
+    }
+    catch (Exception e)
+    {
+      LOG.error("Error saving comment", e);
+      redirectAttributes.addFlashAttribute("msgError", getMessage("story.comments.create.error"));
+    }
+
+    return "redirect:/story/" + ccm.getStoryId();
   }
 }

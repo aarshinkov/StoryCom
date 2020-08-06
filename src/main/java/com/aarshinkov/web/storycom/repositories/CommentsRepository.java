@@ -1,8 +1,6 @@
 package com.aarshinkov.web.storycom.repositories;
 
 import com.aarshinkov.web.storycom.entities.*;
-import java.util.*;
-import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.*;
 
@@ -14,7 +12,7 @@ import org.springframework.stereotype.*;
 @Repository
 public interface CommentsRepository extends JpaRepository<CommentEntity, Long>
 {
-  Page<CommentEntity> findByPostPostId(Long postId, Pageable pageable);
+  CommentEntity findByCommentId(Long commentId);
 
-  Optional<CommentEntity> findByCommentIdAndPostPostId(Long commentId, Long postId);
+  Long countByStoryStoryId(Long storyId);
 }

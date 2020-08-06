@@ -1,6 +1,7 @@
 package com.aarshinkov.web.storycom.controllers;
 
 import com.aarshinkov.web.storycom.base.*;
+import com.aarshinkov.web.storycom.collections.*;
 import com.aarshinkov.web.storycom.dto.*;
 import com.aarshinkov.web.storycom.models.users.*;
 import com.aarshinkov.web.storycom.services.*;
@@ -95,16 +96,34 @@ public class ProfileController extends Base
     return "redirect:/profile";
   }
 
-//  @GetMapping(value = "/stories/my")
-//  public String myStories(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
-//          @RequestParam(value = "limit", defaultValue = "5", required = false) Integer limit,
-//          HttpServletRequest request, Model model)
-//  {
-//    model.addAttribute("globalMenu", "profile");
-//    model.addAttribute("submenu", "mystories");
-//
-//    long userId = (Long) systemService.getSessionAttribute(request, "userId");
-//
+  @GetMapping(value = "/stories/my")
+  public String myStories(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+          @RequestParam(value = "limit", defaultValue = "5", required = false) Integer limit,
+          HttpServletRequest request, Model model)
+  {
+    model.addAttribute("globalMenu", "profile");
+    model.addAttribute("submenu", "mystories");
+
+    long userId = (Long) systemService.getSessionAttribute(request, "userId");
+
+    ObjCollection<StoryDto> stories = storyService.getStories(page, limit, null, userId);
+
+    model.addAttribute("storiesCount", stories.getPage().getLocalTotalElements());
+
+    model.addAttribute("stories", stories.getCollection());
+
+    String otherParams = "";
+
+    if (limit != null && limit > 0)
+    {
+      otherParams = "&limit=" + limit;
+    }
+
+    model.addAttribute("otherParameters", otherParams);
+
+    model.addAttribute("pageWrapper", stories.getPage());
+    model.addAttribute("maxPagesPerView", 5);
+
 //    List<StoryDto> stories = storyService.getStories(page, limit, null, userId);
 //
 //    model.addAttribute("storiesCount", stories.size());
@@ -123,11 +142,10 @@ public class ProfileController extends Base
 //    pageWrapper.setLocalTotalElements(new Long(stories.size()));
 //    pageWrapper.setGlobalTotalElements(globalCount);
 //
-//    model.addAttribute("pageWrapper", pageWrapper);
-//    model.addAttribute("maxPagesPerView", 5);
-//
-//    return "profile/stories";
-//  }
+    model.addAttribute("globalMenu", "stories");
+
+    return "profile/stories";
+  }
 
   @GetMapping(value = "/settings")
   public String prepareSettings(Model model)
