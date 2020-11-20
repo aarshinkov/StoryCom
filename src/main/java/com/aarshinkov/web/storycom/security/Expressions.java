@@ -23,13 +23,6 @@ public class Expressions
   @Autowired
   private StoryService storyService;
 
-  public boolean isUserOwner(Long storyId, Long userId)
-  {
-    LOG.debug("userId: " + userId);
-    LOG.debug("storyId: " + storyId);
-    return true;
-  }
-
   public boolean isUserOwner(Long storyId, HttpServletRequest request)
   {
     Long userId = (Long) systemService.getSessionAttribute(request, "userId");

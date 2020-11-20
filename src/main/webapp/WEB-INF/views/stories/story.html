@@ -44,7 +44,8 @@
           </div>
 
           <span class="card-text mt-3" th:text="#{stories.publishedin}"></span>
-          <a class="card-text text-primary mt-3" href="#" th:href="@{/stories?cat=} + ${story.category.name}" th:text="#{stories.categories. + ${story.category.categoryId}}"></a>
+          <a class="card-text text-primary mt-3" href="#" th:href="@{/stories?cat=} + ${story.category.name}"
+             th:text="#{stories.categories. + ${story.category.categoryId}}"></a>
           <span class="card-text mt-3" th:text="#{stories.publishedfrom}"></span>
 
           <i class="card-text mt-3" th:if="${story.anonymous}" th:text="#{stories.anonymous}"></i>

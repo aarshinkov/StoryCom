@@ -5,7 +5,6 @@ import org.modelmapper.convention.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.*;
-import org.springframework.security.config.annotation.method.configuration.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.crypto.password.*;
 

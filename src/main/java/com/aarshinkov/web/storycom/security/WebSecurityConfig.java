@@ -3,7 +3,6 @@ package com.aarshinkov.web.storycom.security;
 import com.aarshinkov.web.storycom.services.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
-import org.springframework.http.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.builders.*;
 import org.springframework.security.config.annotation.method.configuration.*;
@@ -48,23 +47,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
   @Override
   protected void configure(HttpSecurity http) throws Exception
   {
-//    http
-//            .authorizeRequests()
-//            .antMatchers("/", "/home").permitAll()
-//            .antMatchers("/profile").authenticated()
-//            .and()
-//            .formLogin()
-//            .loginProcessingUrl("/authentication")
-//            .loginPage("/login")
-//            .usernameParameter("email")
-//            .passwordParameter("password")
-//            .defaultSuccessUrl("/")
-//            .permitAll()
-//            .and()
-//            .logout()
-//            .logoutSuccessUrl("/login")
-//            .permitAll();
-
     http.csrf().disable()
             .authorizeRequests()
             .antMatchers("/", "/home").permitAll()
